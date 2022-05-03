@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/api")
 @ApplicationScoped
-@DeclareRoles({"user", "admin"})
+@DeclareRoles({"USER", "ADMIN"})
 public class HelloApplication extends Application {
 
 }

@@ -17,8 +17,11 @@ public class AuthenticateResource {
     @PermitAll
     @Produces("application/json")
     public Response login() {
-        return Response.ok("{\"message\": \"You're now logged in!\"}").cookie(
-                new NewCookie("auth", "true")).build();
+        return Response
+                .status(200)
+                .entity("{\"message\": \"You're now logged in!\"}")
+                .cookie()
+                .build();
     }
 
     @GET

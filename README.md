@@ -10,5 +10,6 @@ Add config.properties to the root of resources folder
 
 - jwt.issuer: Issuer of the JWT token
 - jwt.secret: Secret of the JWT token
+- jwt.name: Name of the JWT token
 
 #### Required properties

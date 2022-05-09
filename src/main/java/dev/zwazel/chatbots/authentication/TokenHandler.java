@@ -7,11 +7,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.xml.bind.DatatypeConverter;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.util.Date;
 
 public class TokenHandler {
@@ -48,9 +44,6 @@ public class TokenHandler {
 
     public static Claims decodeJWT(String jwt) {
         byte[] apiKeySecretBytes = HelloApplication.getProperty("jwt.secret", defaultSecret).getBytes();
-
-        //The JWT signature algorithm we will be using to sign the token
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
         //This line will throw an exception if it is not a signed JWS (as expected)
         return Jwts.parserBuilder()

@@ -32,7 +32,7 @@ public class TokenHandler {
                 .setId(id)
                 .setIssuedAt(now)
                 .setSubject(subject)
-                .setIssuer(HelloApplication.getProperty("jwt.issuer", "zwazel-chatbots"))
+                .setIssuer(HelloApplication.getProperty("jwt.issuer", "this-secret-is-now-a-very-secure-secret"))
                 .signWith(Keys.hmacShaKeyFor(apiKeySecretBytes), signatureAlgorithm);
 
         //if it has been specified, let's add the expiration

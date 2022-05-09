@@ -23,12 +23,18 @@ public class HelloApplication extends Application {
     private static void checkIfPropertyExists() {
         if (properties == null) {
             properties = new Properties();
-            try (InputStream input = new FileInputStream(HelloApplication.class.getClassLoader().getResource("myproperties.properties").getFile())) {
+            try (InputStream input = new FileInputStream(HelloApplication.class.getClassLoader().getResource("config.properties").getFile())) {
                 properties.load(input);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getProperty(String key, String defaultValue) {
+        checkIfPropertyExists();
+
+        return properties.getProperty(key, defaultValue);
     }
 
     public static String getProperty(String key) {

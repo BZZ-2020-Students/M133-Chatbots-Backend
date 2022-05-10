@@ -12,7 +12,6 @@ public class HelloResource {
     public Response hello() {
         return Response
                 .status(200)
-                .header("Access-Control-Allow-Origin", "*")
                 .entity("Hello, World!")
                 .build();
     }

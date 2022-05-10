@@ -3,19 +3,14 @@ package dev.zwazel.chatbots.authentication;
 import dev.zwazel.chatbots.HelloApplication;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.model.User;
-import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 
-@RequestScoped
 @Path("/auth")
 public class AuthenticateResource {
     @POST
     @Path("/login")
-    @PermitAll
     @Produces("application/json")
     public Response login(
             @FormParam("username") String username,
@@ -27,7 +22,7 @@ public class AuthenticateResource {
         NewCookie tokenCookie = new NewCookie(
                 HelloApplication.getProperty("jwt.name", "auth-jwt"),
                 TokenHandler.createJWT(
-                        "1",
+                        "1", // TODO: 10.05.2022 - change to user id
                         "authentication",
                         username,
                         DurationsInMilliseconds.DAY.getDuration()
@@ -54,14 +49,12 @@ public class AuthenticateResource {
 
     @GET
     @Path("/logout")
-    @PermitAll
     public String logout() {
         return "You're now logged out!";
     }
 
     // checks if logged in / authenticated
     @GET
-    @PermitAll
     @Path("auth-check")
     @Produces("application/json")
     public Response authCheck() {
@@ -69,30 +62,23 @@ public class AuthenticateResource {
 
         return Response
                 .status(200)
-                .header("Access-Control-Allow-Origin", "http://localhost:3000/")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
-                .header("Access-Control-Allow-Methods", "GET, POST, DELETE")
                 .entity(user.toJson())
                 .build();
     }
 
     @GET
-    @RolesAllowed("admin")
     @Path("/admin-check")
     public String adminCheck() {
         return "you're an admin";
     }
 
     @GET
-    @RolesAllowed("user")
     @Path("/user-check")
     public String userCheck() {
         return "you're a user";
     }
 
     @GET
-    @RolesAllowed({"admin", "user"})
     @Path("/any-check")
     public String anyRoleCheck() {
         return "you're an admin or a user";

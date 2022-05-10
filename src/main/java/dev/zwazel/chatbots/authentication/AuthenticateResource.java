@@ -2,6 +2,7 @@ package dev.zwazel.chatbots.authentication;
 
 import dev.zwazel.chatbots.HelloApplication;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
+import dev.zwazel.chatbots.classes.model.User;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
@@ -58,11 +59,22 @@ public class AuthenticateResource {
         return "You're now logged out!";
     }
 
+    // checks if logged in / authenticated
     @GET
     @PermitAll
     @Path("auth-check")
-    public String authCheck() {
-        return "idk if you're authenticated";
+    @Produces("application/json")
+    public Response authCheck() {
+        User user = new User("69", "Zwazel");
+
+        return Response
+                .status(200)
+                .header("Access-Control-Allow-Origin", "http://localhost:3000/")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, cache-control")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE")
+                .entity(user.toJson())
+                .build();
     }
 
     @GET

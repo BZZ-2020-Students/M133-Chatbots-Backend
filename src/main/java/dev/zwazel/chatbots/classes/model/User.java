@@ -18,6 +18,13 @@ public class User {
                 '}';
     }
 
+    public String toJson() {
+        return "{" +
+                "\"id\":\"" + id + "\"," +
+                "\"username\":\"" + name + "\"" +
+                "}";
+    }
+
     public String getId() {
         return id;
     }

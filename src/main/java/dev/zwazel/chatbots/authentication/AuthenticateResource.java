@@ -60,7 +60,7 @@ public class AuthenticateResource {
     @Path("auth-check")
     @Produces("application/json")
     public Response authCheck(HttpServletRequest request) {
-        
+
 
         User user = new User("69", "Zwazel");
 

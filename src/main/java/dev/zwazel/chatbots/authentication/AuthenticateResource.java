@@ -3,6 +3,8 @@ package dev.zwazel.chatbots.authentication;
 import dev.zwazel.chatbots.HelloApplication;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.model.User;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
@@ -57,7 +59,9 @@ public class AuthenticateResource {
     @GET
     @Path("auth-check")
     @Produces("application/json")
-    public Response authCheck() {
+    public Response authCheck(HttpServletRequest request) {
+        
+
         User user = new User("69", "Zwazel");
 
         return Response

@@ -1,7 +1,5 @@
 package dev.zwazel.chatbots;
 
-import jakarta.annotation.security.DeclareRoles;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
@@ -11,8 +9,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @ApplicationPath("/api")
-@ApplicationScoped
-@DeclareRoles({"USER", "ADMIN"})
 public class HelloApplication extends Application {
     public static final String defaultConfJwtIssuer = "zwazels-chatbot";
     public static final String defaultConfJwtSecret = "this-secret-is-a-very-secure-secret";

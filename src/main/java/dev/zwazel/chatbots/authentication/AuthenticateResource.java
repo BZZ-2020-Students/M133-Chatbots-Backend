@@ -3,7 +3,6 @@ package dev.zwazel.chatbots.authentication;
 import dev.zwazel.chatbots.HelloApplication;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.model.User;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.NewCookie;
@@ -22,7 +21,7 @@ public class AuthenticateResource {
         System.out.println("password = " + password);
 
         NewCookie tokenCookie = new NewCookie(
-                HelloApplication.getProperty("jwt.name", "auth-jwt"),
+                HelloApplication.getProperty("jwt.name", HelloApplication.defaultConfJwtName),
                 TokenHandler.createJWT(
                         "1", // TODO: 10.05.2022 - change to user id
                         "authentication",

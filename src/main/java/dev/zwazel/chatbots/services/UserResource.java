@@ -10,20 +10,43 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+/**
+ * UserResource is a class that handles all requests to the /user endpoint.
+ *
+ * @author Zwazel
+ * @since 0.1
+ */
 @Path("/user")
 public class UserResource {
+    /**
+     * this method returns the user with the given ID
+     * TODO: 15.05.2022 - implement DB + test if user.toJson() works
+     *
+     * @param id the ID of the user
+     * @return the user with the given ID
+     * @author Zwazel
+     * @since 0.1
+     */
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getUser(@PathParam("id") String id) {
         User user = new User(id, "Zwazel");
-        System.out.println("user = " + user);
         return Response
                 .status(200)
-                .entity(user)
+                .entity(user.toJson())
                 .build();
     }
 
+    /**
+     * this method is purely for testing purposes. it creates a user with the given id and name and creates a token for it. it then returns the token.
+     *
+     * @param id   the id of the user
+     * @param name the name of the user
+     * @return the token
+     * @author Zwazel
+     * @since 0.1
+     */
     @GET
     @Path("/{id}/{name}")
     @Produces("text/plain")

@@ -12,7 +12,6 @@ import java.io.IOException;
  * <br>
  * refer to <a href="https://www.baeldung.com/cors-in-jax-rs#1-using-the-filter">Baeldung.com</a>
  *
- * @version 1.0
  * @since 0.1
  */
 @Provider
@@ -24,6 +23,7 @@ public class CorsFilter implements ContainerResponseFilter {
      * @param requestContext  the request context
      * @param responseContext the response context
      * @throws IOException if there is an error
+     * @author Zwazel
      * @since 0.1
      */
     @Override

@@ -7,7 +7,6 @@ import lombok.Setter;
  * User class
  *
  * @author Zwazel
- * @version 0.1
  * @since 0.1
  */
 @Setter

@@ -96,6 +96,7 @@ public class User {
     /**
      * User toJson method
      *
+     * @return A JSON string of the user
      * @author Zwazel
      * @since 0.1
      */

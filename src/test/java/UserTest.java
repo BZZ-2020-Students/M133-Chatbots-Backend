@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @see User
  * @since 0.2
  */
-public class UserTests {
+public class UserTest {
     /**
      * Tests if we get a NullPointerException when trying to build a User without a Name
      *

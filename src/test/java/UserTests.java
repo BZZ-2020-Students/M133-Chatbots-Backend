@@ -125,6 +125,12 @@ public class UserTests {
         assertEquals(UserRole.USER, user.getUserRole());
     }
 
+    /**
+     * Tests if we can successfully construct a user with the no args constructor
+     *
+     * @author Zwazel
+     * @since 0.2
+     */
     @Test
     public void testNoArgsConstructor() {
         User user = new User();

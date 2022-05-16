@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.classes.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Utility class for getting the milliseconds of a duration. This can be used to set the expiration time of the JWT.
@@ -9,6 +10,7 @@ import lombok.Getter;
  * @since 0.1
  */
 @Getter
+@RequiredArgsConstructor
 public enum DurationsInMilliseconds {
     /**
      * The duration of a minute in milliseconds.
@@ -46,15 +48,4 @@ public enum DurationsInMilliseconds {
      * @since 0.1
      */
     private final long duration;
-
-    /**
-     * Constructor for the enum.
-     *
-     * @param duration The duration in milliseconds.
-     * @author Zwazel
-     * @since 0.1
-     */
-    DurationsInMilliseconds(long duration) {
-        this.duration = duration;
-    }
 }

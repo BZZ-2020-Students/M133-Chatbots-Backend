@@ -1,9 +1,9 @@
 package dev.zwazel.chatbots.classes.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,15 +12,22 @@ import java.util.List;
  * @author Zwazel
  * @since 0.2
  */
-@Getter
 @Setter
+@Getter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Chatbot {
     /**
      * The date the chatbot was created
      *
      * @since 0.2
      */
-    private final LocalDate createdAt;
+    @Builder.Default
+    @NonNull
+    private final LocalDate createdAt = LocalDate.now();
 
     /**
      * the id of the chatbot
@@ -35,6 +42,7 @@ public class Chatbot {
      * @see User
      * @since 0.2
      */
+    @NonNull
     private User owner;
 
     /**
@@ -42,6 +50,7 @@ public class Chatbot {
      *
      * @since 0.2
      */
+    @NonNull
     private String name;
 
     /**
@@ -50,6 +59,7 @@ public class Chatbot {
      * @see QuestionAnswer
      * @since 0.2
      */
+    @NonNull
     private List<QuestionAnswer> questionAnswers;
 
     /**
@@ -58,31 +68,8 @@ public class Chatbot {
      * @see Text
      * @since 0.2
      */
-    private List<Text> unknownTexts;
+    @Builder.Default
+    private List<Text> unknownTexts = new ArrayList<>();
 
     // TODO: 16.05.2022 LEVENSHTEIN DISTANCE
-
-    /**
-     * default constructor
-     *
-     * @author Zwazel
-     * @since 0.2
-     */
-    public Chatbot() {
-        createdAt = LocalDate.now();
-    }
-
-    /**
-     * constructor with id and owner
-     *
-     * @param id    the id of the chatbot
-     * @param owner the owner of the chatbot
-     * @author Zwazel
-     * @since 0.2
-     */
-    public Chatbot(String id, User owner) {
-        this.id = id;
-        this.owner = owner;
-        createdAt = LocalDate.now();
-    }
 }

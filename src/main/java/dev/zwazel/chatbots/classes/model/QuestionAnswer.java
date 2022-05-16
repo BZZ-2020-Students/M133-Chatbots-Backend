@@ -1,7 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,8 +11,13 @@ import java.util.List;
  * @author Zwazel
  * @since 0.2
  */
-@Getter
 @Setter
+@Getter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class QuestionAnswer {
     /**
      * A List containing all the questions.
@@ -21,6 +25,7 @@ public class QuestionAnswer {
      * @see Text
      * @since 0.2
      */
+    @NonNull
     private List<Text> questions;
 
     /**
@@ -29,5 +34,6 @@ public class QuestionAnswer {
      * @see Text
      * @since 0.2
      */
+    @NonNull
     private List<Text> answers;
 }

@@ -1,8 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import dev.zwazel.chatbots.classes.enums.UserRole;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * User class
@@ -12,6 +11,11 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class User {
     /**
      * User id
@@ -25,6 +29,7 @@ public class User {
      *
      * @since 0.1
      */
+    @NonNull
     private String name;
 
     /**
@@ -32,6 +37,7 @@ public class User {
      *
      * @since 0.2
      */
+    @NonNull
     private String password;
 
     /**
@@ -39,59 +45,8 @@ public class User {
      *
      * @since 0.2
      */
+    @NonNull
     private UserRole userRole;
-
-    /**
-     * Default User constructor
-     *
-     * @author Zwazel
-     * @since 0.2
-     */
-    public User() {
-    }
-
-
-    /**
-     * User constructor without id
-     *
-     * @param name     name of user
-     * @param password password of user
-     * @author Zwazel
-     * @since 0.2
-     */
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    /**
-     * User constructor with userRole
-     *
-     * @param name     name of user
-     * @param password password of user
-     * @param userRole role of user
-     * @author Zwazel
-     * @since 0.2
-     */
-    public User(String name, String password, UserRole userRole) {
-        this.name = name;
-        this.password = password;
-        this.userRole = userRole;
-    }
-
-    /**
-     * User to String method
-     *
-     * @author Zwazel
-     * @since 0.1
-     */
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
 
     /**
      * User toJson method

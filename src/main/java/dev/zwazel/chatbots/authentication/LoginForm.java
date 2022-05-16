@@ -1,7 +1,6 @@
 package dev.zwazel.chatbots.authentication;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Utility class for Login API.
@@ -9,14 +8,20 @@ import lombok.Setter;
  * @author Zwazel
  * @since 0.1
  */
-@Getter
 @Setter
+@Getter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class LoginForm {
     /**
      * The username.
      *
      * @since 0.1
      */
+    @NonNull
     private String username;
 
     /**
@@ -24,5 +29,6 @@ public class LoginForm {
      *
      * @since 0.1
      */
+    @NonNull
     private String password;
 }

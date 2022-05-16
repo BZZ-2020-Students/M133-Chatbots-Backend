@@ -2,6 +2,7 @@ package dev.zwazel.chatbots.services;
 
 import dev.zwazel.chatbots.authentication.TokenHandler;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
+import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -31,7 +32,11 @@ public class UserResource {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getUser(@PathParam("id") String id) {
-        User user = new User("Zwazel", id);
+        User user = User.builder()
+                .id(id)
+                .userRole(UserRole.USER)
+                .build();
+
         return Response
                 .status(200)
                 .entity(user.toJson())
@@ -51,7 +56,7 @@ public class UserResource {
     @Path("/{id}/{name}")
     @Produces("text/plain")
     public String getUser(@PathParam("id") String id, @PathParam("name") String name) {
-        User user = new User(name, id);
+        User user = new User(id, name, UserRole.USER);
         String jwt = TokenHandler.createJWT(id, "idk what subject to use", name, DurationsInMilliseconds.DAY.getDuration());
         String usernameFromJWT = TokenHandler.getUsername(jwt);
         System.out.println("user = " + user);

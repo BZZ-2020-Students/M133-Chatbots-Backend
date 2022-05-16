@@ -1,8 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import dev.zwazel.chatbots.classes.enums.RatingEnum;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * This class represents a rating that a user gave a chatbot.
@@ -10,8 +9,13 @@ import lombok.Setter;
  * @author Zwazel
  * @since 0.2
  */
-@Getter
 @Setter
+@Getter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Rating {
     /**
      * The user that gave the rating.
@@ -19,6 +23,7 @@ public class Rating {
      * @see User
      * @since 0.2
      */
+    @NonNull
     private User user;
 
     /**
@@ -27,6 +32,7 @@ public class Rating {
      * @see Chatbot
      * @since 0.2
      */
+    @NonNull
     private Chatbot chatbot;
 
     /**
@@ -35,6 +41,7 @@ public class Rating {
      * @see RatingEnum
      * @since 0.2
      */
+    @NonNull
     private RatingEnum rating;
 
     /**
@@ -42,5 +49,6 @@ public class Rating {
      *
      * @since 0.2
      */
-    private boolean favourite;
+    @Builder.Default
+    private boolean favourite = false;
 }

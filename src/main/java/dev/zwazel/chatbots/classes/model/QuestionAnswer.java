@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Builder
 @ToString
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class QuestionAnswer {

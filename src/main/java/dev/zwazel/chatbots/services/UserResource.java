@@ -34,6 +34,8 @@ public class UserResource {
     public Response getUser(@PathParam("id") String id) {
         User user = User.builder()
                 .id(id)
+                .name("Zwazel")
+                .password("password")
                 .userRole(UserRole.USER)
                 .build();
 

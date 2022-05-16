@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 @Builder
 @ToString
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class LoginForm {

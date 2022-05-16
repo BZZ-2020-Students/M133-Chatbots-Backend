@@ -6,7 +6,7 @@
 
     <groupId>dev.zwazel</groupId>
     <artifactId>chatbots</artifactId>
-    <version>0.1.1</version>
+    <version>0.2</version>
     <name>chatbots</name>
     <packaging>war</packaging>
 

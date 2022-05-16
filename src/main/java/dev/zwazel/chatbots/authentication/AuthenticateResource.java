@@ -88,7 +88,7 @@ public class AuthenticateResource {
     @Path("auth-check")
     @Produces("application/json")
     public Response authCheck() {
-        User user = new User("69", "Zwazel");
+        User user = new User("Zwazel", "1234");
 
         return Response
                 .status(200)

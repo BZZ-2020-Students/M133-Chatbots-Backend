@@ -31,7 +31,7 @@ public class UserResource {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getUser(@PathParam("id") String id) {
-        User user = new User(id, "Zwazel");
+        User user = new User("Zwazel", id);
         return Response
                 .status(200)
                 .entity(user.toJson())
@@ -51,7 +51,7 @@ public class UserResource {
     @Path("/{id}/{name}")
     @Produces("text/plain")
     public String getUser(@PathParam("id") String id, @PathParam("name") String name) {
-        User user = new User(id, name);
+        User user = new User(name, id);
         String jwt = TokenHandler.createJWT(id, "idk what subject to use", name, DurationsInMilliseconds.DAY.getDuration());
         String usernameFromJWT = TokenHandler.getUsername(jwt);
         System.out.println("user = " + user);

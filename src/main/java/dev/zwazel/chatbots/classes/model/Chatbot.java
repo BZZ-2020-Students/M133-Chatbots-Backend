@@ -72,4 +72,13 @@ public class Chatbot {
     private List<Text> unknownTexts = new ArrayList<>();
 
     // TODO: 16.05.2022 LEVENSHTEIN DISTANCE
+
+    public String toJson() {
+        return "{\n" +
+                "  \"owner\": \"" + owner.getName() + "\",\n" +
+                "  \"name\": \"" + name + "\",\n" +
+                "  \"questionAnswers\": " + questionAnswers + ",\n" +
+                "  \"unknownTexts\": " + unknownTexts + "\n" +
+                "}";
+    }
 }

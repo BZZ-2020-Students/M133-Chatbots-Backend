@@ -50,4 +50,26 @@ public class TextResource {
         TextDao textDao = new TextDao();
         return Response.ok(textDao.findAll()).build();
     }
+
+    /**
+     * Returns all Text objects that are associated with a specific chatbot.
+     *
+     * @param id The id of the chatbot.
+     * @return A list of Text objects.
+     * @author Zwazel
+     * @since 0.3
+     */
+    @GET
+    @Path("/chatbot/{id}")
+    @Produces("application/json")
+    public Response getTextByChatbot(@PathParam("id") String id) {
+        TextDao textDao = new TextDao();
+        Iterable<Text> texts = textDao.findAllByChatbotId(id);
+
+        if (texts == null || !texts.iterator().hasNext()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(texts).build();
+    }
 }

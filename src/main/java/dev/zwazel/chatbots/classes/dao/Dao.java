@@ -3,6 +3,7 @@ package dev.zwazel.chatbots.classes.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import lombok.Getter;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @author Zwazel
  * @since 0.3
  */
+@Getter
 public class Dao<T, I extends Serializable> {
     /**
      * The class of the entity.
@@ -91,11 +93,7 @@ public class Dao<T, I extends Serializable> {
         try {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
-            String query = "SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'";
-
-            System.out.println("query = " + query);
-
-            t = entityManager.createQuery(query, tClass).getSingleResult();
+            t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'", tClass).getSingleResult();
             entityManager.getTransaction().commit();
         } catch (Exception ignored) {
 

@@ -7,6 +7,7 @@ import dev.zwazel.chatbots.classes.model.Chatbot;
  *
  * @author Zwazel
  * @since 0.3
+ * @see Dao
  */
 public class ChatbotDao extends Dao<Chatbot, String> {
     /**
@@ -28,6 +29,4 @@ public class ChatbotDao extends Dao<Chatbot, String> {
     public Chatbot findByName(String name) {
         return this.findBy("chatbotName", name);
     }
-
-
 }

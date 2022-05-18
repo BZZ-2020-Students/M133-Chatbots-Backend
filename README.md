@@ -15,5 +15,7 @@ variables are higher priority than config.properties and will override the value
     - Default: this-secret-is-a-very-secure-secret
 - jwt.name: Name of the JWT token
     - Default: zwazel-jwt-chatbot
+- cors.allowed.origins: Allowed origins for CORS
+    - Default: http://localhost:3000
 
 #### Required properties

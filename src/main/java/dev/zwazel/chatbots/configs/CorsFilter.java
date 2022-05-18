@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.configs;
 
+import dev.zwazel.chatbots.HelloApplication;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
@@ -30,7 +31,7 @@ public class CorsFilter implements ContainerResponseFilter {
     public void filter(ContainerRequestContext requestContext,
                        ContainerResponseContext responseContext) throws IOException {
         responseContext.getHeaders().add(
-                "Access-Control-Allow-Origin", "http://localhost:3000");
+                "Access-Control-Allow-Origin", HelloApplication.getProperty("cors.allowed.origins", HelloApplication.defaultCorsAllowedOrigins));
         responseContext.getHeaders().add(
                 "Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().add(

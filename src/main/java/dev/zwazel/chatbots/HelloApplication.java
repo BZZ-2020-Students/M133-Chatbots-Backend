@@ -39,6 +39,13 @@ public class HelloApplication extends Application {
     public static final String defaultConfJwtName = "zwazel-jwt-chatbot";
 
     /**
+     * The default JWT Expiration Time
+     *
+     * @since 0.2
+     */
+    public static final String defaultCorsAllowedOrigins = "http://localhost:3000";
+
+    /**
      * The properties of this application
      *
      * @since 0.1

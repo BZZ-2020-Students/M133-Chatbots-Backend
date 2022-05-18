@@ -10,6 +10,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.Iterator;
+
 /**
  * UserResource is a class that handles all requests to the /user endpoint.
  *
@@ -78,17 +80,24 @@ public class UserResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsers() {
         Iterable<User> users = new UserDao().findAll();
+        Iterator<User> iterator = users.iterator();
 
-        StringBuilder json = new StringBuilder();
-        for (User user : users) {
+        StringBuilder json = new StringBuilder("[");
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+
             try {
-                json.append(user.toJson()).append("\n");
+                json.append(user.toJson());
+                if (iterator.hasNext()) {
+                    json.append(",");
+                }
             } catch (JsonProcessingException e) {
                 return Response
                         .status(Response.Status.INTERNAL_SERVER_ERROR)
                         .build();
             }
         }
+        json.append("]");
 
         return Response
                 .status(200)

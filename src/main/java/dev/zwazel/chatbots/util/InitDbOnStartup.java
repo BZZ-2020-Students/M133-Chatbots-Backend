@@ -62,6 +62,14 @@ public class InitDbOnStartup {
         System.out.println("DB initiation finished");
     }
 
+    /**
+     * This method is used to get the Chatbots for the Database.
+     *
+     * @param users the users to be added to the Chatbots
+     * @return the Chatbots for the Database
+     * @author Zwazel
+     * @since 0.3
+     */
     private List<Chatbot> getChatbots(Iterable<User> users) {
         List<Chatbot> chatbots = new ArrayList<>();
 
@@ -115,6 +123,13 @@ public class InitDbOnStartup {
         return chatbots;
     }
 
+    /**
+     * This method is used to get the Users for the Database.
+     *
+     * @return the Users for the Database
+     * @author Zwazel
+     * @since 0.3
+     */
     private List<User> getUsers() {
         List<User> users = new ArrayList<>();
 

@@ -1,6 +1,8 @@
 package dev.zwazel.chatbots.util;
 
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
+import dev.zwazel.chatbots.classes.dao.Dao;
+import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.Chatbot;
@@ -51,6 +53,11 @@ public class InitDbOnStartup {
         for (Chatbot c : chatbots) {
             Chatbot chatbotFromDb = chatbotDao.findByName(c.getChatbotName());
             if (chatbotFromDb == null) {
+                TextDao textDao = new TextDao();
+                textDao.saveCollection(c.getUnknownTexts());
+                c.getQuestionAnswers().forEach(qa -> textDao.saveCollection(qa.getAnswers()));
+                c.getQuestionAnswers().forEach(qa -> textDao.saveCollection(qa.getQuestions()));
+
                 chatbotDao.save(c);
             } else {
                 System.out.println(c.getChatbotName() + " already exists");

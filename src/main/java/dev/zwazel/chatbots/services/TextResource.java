@@ -1,7 +1,9 @@
 package dev.zwazel.chatbots.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
+import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -33,7 +35,11 @@ public class TextResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.ok(text).build();
+        try {
+            return Response.status(200).entity(ToJson.toJson(textDao.findAll())).build();
+        } catch (JsonProcessingException e) {
+            return Response.status(500).build();
+        }
     }
 
     /**
@@ -48,7 +54,11 @@ public class TextResource {
     @Produces("application/json")
     public Response getTexts() {
         TextDao textDao = new TextDao();
-        return Response.ok(textDao.findAll()).build();
+        try {
+            return Response.status(200).entity(ToJson.arrayToJson(textDao.findAll())).build();
+        } catch (JsonProcessingException e) {
+            return Response.status(500).build();
+        }
     }
 
     /**
@@ -70,6 +80,10 @@ public class TextResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.ok(texts).build();
+        try {
+            return Response.status(200).entity(ToJson.arrayToJson(texts)).build();
+        } catch (JsonProcessingException e) {
+            return Response.status(500).build();
+        }
     }
 }

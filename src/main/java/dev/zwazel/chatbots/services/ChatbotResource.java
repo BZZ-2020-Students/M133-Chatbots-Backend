@@ -3,7 +3,7 @@ package dev.zwazel.chatbots.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
-import dev.zwazel.chatbots.interfaces.ToJson;
+import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;

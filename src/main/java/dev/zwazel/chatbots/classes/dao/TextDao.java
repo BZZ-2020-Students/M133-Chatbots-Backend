@@ -2,6 +2,7 @@ package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Text;
+import jakarta.persistence.EntityManager;
 
 import java.util.Set;
 
@@ -65,5 +66,57 @@ public class TextDao extends Dao<Text, String> {
         });
 
         return texts;
+    }
+
+    /**
+     * Finds Text with the same text as the given text.
+     *
+     * @param text The text.
+     * @return The Text.
+     * @author Zwazel
+     * @since 0.3
+     */
+    private Text findByText(String text) {
+        return findBy("text", text);
+    }
+
+    /**
+     * If the text is not in the database, it will be added.
+     *
+     * @param text The text.
+     * @author Zwazel
+     * @since 0.3
+     */
+    @Override
+    public void save(Text text) {
+        Text textInDB = findByText(text.getText());
+        if (textInDB == null) {
+            super.save(text);
+        } else {
+            text.setId(textInDB.getId());
+        }
+    }
+
+    /**
+     * If the text is not in the database, it will be added.
+     *
+     * @param t The collection of entities to save.
+     * @author Zwazel
+     * @since 0.3
+     */
+    @Override
+    public void saveCollection(Iterable<Text> t) {
+        EntityManager em = getEntityManagerFactory().createEntityManager();
+        em.getTransaction().begin();
+        t.forEach(text -> {
+            Text textInDB = findByText(text.getText());
+            if (textInDB == null) {
+                System.out.println("Saving " + text.getText());
+                em.persist(text);
+            } else {
+                System.out.println("Skipping " + text.getText());
+                text.setId(textInDB.getId());
+            }
+        });
     }
 }

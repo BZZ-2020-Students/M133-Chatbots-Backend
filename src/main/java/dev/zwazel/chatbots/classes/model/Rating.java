@@ -40,7 +40,7 @@ public class Rating {
      * @see User
      * @since 0.2
      */
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {})
     @JoinColumn(name = "user_id")
     @NonNull
     private User user;
@@ -51,7 +51,7 @@ public class Rating {
      * @see Chatbot
      * @since 0.2
      */
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {})
     @JoinColumn(name = "chatbot_id")
     @NonNull
     private Chatbot chatbot;

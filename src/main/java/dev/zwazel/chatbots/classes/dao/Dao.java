@@ -37,6 +37,7 @@ public class Dao<T, I extends Serializable> {
      * Default constructor.
      *
      * @param tClass The class of the entity.
+     * @author Zwazel
      * @since 0.3
      */
     public Dao(Class<T> tClass) {
@@ -47,6 +48,7 @@ public class Dao<T, I extends Serializable> {
      * Persist an entity.
      *
      * @param t The entity to persist.
+     * @author Zwazel
      * @since 0.3
      */
     public void save(T t) {
@@ -58,10 +60,28 @@ public class Dao<T, I extends Serializable> {
     }
 
     /**
+     * saves a collection of entities.
+     *
+     * @param t The collection of entities to save.
+     * @author Zwazel
+     * @since 0.3
+     */
+    public void saveCollection(Iterable<T> t) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        for (T t1 : t) {
+            entityManager.persist(t1);
+        }
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    /**
      * Finds an entity by its primary key.
      *
      * @param i The primary key.
      * @return The entity if found, null otherwise.
+     * @author Zwazel
      * @since 0.3
      */
     public T find(I i) {
@@ -86,6 +106,7 @@ public class Dao<T, I extends Serializable> {
      * @param field The field to search by.
      * @param value The value to search for.
      * @return The entity if found, null otherwise.
+     * @author Zwazel
      * @since 0.3
      */
     public T findBy(String field, String value) {
@@ -105,6 +126,7 @@ public class Dao<T, I extends Serializable> {
      * finds all entities.
      *
      * @return all entities in the database.
+     * @author Zwazel
      * @since 0.3
      */
     public Iterable<T> findAll() {

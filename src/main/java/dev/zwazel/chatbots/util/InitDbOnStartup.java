@@ -21,7 +21,7 @@ public class InitDbOnStartup {
 
         User user = User.builder()
                 .userRole(UserRole.USER)
-                .name("Zwazel")
+                .username("Zwazel")
                 .password("securePassword")
                 .id(new UUID(0, 0))
                 .build();

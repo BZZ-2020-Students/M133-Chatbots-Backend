@@ -1,6 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -34,7 +34,7 @@ public class QuestionAnswer {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-/**
+    /**
      * A List containing all the questions.
      *
      * @see Text

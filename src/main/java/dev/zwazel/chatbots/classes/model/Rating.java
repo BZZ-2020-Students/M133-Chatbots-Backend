@@ -1,7 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import dev.zwazel.chatbots.classes.enums.RatingEnum;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;

@@ -33,7 +33,7 @@ public class UserResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getUser(@PathParam("id") String id) {
         User user = User.builder()
-                .name("Zwazel")
+                .username("Zwazel")
                 .password("password")
                 .userRole(UserRole.USER)
                 .build();

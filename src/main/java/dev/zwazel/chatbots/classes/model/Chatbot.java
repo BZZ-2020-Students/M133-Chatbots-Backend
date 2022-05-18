@@ -1,12 +1,14 @@
 package dev.zwazel.chatbots.classes.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
+
+;
 
 /**
  * Chatbot class
@@ -87,7 +89,7 @@ public class Chatbot {
 
     public String toJson() {
         return "{\n" +
-                "  \"owner\": \"" + owner.getName() + "\",\n" +
+                "  \"owner\": \"" + owner.getUsername() + "\",\n" +
                 "  \"name\": \"" + name + "\",\n" +
                 "  \"questionAnswers\": " + questionAnswers + ",\n" +
                 "  \"unknownTexts\": " + unknownTexts + "\n" +

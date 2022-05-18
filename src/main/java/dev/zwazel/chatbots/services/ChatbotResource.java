@@ -10,7 +10,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 
-import java.util.List;
 import java.util.Set;
 
 @Path("/chatbot")
@@ -21,7 +20,7 @@ public class ChatbotResource {
         Chatbot chatbot = Chatbot.builder()
                 .name(name)
                 .owner(User.builder()
-                        .name("Test")
+                        .username("Test")
                         .password("1234")
                         .userRole(UserRole.USER)
                         .build()

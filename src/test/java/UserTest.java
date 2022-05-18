@@ -2,8 +2,6 @@ import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -42,7 +40,7 @@ public class UserTest {
         // assert null pointer exception
         assertThrows(NullPointerException.class,
                 () -> User.builder()
-                        .name("name")
+                        .username("name")
                         .userRole(UserRole.USER)
                         .build()
         );
@@ -61,7 +59,7 @@ public class UserTest {
         assertThrows(NullPointerException.class,
                 () -> User.builder()
                         .password("password")
-                        .name("name")
+                        .username("name")
                         .build()
         );
     }
@@ -76,7 +74,7 @@ public class UserTest {
     public void testToJson() {
         User user = User.builder()
                 .password("password")
-                .name("name")
+                .username("name")
                 .userRole(UserRole.USER)
                 .build();
         String json = user.toJson();
@@ -96,11 +94,11 @@ public class UserTest {
     public void testBuildingValidUser() {
         User user = User.builder()
                 .password("password")
-                .name("name")
+                .username("name")
                 .userRole(UserRole.USER)
                 .build();
 
-        assertEquals("name", user.getName());
+        assertEquals("name", user.getUsername());
         assertEquals("password", user.getPassword());
         assertEquals(UserRole.USER, user.getUserRole());
     }
@@ -115,7 +113,7 @@ public class UserTest {
     public void testRequiredArgsConstructor() {
         User user = new User("name", "password", UserRole.USER);
 
-        assertEquals("name", user.getName());
+        assertEquals("name", user.getUsername());
         assertEquals("password", user.getPassword());
         assertEquals(UserRole.USER, user.getUserRole());
     }
@@ -131,7 +129,7 @@ public class UserTest {
         User user = new User();
 
         assertNull(user.getId());
-        assertNull(user.getName());
+        assertNull(user.getUsername());
         assertNull(user.getPassword());
         assertNull(user.getUserRole());
     }

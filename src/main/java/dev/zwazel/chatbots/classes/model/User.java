@@ -1,9 +1,9 @@
 package dev.zwazel.chatbots.classes.model;
 
 import dev.zwazel.chatbots.classes.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -28,6 +28,7 @@ public class User {
      */
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue
     private UUID id;
 
     /**
@@ -36,7 +37,7 @@ public class User {
      * @since 0.1
      */
     @NonNull
-    private String name;
+    private String username;
 
     /**
      * User password
@@ -65,7 +66,7 @@ public class User {
     public String toJson() {
         return "{" +
                 "\"id\":\"" + id + "\"," +
-                "\"username\":\"" + name + "\"" +
+                "\"username\":\"" + username + "\"" +
                 "}";
     }
 }

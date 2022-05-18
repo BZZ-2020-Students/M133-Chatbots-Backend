@@ -1,10 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.zwazel.chatbots.classes.enums.UserRole;
-import dev.zwazel.chatbots.interfaces.ToJson;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -26,7 +23,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @JsonIgnoreProperties(value = {"password"})
-public class User implements ToJson {
+public class User {
     /**
      * User id
      *
@@ -63,10 +60,4 @@ public class User implements ToJson {
     @NonNull
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-    @Override
-    public String toJson() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(this);
-    }
 }

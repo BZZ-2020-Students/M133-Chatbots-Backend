@@ -3,14 +3,13 @@ package dev.zwazel.chatbots.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.interfaces.ToJson;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.util.Iterator;
 
 /**
  * UserResource is a class that handles all requests to the /user endpoint.
@@ -64,15 +63,13 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(user.toJson())
+                    .entity(ToJson.toJson(user))
                     .build();
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .build();
         }
-
-        return Response
-                .status(Response.Status.INTERNAL_SERVER_ERROR)
-                .build();
     }
 
     @GET
@@ -80,28 +77,17 @@ public class UserResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsers() {
         Iterable<User> users = new UserDao().findAll();
-        Iterator<User> iterator = users.iterator();
 
-        StringBuilder json = new StringBuilder("[");
-        while (iterator.hasNext()) {
-            User user = iterator.next();
 
-            try {
-                json.append(user.toJson());
-                if (iterator.hasNext()) {
-                    json.append(",");
-                }
-            } catch (JsonProcessingException e) {
-                return Response
-                        .status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .build();
-            }
+        try {
+            return Response
+                    .status(200)
+                    .entity(ToJson.arrayToJson(users))
+                    .build();
+        } catch (JsonProcessingException e) {
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .build();
         }
-        json.append("]");
-
-        return Response
-                .status(200)
-                .entity(json.toString())
-                .build();
     }
 }

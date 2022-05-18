@@ -8,6 +8,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 
+import java.util.UUID;
+
 /**
  * Resource for authenticating users.
  *
@@ -90,7 +92,6 @@ public class AuthenticateResource {
     @Produces("application/json")
     public Response authCheck() {
         User user = User.builder()
-                .id("1321")
                 .name("Zwazel")
                 .password("1234")
                 .userRole(UserRole.USER)

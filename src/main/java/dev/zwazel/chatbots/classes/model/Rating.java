@@ -1,7 +1,10 @@
 package dev.zwazel.chatbots.classes.model;
 
 import dev.zwazel.chatbots.classes.enums.RatingEnum;
+import javax.persistence.*;
 import lombok.*;
+
+import java.util.UUID;
 
 /**
  * This class represents a rating that a user gave a chatbot.
@@ -16,13 +19,25 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Entity
 public class Rating {
+    /**
+     * The unique identifier of the rating.
+     *
+     * @since 0.3
+     */
+    @Id
+    @Column(name = "id", nullable = false)
+    private UUID id;
+
     /**
      * The user that gave the rating.
      *
      * @see User
      * @since 0.2
      */
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     @NonNull
     private User user;
 
@@ -32,6 +47,8 @@ public class Rating {
      * @see Chatbot
      * @since 0.2
      */
+    @ManyToOne
+    @JoinColumn(name = "chatbot_id")
     @NonNull
     private Chatbot chatbot;
 
@@ -42,6 +59,7 @@ public class Rating {
      * @since 0.2
      */
     @NonNull
+    @Enumerated(EnumType.STRING)
     private RatingEnum rating;
 
     /**

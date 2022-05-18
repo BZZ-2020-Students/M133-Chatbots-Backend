@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots;
 
+import jakarta.ejb.Startup;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 

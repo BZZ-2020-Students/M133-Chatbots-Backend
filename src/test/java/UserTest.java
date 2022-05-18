@@ -2,6 +2,8 @@ import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -23,7 +25,6 @@ public class UserTest {
         // assert null pointer exception
         assertThrows(NullPointerException.class,
                 () -> User.builder()
-                        .id("123")
                         .password("password")
                         .userRole(UserRole.USER)
                         .build()
@@ -41,7 +42,6 @@ public class UserTest {
         // assert null pointer exception
         assertThrows(NullPointerException.class,
                 () -> User.builder()
-                        .id("123")
                         .name("name")
                         .userRole(UserRole.USER)
                         .build()
@@ -60,7 +60,6 @@ public class UserTest {
         // assert null pointer exception
         assertThrows(NullPointerException.class,
                 () -> User.builder()
-                        .id("123")
                         .password("password")
                         .name("name")
                         .build()
@@ -76,7 +75,6 @@ public class UserTest {
     @Test
     public void testToJson() {
         User user = User.builder()
-                .id("123")
                 .password("password")
                 .name("name")
                 .userRole(UserRole.USER)
@@ -97,13 +95,11 @@ public class UserTest {
     @Test
     public void testBuildingValidUser() {
         User user = User.builder()
-                .id("123")
                 .password("password")
                 .name("name")
                 .userRole(UserRole.USER)
                 .build();
 
-        assertEquals("123", user.getId());
         assertEquals("name", user.getName());
         assertEquals("password", user.getPassword());
         assertEquals(UserRole.USER, user.getUserRole());
@@ -117,9 +113,8 @@ public class UserTest {
      */
     @Test
     public void testRequiredArgsConstructor() {
-        User user = new User("123", "name", "password", UserRole.USER);
+        User user = new User("name", "password", UserRole.USER);
 
-        assertEquals("123", user.getId());
         assertEquals("name", user.getName());
         assertEquals("password", user.getPassword());
         assertEquals(UserRole.USER, user.getUserRole());

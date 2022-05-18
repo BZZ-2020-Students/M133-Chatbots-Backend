@@ -1,8 +1,13 @@
 package dev.zwazel.chatbots.classes.model;
 
+import javax.persistence.*;
 import lombok.*;
+import org.hibernate.Hibernate;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * QuestionAnswer class.
@@ -15,18 +20,33 @@ import java.util.List;
 @Getter
 @Builder
 @ToString
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
+@Entity
 public class QuestionAnswer {
     /**
+     * The unique identifier of the question answer.
+     *
+     * @since 0.3
+     */
+    @Id
+    @Column(name = "id", nullable = false)
+    private UUID id;
+
+/**
      * A List containing all the questions.
      *
      * @see Text
      * @since 0.2
      */
     @NonNull
-    private List<Text> questions;
+    @ManyToMany
+    @JoinTable(name = "QuestionAnswer_questions",
+            joinColumns = @JoinColumn(name = "questionAnswer_id"),
+            inverseJoinColumns = @JoinColumn(name = "questions_id"))
+    @ToString.Exclude
+    private Set<Text> questions = new LinkedHashSet<>();
 
     /**
      * A List containing all the answers.
@@ -35,5 +55,27 @@ public class QuestionAnswer {
      * @since 0.2
      */
     @NonNull
-    private List<Text> answers;
+    @ManyToMany
+    @JoinTable(name = "QuestionAnswer_answers",
+            joinColumns = @JoinColumn(name = "questionAnswer_id"),
+            inverseJoinColumns = @JoinColumn(name = "answers_id"))
+    @ToString.Exclude
+    private Set<Text> answers = new LinkedHashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "chatbot_id")
+    private Chatbot chatbot;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        QuestionAnswer that = (QuestionAnswer) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

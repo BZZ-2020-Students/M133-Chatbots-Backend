@@ -1,10 +1,12 @@
 package dev.zwazel.chatbots.classes.model;
 
+import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Chatbot class
@@ -19,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Entity
 public class Chatbot {
     /**
      * The date the chatbot was created
@@ -34,7 +37,9 @@ public class Chatbot {
      *
      * @since 0.2
      */
-    private String id;
+    @Id
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
     /**
      * the owner of the chatbot
@@ -42,6 +47,8 @@ public class Chatbot {
      * @see User
      * @since 0.2
      */
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     @NonNull
     private User owner;
 
@@ -60,7 +67,8 @@ public class Chatbot {
      * @since 0.2
      */
     @NonNull
-    private List<QuestionAnswer> questionAnswers;
+    @OneToMany(mappedBy = "chatbot", orphanRemoval = true)
+    private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
     /**
      * all the questions the chatbot can't yet respond to
@@ -69,9 +77,13 @@ public class Chatbot {
      * @since 0.2
      */
     @Builder.Default
-    private List<Text> unknownTexts = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "Chatbot_unknownTexts",
+            joinColumns = @JoinColumn(name = "chatbot_id"),
+            inverseJoinColumns = @JoinColumn(name = "unknownTexts_id"))
+    private Set<Text> unknownTexts = new LinkedHashSet<>();
 
-    // TODO: 16.05.2022 LEVENSHTEIN DISTANCE
+// TODO: 16.05.2022 LEVENSHTEIN DISTANCE
 
     public String toJson() {
         return "{\n" +

@@ -3,6 +3,9 @@ package dev.zwazel.chatbots.classes.model;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import lombok.*;
 
+import javax.persistence.*;
+import java.util.UUID;
+
 /**
  * User class
  *
@@ -16,13 +19,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Entity
 public class User {
     /**
      * User id
      *
      * @since 0.1
      */
-    private String id;
+    @Id
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
     /**
      * User name
@@ -46,6 +52,7 @@ public class User {
      * @since 0.2
      */
     @NonNull
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     /**

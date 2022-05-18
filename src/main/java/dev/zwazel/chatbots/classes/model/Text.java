@@ -1,6 +1,13 @@
 package dev.zwazel.chatbots.classes.model;
 
 import lombok.*;
+import org.hibernate.Hibernate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Text class
@@ -15,13 +22,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Entity
 public class Text {
     /**
      * Text ID
      *
      * @since 0.2
      */
-    private String id;
+    @Id
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
     /**
      * Text
@@ -41,5 +51,18 @@ public class Text {
 
     private String toJson() {
         return "{\"id\":\"" + id + "\",\"text\":\"" + text + "\",\"amountUsed\":\"" + amountUsed + "\"}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Text text = (Text) o;
+        return id != null && Objects.equals(id, text.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

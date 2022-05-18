@@ -11,6 +11,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.Set;
 
 @Path("/chatbot")
 public class ChatbotResource {
@@ -18,7 +19,6 @@ public class ChatbotResource {
     @Path("/{id}/{name}")
     public Response getChatbot(@PathParam("id") String id, @PathParam("name") String name) {
         Chatbot chatbot = Chatbot.builder()
-                .id(id)
                 .name(name)
                 .owner(User.builder()
                         .name("Test")
@@ -26,20 +26,20 @@ public class ChatbotResource {
                         .userRole(UserRole.USER)
                         .build()
                 )
-                .questionAnswers(List.of(
+                .questionAnswers(Set.of(
                                 QuestionAnswer.builder()
-                                        .answers(List.of(
+                                        .answers(Set.of(
                                                 Text.builder().text("Answer 1").build()
                                         ))
-                                        .questions(List.of(
+                                        .questions(Set.of(
                                                 Text.builder().text("Question 1").build()
                                         ))
                                         .build(),
                                 QuestionAnswer.builder()
-                                        .answers(List.of(
+                                        .answers(Set.of(
                                                 Text.builder().text("Answer 2").build()
                                         ))
-                                        .questions(List.of(
+                                        .questions(Set.of(
                                                 Text.builder().text("Question 2").build()
                                         ))
                                         .build()

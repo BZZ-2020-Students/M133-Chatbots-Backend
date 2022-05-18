@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -41,7 +42,10 @@ public class Chatbot {
      */
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @Builder.Default
+    @Size(max = 36)
+    private String id = UUID.randomUUID().toString();
 
     /**
      * the owner of the chatbot

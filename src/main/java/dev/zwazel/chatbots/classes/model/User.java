@@ -2,6 +2,7 @@ package dev.zwazel.chatbots.classes.model;
 
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.UUID;
@@ -28,8 +29,10 @@ public class User {
      */
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @Builder.Default
+    @Size(max = 36)
+    private String id = UUID.randomUUID().toString();
 
     /**
      * User name

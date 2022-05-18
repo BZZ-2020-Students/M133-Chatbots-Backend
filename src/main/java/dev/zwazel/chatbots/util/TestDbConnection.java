@@ -1,9 +1,8 @@
 package dev.zwazel.chatbots.util;
 
+import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
-
-import java.util.UUID;
 
 public class TestDbConnection {
     public static void main(String[] args) {
@@ -13,11 +12,13 @@ public class TestDbConnection {
                 .userRole(UserRole.USER)
                 .build();
 
-
-        Dao<User, UUID> userDao = new Dao<>(User.class);
-        userDao.save(user);
-
-        user = userDao.find(user.getId());
+        UserDao userDao = new UserDao();
+        User alreadyExistingUser = userDao.findByUsername(user.getUsername());
+        if (alreadyExistingUser == null) {
+            userDao.save(user);
+        } else {
+            System.out.println("User already exists");
+        }
 
         System.out.println(user.getUsername());
     }

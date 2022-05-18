@@ -2,7 +2,9 @@ package dev.zwazel.chatbots.classes.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -31,7 +33,10 @@ public class Text {
      */
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @Builder.Default
+    @Size(max = 36)
+    private String id = UUID.randomUUID().toString();
 
     /**
      * Text

@@ -2,6 +2,7 @@ package dev.zwazel.chatbots.classes.model;
 
 import dev.zwazel.chatbots.classes.enums.RatingEnum;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.UUID;
@@ -28,7 +29,10 @@ public class Rating {
      */
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @Builder.Default
+    @Size(max = 36)
+    private String id = UUID.randomUUID().toString();
 
     /**
      * The user that gave the rating.

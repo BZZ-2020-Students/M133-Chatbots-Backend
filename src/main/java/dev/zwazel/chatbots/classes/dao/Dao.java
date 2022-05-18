@@ -1,4 +1,4 @@
-package dev.zwazel.chatbots.util;
+package dev.zwazel.chatbots.classes.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -30,8 +30,21 @@ public class Dao<T, I extends Serializable> {
             entityManager.getTransaction().begin();
             t = entityManager.find(tClass, i);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
+
+        }
+        return t;
+    }
+
+    public T findBy(String field, String value) {
+        T t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'", tClass).getSingleResult();
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
         }
         return t;
     }

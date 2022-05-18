@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -32,7 +33,10 @@ public class QuestionAnswer {
      */
     @Id
     @Column(name = "id", nullable = false)
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @Builder.Default
+    @Size(max = 36)
+    private String id = UUID.randomUUID().toString();
 
     /**
      * A List containing all the questions.

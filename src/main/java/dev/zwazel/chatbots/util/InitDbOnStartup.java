@@ -6,16 +6,13 @@ import dev.zwazel.chatbots.classes.model.User;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
-import org.apache.log4j.Logger;
 
 @Singleton
 @Startup
 public class InitDbOnStartup {
-    private static final Logger LOG = Logger.getLogger(InitDbOnStartup.class.getName());
-
     @PostConstruct
     public void init() {
-        LOG.info("Initializing database");
+        System.out.println("Initiation of DB");
 
         User user = User.builder()
                 .username("test")
@@ -23,14 +20,30 @@ public class InitDbOnStartup {
                 .userRole(UserRole.USER)
                 .build();
 
+        User admin = User.builder()
+                .username("admin")
+                .password("admin")
+                .userRole(UserRole.ADMIN)
+                .build();
+
         UserDao userDao = new UserDao();
         User alreadyExistingUser = userDao.findByUsername(user.getUsername());
+        User alreadyExistingAdmin = userDao.findByUsername(admin.getUsername());
+
         if (alreadyExistingUser == null) {
             userDao.save(user);
         } else {
-            LOG.info("User already exists");
+            System.out.println("User already exists");
         }
 
-        LOG.info("Database initialized");
+        if (alreadyExistingAdmin == null) {
+            userDao.save(admin);
+        } else {
+            System.out.println("Admin already exists");
+        }
+
+        System.out.println("Available users: " + userDao.findAll());
+
+        System.out.println("DB initiation finished");
     }
 }

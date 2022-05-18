@@ -48,4 +48,14 @@ public class Dao<T, I extends Serializable> {
         }
         return t;
     }
+
+    // find all entities of a certain type
+    public Iterable<T> findAll() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Iterable<T> t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t", tClass).getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return t;
+    }
 }

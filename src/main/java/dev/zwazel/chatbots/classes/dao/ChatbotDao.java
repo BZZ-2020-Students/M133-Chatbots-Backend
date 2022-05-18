@@ -26,7 +26,7 @@ public class ChatbotDao extends Dao<Chatbot, String> {
      * @since 0.3
      */
     public Chatbot findByName(String name) {
-        return this.findBy("chatbot_name", name);
+        return this.findBy("chatbotName", name);
     }
 
 

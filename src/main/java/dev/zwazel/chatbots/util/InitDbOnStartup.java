@@ -93,7 +93,7 @@ public class InitDbOnStartup {
                 .build();
 
         Chatbot chatbot = Chatbot.builder()
-                .chatbotName("Chatbot - 1")
+                .chatbotName("MRVN")
                 .owner(user)
                 .questionAnswers(Set.of(
                         questionAnswer

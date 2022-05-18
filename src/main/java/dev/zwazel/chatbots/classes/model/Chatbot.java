@@ -64,7 +64,7 @@ public class Chatbot {
      * @since 0.2
      */
     @NonNull
-    @Column(name = "chatbot_name", nullable = false)
+    @Column(nullable = false)
     @Size(max = 16)
     private String chatbotName;
 

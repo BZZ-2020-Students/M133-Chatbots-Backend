@@ -78,6 +78,9 @@ public class Dao<T, I extends Serializable> {
     /**
      * finds an entity by a certain field.
      *
+     * <br>
+     * Important: The field must be called like the Java field name. Not the database name.
+     *
      * @param field The field to search by.
      * @param value The value to search for.
      * @return The entity if found, null otherwise.
@@ -88,7 +91,11 @@ public class Dao<T, I extends Serializable> {
         try {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
-            t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'", tClass).getSingleResult();
+            String query = "SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'";
+
+            System.out.println("query = " + query);
+
+            t = entityManager.createQuery(query, tClass).getSingleResult();
             entityManager.getTransaction().commit();
         } catch (Exception ignored) {
 

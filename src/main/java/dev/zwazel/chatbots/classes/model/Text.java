@@ -54,10 +54,6 @@ public class Text {
     @Builder.Default
     private Integer amountUsed = 0;
 
-    private String toJson() {
-        return "{\"id\":\"" + id + "\",\"text\":\"" + text + "\",\"amountUsed\":\"" + amountUsed + "\"}";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

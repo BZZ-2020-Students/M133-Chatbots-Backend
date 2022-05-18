@@ -6,15 +6,47 @@ import jakarta.persistence.Persistence;
 
 import java.io.Serializable;
 
+/**
+ * Utility class for DAO layer.
+ * Used to get the EntityManagerFactory and EntityManager.
+ * CRUD operations are implemented in this class.
+ *
+ * @param <T> The type of the entity.
+ * @param <I> The type of the primary key.
+ * @author Zwazel
+ * @since 0.3
+ */
 public class Dao<T, I extends Serializable> {
+    /**
+     * The class of the entity.
+     *
+     * @since 0.3
+     */
     private final Class<T> tClass;
 
+    /**
+     * The EntityManagerFactory.
+     *
+     * @since 0.3
+     */
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("chatbots");
 
+    /**
+     * Default constructor.
+     *
+     * @param tClass The class of the entity.
+     * @since 0.3
+     */
     public Dao(Class<T> tClass) {
         this.tClass = tClass;
     }
 
+    /**
+     * Persist an entity.
+     *
+     * @param t The entity to persist.
+     * @since 0.3
+     */
     public void save(T t) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
@@ -23,6 +55,13 @@ public class Dao<T, I extends Serializable> {
         entityManager.close();
     }
 
+    /**
+     * Finds an entity by its primary key.
+     *
+     * @param i The primary key.
+     * @return The entity if found, null otherwise.
+     * @since 0.3
+     */
     public T find(I i) {
         T t = null;
         try {
@@ -36,6 +75,14 @@ public class Dao<T, I extends Serializable> {
         return t;
     }
 
+    /**
+     * finds an entity by a certain field.
+     *
+     * @param field The field to search by.
+     * @param value The value to search for.
+     * @return The entity if found, null otherwise.
+     * @since 0.3
+     */
     public T findBy(String field, String value) {
         T t = null;
         try {
@@ -49,7 +96,12 @@ public class Dao<T, I extends Serializable> {
         return t;
     }
 
-    // find all entities of a certain type
+    /**
+     * finds all entities.
+     *
+     * @return all entities in the database.
+     * @since 0.3
+     */
     public Iterable<T> findAll() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();

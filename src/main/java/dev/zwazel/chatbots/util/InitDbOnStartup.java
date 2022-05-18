@@ -7,9 +7,21 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 
+/**
+ * This class is used to initialize the database with Data on startup.
+ *
+ * @author Zwazel
+ * @since 0.3
+ */
 @Singleton
 @Startup
 public class InitDbOnStartup {
+    /**
+     * This method is used to initialize the database with Data on startup.
+     *
+     * @author Zwazel
+     * @since 0.3
+     */
     @PostConstruct
     public void init() {
         System.out.println("Initiation of DB");

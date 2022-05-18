@@ -90,13 +90,4 @@ public class Chatbot {
     private Set<Text> unknownTexts = new LinkedHashSet<>();
 
 // TODO: 16.05.2022 LEVENSHTEIN DISTANCE
-
-    public String toJson() {
-        return "{\n" +
-                "  \"owner\": \"" + owner.getUsername() + "\",\n" +
-                "  \"name\": \"" + name + "\",\n" +
-                "  \"questionAnswers\": " + questionAnswers + ",\n" +
-                "  \"unknownTexts\": " + unknownTexts + "\n" +
-                "}";
-    }
 }

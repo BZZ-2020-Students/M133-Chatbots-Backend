@@ -27,6 +27,11 @@ public enum RatingEnum {
      */
     DOWNVOTE(-1);
 
+    /**
+     * The value of the rating.
+     *
+     * @since 0.2
+     */
     @NonNull
     private final Integer value;
 }

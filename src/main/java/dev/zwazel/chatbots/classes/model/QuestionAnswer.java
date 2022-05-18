@@ -66,6 +66,12 @@ public class QuestionAnswer {
     @ToString.Exclude
     private Set<Text> answers = new LinkedHashSet<>();
 
+    /**
+     * the Chatbot which this question answer belongs to.
+     *
+     * @see Chatbot
+     * @since 0.3
+     */
     @ManyToOne
     @JoinColumn(name = "chatbot_id")
     private Chatbot chatbot;

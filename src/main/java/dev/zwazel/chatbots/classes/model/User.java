@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -16,11 +17,12 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@ToString
+@JsonIgnoreProperties(value = {"password"})
 public class User {
     /**
      * User id
@@ -58,18 +60,4 @@ public class User {
     @NonNull
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-    /**
-     * User toJson method
-     *
-     * @return A JSON string of the user
-     * @author Zwazel
-     * @since 0.1
-     */
-    public String toJson() {
-        return "{" +
-                "\"id\":\"" + id + "\"," +
-                "\"username\":\"" + username + "\"" +
-                "}";
-    }
 }

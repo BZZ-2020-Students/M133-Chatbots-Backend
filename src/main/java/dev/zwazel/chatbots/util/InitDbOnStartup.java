@@ -15,8 +15,8 @@ public class InitDbOnStartup {
         System.out.println("Initiation of DB");
 
         User user = User.builder()
-                .username("test")
-                .password("test")
+                .username("user")
+                .password("user")
                 .userRole(UserRole.USER)
                 .build();
 

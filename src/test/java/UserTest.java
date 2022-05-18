@@ -1,6 +1,10 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 0.2
  */
 public class UserTest {
+    /**
+     * Test UUID
+     *
+     * @since 0.3
+     */
+    private final String testUuid = "2684e7b0-ab8a-4ac2-99d2-bde7b4529ad1";
+
     /**
      * Tests if we get a NullPointerException when trying to build a User without a Name
      *
@@ -73,13 +84,21 @@ public class UserTest {
     @Test
     public void testToJson() {
         User user = User.builder()
+                .id(UUID.fromString(testUuid).toString())
                 .password("password")
                 .username("name")
                 .userRole(UserRole.USER)
                 .build();
-        String json = user.toJson();
 
-        String expected = "{\"id\":\"123\",\"username\":\"name\"}";
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        String expected = "{\"id\":\"" + testUuid + "\",\"username\":\"name\",\"userRole\":\"USER\"}";
 
         assertEquals(expected, json);
     }
@@ -93,11 +112,13 @@ public class UserTest {
     @Test
     public void testBuildingValidUser() {
         User user = User.builder()
+                .id(UUID.fromString(testUuid).toString())
                 .password("password")
                 .username("name")
                 .userRole(UserRole.USER)
                 .build();
 
+        assertEquals(user.getId(), UUID.fromString(testUuid).toString());
         assertEquals("name", user.getUsername());
         assertEquals("password", user.getPassword());
         assertEquals(UserRole.USER, user.getUserRole());
@@ -128,7 +149,7 @@ public class UserTest {
     public void testNoArgsConstructor() {
         User user = new User();
 
-        assertNull(user.getId());
+        assertNotNull(user.getId());
         assertNull(user.getUsername());
         assertNull(user.getPassword());
         assertNull(user.getUserRole());

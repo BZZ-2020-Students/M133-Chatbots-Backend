@@ -1,8 +1,6 @@
 package dev.zwazel.chatbots.services;
 
-import dev.zwazel.chatbots.authentication.TokenHandler;
-import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
-import dev.zwazel.chatbots.classes.enums.UserRole;
+import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.User;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -21,7 +19,6 @@ import jakarta.ws.rs.core.Response;
 public class UserResource {
     /**
      * this method returns the user with the given ID
-     * TODO: 15.05.2022 - implement DB + test if user.toJson() works
      *
      * @param id the ID of the user
      * @return the user with the given ID
@@ -32,37 +29,53 @@ public class UserResource {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getUser(@PathParam("id") String id) {
-        User user = User.builder()
-                .username("Zwazel")
-                .password("password")
-                .userRole(UserRole.USER)
-                .build();
+        User user = new UserDao().find(id);
+
+        if (user == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
 
         return Response
                 .status(200)
-                .entity(user.toJson())
+                .entity(user)
                 .build();
     }
 
     /**
-     * this method is purely for testing purposes. it creates a user with the given id and name and creates a token for it. it then returns the token.
+     * this method searches for a user with the given username
      *
-     * @param id   the id of the user
-     * @param name the name of the user
-     * @return the token
+     * @param username the username of the user
+     * @return the user with the given username, or 404 if no user was found
      * @author Zwazel
-     * @since 0.1
+     * @since 0.3
      */
     @GET
-    @Path("/{id}/{name}")
-    @Produces("text/plain")
-    public String getUser(@PathParam("id") String id, @PathParam("name") String name) {
-        User user = new User(id, name, UserRole.USER);
-        String jwt = TokenHandler.createJWT(id, "idk what subject to use", name, DurationsInMilliseconds.DAY.getDuration());
-        String usernameFromJWT = TokenHandler.getUsername(jwt);
-        System.out.println("user = " + user);
-        System.out.println("jwt = " + jwt);
-        System.out.println("usernameFromJWT = " + usernameFromJWT);
-        return usernameFromJWT;
+    @Path("/name/{username}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getUserByUsername(@PathParam("username") String username) {
+        User user = new UserDao().findByUsername(username);
+
+        if (user == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+
+        return Response
+                .status(200)
+                .entity(user)
+                .build();
+    }
+
+    @GET
+    @Path("/list")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllUsers() {
+        return Response
+                .status(200)
+                .entity(new UserDao().findAll())
+                .build();
     }
 }

@@ -97,7 +97,7 @@ public class AuthenticateResource {
 
         return Response
                 .status(200)
-                .entity(user.toJson())
+                .entity(user)
                 .build();
     }
 

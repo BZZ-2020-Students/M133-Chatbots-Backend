@@ -50,8 +50,6 @@ public class InitDbOnStartup {
         ChatbotDao chatbotDao = new ChatbotDao();
         for (Chatbot c : chatbots) {
             Chatbot chatbotFromDb = chatbotDao.findByName(c.getChatbotName());
-            System.out.println("searching for " + c.getChatbotName());
-            System.out.println("chatbotFromDb = " + chatbotFromDb);
             if (chatbotFromDb == null) {
                 chatbotDao.save(c);
             } else {

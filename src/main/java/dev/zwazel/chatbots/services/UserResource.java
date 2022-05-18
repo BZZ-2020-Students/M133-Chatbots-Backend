@@ -53,6 +53,14 @@ public class UserResource {
         return getResponseForUser(user);
     }
 
+    /**
+     * Helper method for returning a response for a user
+     *
+     * @param user the user to return
+     * @return a response for the user
+     * @author Zwazel
+     * @since 0.3
+     */
     private Response getResponseForUser(User user) {
         if (user == null) {
             return Response
@@ -72,12 +80,18 @@ public class UserResource {
         }
     }
 
+    /**
+     * this method returns a list of all users
+     *
+     * @return a list of all users
+     * @author Zwazel
+     * @since 0.3
+     */
     @GET
     @Path("/list")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsers() {
         Iterable<User> users = new UserDao().findAll();
-
 
         try {
             return Response

@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.User;
 import jakarta.ws.rs.GET;
@@ -31,16 +32,7 @@ public class UserResource {
     public Response getUser(@PathParam("id") String id) {
         User user = new UserDao().find(id);
 
-        if (user == null) {
-            return Response
-                    .status(Response.Status.NOT_FOUND)
-                    .build();
-        }
-
-        return Response
-                .status(200)
-                .entity(user)
-                .build();
+        return getResponseForUser(user);
     }
 
     /**
@@ -57,15 +49,27 @@ public class UserResource {
     public Response getUserByUsername(@PathParam("username") String username) {
         User user = new UserDao().findByUsername(username);
 
+        return getResponseForUser(user);
+    }
+
+    private Response getResponseForUser(User user) {
         if (user == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .build();
         }
 
+        try {
+            return Response
+                    .status(200)
+                    .entity(user.toJson())
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
         return Response
-                .status(200)
-                .entity(user)
+                .status(Response.Status.INTERNAL_SERVER_ERROR)
                 .build();
     }
 
@@ -73,9 +77,22 @@ public class UserResource {
     @Path("/list")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsers() {
+        Iterable<User> users = new UserDao().findAll();
+
+        StringBuilder json = new StringBuilder();
+        for (User user : users) {
+            try {
+                json.append(user.toJson()).append("\n");
+            } catch (JsonProcessingException e) {
+                return Response
+                        .status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .build();
+            }
+        }
+
         return Response
                 .status(200)
-                .entity(new UserDao().findAll())
+                .entity(json.toString())
                 .build();
     }
 }

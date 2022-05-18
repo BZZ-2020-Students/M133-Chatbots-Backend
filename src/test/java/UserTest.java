@@ -31,7 +31,6 @@ public class UserTest {
      */
     @Test
     public void testBuilderMissingName() {
-        // assert null pointer exception
         assertThrows(NullPointerException.class,
                 () -> User.builder()
                         .password("password")

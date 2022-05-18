@@ -45,7 +45,7 @@ public class QuestionAnswer {
      * @since 0.2
      */
     @NonNull
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "QuestionAnswer_questions",
             joinColumns = @JoinColumn(name = "questionAnswer_id"),
             inverseJoinColumns = @JoinColumn(name = "questions_id"))
@@ -59,7 +59,7 @@ public class QuestionAnswer {
      * @since 0.2
      */
     @NonNull
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "QuestionAnswer_answers",
             joinColumns = @JoinColumn(name = "questionAnswer_id"),
             inverseJoinColumns = @JoinColumn(name = "answers_id"))
@@ -72,8 +72,9 @@ public class QuestionAnswer {
      * @see Chatbot
      * @since 0.3
      */
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "chatbot_id")
+    @ToString.Exclude
     private Chatbot chatbot;
 
     @Override

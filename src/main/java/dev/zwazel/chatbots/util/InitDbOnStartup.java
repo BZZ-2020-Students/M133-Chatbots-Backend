@@ -1,11 +1,19 @@
 package dev.zwazel.chatbots.util;
 
+import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
+import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.QuestionAnswer;
+import dev.zwazel.chatbots.classes.model.Text;
 import dev.zwazel.chatbots.classes.model.User;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class is used to initialize the database with Data on startup.
@@ -26,11 +34,87 @@ public class InitDbOnStartup {
     public void init() {
         System.out.println("Initiation of DB");
 
+        List<User> users = getUsers();
+        UserDao userDao = new UserDao();
+        for (User u : users) {
+            User userFromDb = userDao.findByUsername(u.getUsername());
+            if (userFromDb == null) {
+                userDao.save(u);
+            } else {
+                System.out.println(u.getUsername() + " already exists");
+            }
+        }
+
+        Iterable<User> persistedUsers = userDao.findAll();
+        List<Chatbot> chatbots = getChatbots(persistedUsers);
+        ChatbotDao chatbotDao = new ChatbotDao();
+        for (Chatbot c : chatbots) {
+            Chatbot chatbotFromDb = chatbotDao.findByName(c.getChatbotName());
+            if (chatbotFromDb == null) {
+                chatbotDao.save(c);
+            } else {
+                System.out.println(c.getChatbotName() + " already exists");
+            }
+        }
+
+        System.out.println("DB initiation finished");
+    }
+
+    private List<Chatbot> getChatbots(Iterable<User> users) {
+        List<Chatbot> chatbots = new ArrayList<>();
+
+        User user = users.iterator().next();
+
+        QuestionAnswer questionAnswer = QuestionAnswer.builder()
+                .answers(Set.of(
+                        Text.builder()
+                                .text("Answer 1")
+                                .build(),
+                        Text.builder()
+                                .text("Answer 2")
+                                .build(),
+                        Text.builder()
+                                .text("Answer 3")
+                                .build()
+                ))
+                .questions(Set.of(
+                        Text.builder()
+                                .text("Question 1")
+                                .build(),
+                        Text.builder()
+                                .text("Question 2")
+                                .build(),
+                        Text.builder()
+                                .text("Question 3")
+                                .build()
+                ))
+                .build();
+
+        Chatbot chatbot = Chatbot.builder()
+                .chatbotName("Chatbot - 1")
+                .owner(user)
+                .questionAnswers(Set.of(
+                        questionAnswer
+                ))
+                .build();
+
+        questionAnswer.setChatbot(chatbot);
+
+        chatbots.add(chatbot);
+
+        return chatbots;
+    }
+
+    private List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+
         User user = User.builder()
                 .username("user")
                 .password("user")
                 .userRole(UserRole.USER)
                 .build();
+
+        users.add(user);
 
         User admin = User.builder()
                 .username("admin")
@@ -38,24 +122,8 @@ public class InitDbOnStartup {
                 .userRole(UserRole.ADMIN)
                 .build();
 
-        UserDao userDao = new UserDao();
-        User alreadyExistingUser = userDao.findByUsername(user.getUsername());
-        User alreadyExistingAdmin = userDao.findByUsername(admin.getUsername());
+        users.add(admin);
 
-        if (alreadyExistingUser == null) {
-            userDao.save(user);
-        } else {
-            System.out.println("User already exists");
-        }
-
-        if (alreadyExistingAdmin == null) {
-            userDao.save(admin);
-        } else {
-            System.out.println("Admin already exists");
-        }
-
-        System.out.println("Available users: " + userDao.findAll());
-
-        System.out.println("DB initiation finished");
+        return users;
     }
 }

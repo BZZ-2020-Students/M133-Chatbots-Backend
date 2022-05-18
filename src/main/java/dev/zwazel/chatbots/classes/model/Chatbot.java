@@ -9,8 +9,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
-;
-
 /**
  * Chatbot class
  *
@@ -53,7 +51,7 @@ public class Chatbot {
      * @see User
      * @since 0.2
      */
-    @ManyToOne
+    @ManyToOne(cascade = {})
     @JoinColumn(name = "owner_id")
     @NonNull
     private User owner;
@@ -64,7 +62,9 @@ public class Chatbot {
      * @since 0.2
      */
     @NonNull
-    private String name;
+    @Column(name = "chatbot_name", nullable = false)
+    @Size(max = 16)
+    private String chatbotName;
 
     /**
      * All the questions the chatbot can respond to
@@ -73,7 +73,8 @@ public class Chatbot {
      * @since 0.2
      */
     @NonNull
-    @OneToMany(mappedBy = "chatbot", orphanRemoval = true)
+    @OneToMany(mappedBy = "chatbot", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @ToString.Exclude
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
     /**
@@ -83,10 +84,11 @@ public class Chatbot {
      * @since 0.2
      */
     @Builder.Default
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(name = "Chatbot_unknownTexts",
             joinColumns = @JoinColumn(name = "chatbot_id"),
             inverseJoinColumns = @JoinColumn(name = "unknownTexts_id"))
+    @ToString.Exclude
     private Set<Text> unknownTexts = new LinkedHashSet<>();
 
 // TODO: 16.05.2022 LEVENSHTEIN DISTANCE

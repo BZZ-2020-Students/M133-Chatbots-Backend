@@ -1,0 +1,934 @@
+{
+	"info": {
+		"_postman_id": "d502eed0-be90-4dff-b219-dceadf708a76",
+		"name": "Chatbot-M133",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "Chatbot",
+					"item": [
+						{
+							"name": "TestGetSingleChatbotByName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Name is correct\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.chatbotName).to.eql(\"MRVN\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/name/MRVN",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"chatbot",
+										"name",
+										"MRVN"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleNonExistentChatbotByName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/name/ndiuwadwa",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"chatbot",
+										"name",
+										"ndiuwadwa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetAllChatbots",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"chatbotInDbName\", jsonData[0].chatbotName);\r",
+											"pm.collectionVariables.set(\"chatbotInDbId\", jsonData[0].id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"chatbot",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleChatbotByID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Chatbotname is correct\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    const chatbotName = pm.collectionVariables.get(\"chatbotInDbName\");\r",
+											"    pm.expect(jsonData.chatbotName).to.eql(chatbotName);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/{{chatbotInDbId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"chatbot",
+										"{{chatbotInDbId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleNonExistentChatbotById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/12321",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"chatbot",
+										"12321"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "TestGetSingleUserByName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Name is correct\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.username).to.eql(\"user\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"UserRole is correct\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.userRole).to.eql(\"USER\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/name/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"user",
+										"name",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleNonExistentUserByName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/name/dwadwa",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"user",
+										"name",
+										"dwadwa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetAllUsers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"userInDbName\", jsonData[0].username);\r",
+											"pm.collectionVariables.set(\"userInDbId\", jsonData[0].id);\r",
+											"pm.collectionVariables.set(\"userRoleInDb\", jsonData[0].userRole);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"user",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleUserByID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Username is correct\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    const username = pm.collectionVariables.get(\"userInDbName\");\r",
+											"    pm.expect(jsonData.username).to.eql(username);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"UserRole is correct\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    const userRole = pm.collectionVariables.get(\"userRoleInDb\");\r",
+											"    pm.expect(jsonData.userRole).to.eql(userRole);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/{{userInDbId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"user",
+										"{{userInDbId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleNonExistentUserById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/2312312",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"user",
+										"2312312"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetAllUsersByRole",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/role/USER",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"user",
+										"role",
+										"USER"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Text",
+					"item": [
+						{
+							"name": "TestGetAllTexts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"textInDbId\", jsonData[0].id);\r",
+											"pm.collectionVariables.set(\"textInDbText\", jsonData[0].text);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"text",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleTextByID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Text is correct\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    const text = pm.collectionVariables.get(\"textInDbText\");\r",
+											"    pm.expect(jsonData.text).to.eql(text);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/{{textInDbId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"text",
+										"{{textInDbId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetNonExistentTextById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/1231212",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"text",
+										"1231212"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetAllTextsOfAChatbot",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/chatbot/{{chatbotInDbId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"text",
+										"chatbot",
+										"{{chatbotInDbId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Rating",
+					"item": [
+						{
+							"name": "TestGetAllRatings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"ratingInDbId\", jsonData[0].id);\r",
+											"pm.collectionVariables.set(\"ratingInDbUserId\", jsonData[0].user.id);\r",
+											"pm.collectionVariables.set(\"ratingInDbChatbotId\", jsonData[0].chatbot.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"rating",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleRatingById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"User is correct\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    const userID = pm.collectionVariables.get(\"ratingInDbUserId\");\r",
+											"    pm.expect(jsonData.user.id).to.eql(userID);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Chatbot is correct\", function () {\r",
+											"    const jsonData = pm.response.json();\r",
+											"\r",
+											"    const chatbotID = pm.collectionVariables.get(\"ratingInDbChatbotId\");\r",
+											"    pm.expect(jsonData.chatbot.id).to.eql(chatbotID);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/{{ratingInDbId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"rating",
+										"{{ratingInDbId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetSingleNonExistentRatingById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/213111",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"rating",
+										"213111"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TestGetAllRatingsByAUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All Users are correct\", function() {\r",
+											"    const ratings = pm.response.json();\r",
+											"\r",
+											"    const userID = pm.collectionVariables.get(\"ratingInDbUserId\");\r",
+											"    ratings.forEach((rating, ratingIndex) => {\r",
+											"        pm.expect(rating.user.id).to.eql(userID);\r",
+											"    })\r",
+											"});\r",
+											"\r",
+											"pm.test(\"All Chatbots are correct\", function() {\r",
+											"    const ratings = pm.response.json();\r",
+											"\r",
+											"    const chatbotId = pm.collectionVariables.get(\"ratingInDbChatbotId\");\r",
+											"    ratings.forEach((rating, ratingIndex) => {\r",
+											"        pm.expect(rating.chatbot.id).to.eql(chatbotId);\r",
+											"    })\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/user/{{ratingInDbUserId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"{{base_url_chatbot}}",
+										"rating",
+										"user",
+										"{{ratingInDbUserId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hello World",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"text body is 'hello world'\", function () {\r",
+									"    pm.response.to.have.body(\"Hello, World!\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/{{base_url_chatbot}}/hello-world",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"{{base_url_chatbot}}",
+								"hello-world"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "Zwazel",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/{{base_url_chatbot}}/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"{{base_url_chatbot}}",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url_chatbot",
+			"value": "chatbots-0.3/api",
+			"type": "string"
+		},
+		{
+			"key": "chatbotInDbName",
+			"value": ""
+		},
+		{
+			"key": "chatbotInDbId",
+			"value": ""
+		},
+		{
+			"key": "userInDbName",
+			"value": ""
+		},
+		{
+			"key": "userInDbId",
+			"value": ""
+		},
+		{
+			"key": "userRoleInDb",
+			"value": ""
+		},
+		{
+			"key": "textInDbId",
+			"value": ""
+		},
+		{
+			"key": "textInDbText",
+			"value": ""
+		},
+		{
+			"key": "ratingInDbId",
+			"value": ""
+		},
+		{
+			"key": "ratingInDbUserId",
+			"value": ""
+		},
+		{
+			"key": "ratingInDbChatbotId",
+			"value": ""
+		}
+	]
+}

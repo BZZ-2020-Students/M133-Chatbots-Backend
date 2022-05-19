@@ -1,32 +1,63 @@
 package dev.zwazel.chatbots.classes.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import dev.zwazel.chatbots.classes.enums.UserRole;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
+import java.util.UUID;
+
+/**
+ * User class
+ *
+ * @author Zwazel
+ * @since 0.1
+ */
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@ToString
+@JsonIgnoreProperties(value = {"password"})
 public class User {
-    private String id;
+    /**
+     * User id
+     *
+     * @since 0.1
+     */
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "uuid")
+    @Builder.Default
+    @Size(max = 36)
+    private String id = UUID.randomUUID().toString();
 
-    private String name;
+    /**
+     * User name
+     *
+     * @since 0.1
+     */
+    @NonNull
+    private String username;
 
-    public User(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    /**
+     * User password
+     *
+     * @since 0.2
+     */
+    @NonNull
+    private String password;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    public String toJson() {
-        return "{" +
-                "\"id\":\"" + id + "\"," +
-                "\"username\":\"" + name + "\"" +
-                "}";
-    }
+    /**
+     * The role of the user
+     *
+     * @since 0.2
+     */
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 }

@@ -36,7 +36,7 @@ public class TextResource {
         }
 
         try {
-            return Response.status(200).entity(ToJson.toJson(textDao.findAll())).build();
+            return Response.status(200).entity(ToJson.toJson(text)).build();
         } catch (JsonProcessingException e) {
             return Response.status(500).build();
         }

@@ -9,6 +9,7 @@ import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 
@@ -31,7 +32,7 @@ public class RatingResource {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Response getRating(@jakarta.ws.rs.PathParam("id") String id) {
+    public Response getRating(@PathParam("id") String id) {
         RatingDao ratingDao = new RatingDao();
 
         Rating rating = ratingDao.find(id);
@@ -62,6 +63,27 @@ public class RatingResource {
 
         try {
             return Response.status(200).entity(ToJson.toJson(ratingDao.findAll(), getFilterProviderChatbot())).build();
+        } catch (JsonProcessingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
+     * Gets all Ratings for a specific chatbot.
+     *
+     * @param id id of the chatbot
+     * @return all ratings for the chatbot
+     * @author Zwazel
+     * @since 0.3
+     */
+    @GET
+    @Path("/chatbot/{id}")
+    @Produces("application/json")
+    public Response getRatingsByChatbot(@PathParam("id") String id) {
+        RatingDao ratingDao = new RatingDao();
+
+        try {
+            return Response.status(200).entity(ToJson.toJson(ratingDao.findByChatbotId(id), getFilterProviderChatbot())).build();
         } catch (JsonProcessingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

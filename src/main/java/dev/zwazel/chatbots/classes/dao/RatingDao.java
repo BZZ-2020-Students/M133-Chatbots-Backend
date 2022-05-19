@@ -1,6 +1,10 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Rating;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+
+import java.util.List;
 
 /**
  * Dao class for Rating Objects.
@@ -16,6 +20,28 @@ public class RatingDao extends Dao<Rating, String> {
      */
     public RatingDao() {
         super(Rating.class);
+    }
+
+    /**
+     * Gets all Rating objects that are with a given Chatbot
+     *
+     * @param chatbotId The id of the Chatbot to get the ratings for.
+     * @return A collection of Rating objects.
+     * @author Zwazel
+     * @since 0.3
+     */
+    public Iterable<Rating> findByChatbotId(String chatbotId) {
+        EntityManagerFactory entityManagerFactory = getEntityManagerFactory();
+        List<Rating> t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            t = entityManager.createQuery("SELECT t FROM Rating t where t.chatbot.id = '" + chatbotId + "'", Rating.class).getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
+        }
+        return t;
     }
 
     /**

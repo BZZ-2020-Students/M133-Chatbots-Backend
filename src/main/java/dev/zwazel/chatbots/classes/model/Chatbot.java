@@ -86,7 +86,7 @@ public class Chatbot {
      * @since 0.2
      */
     @Builder.Default
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {})
     @JoinTable(name = "Chatbot_unknownTexts",
             joinColumns = @JoinColumn(name = "chatbot_id"),
             inverseJoinColumns = @JoinColumn(name = "unknownTexts_id"))

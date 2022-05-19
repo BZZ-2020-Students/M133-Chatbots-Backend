@@ -2,7 +2,7 @@
 
 ## Needed things
 
-Add config.properties to the root of resources folder or add the properties to the environment variables. Environment
+Add 'config.properties' to the root of resources folder or add the properties to the environment variables. Environment
 variables are higher priority than config.properties and will override the values in config.properties.
 
 ### Config properties

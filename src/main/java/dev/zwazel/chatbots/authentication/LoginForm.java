@@ -4,7 +4,7 @@ import lombok.*;
 
 /**
  * Utility class for Login API.
- *
+ * todo: implement/use
  * @author Zwazel
  * @since 0.1
  */

@@ -96,7 +96,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.arrayToJson(users))
+                    .entity(ToJson.toJson(users))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -122,7 +122,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.arrayToJson(users))
+                    .entity(ToJson.toJson(users))
                     .build();
         } catch (JsonProcessingException e) {
             return Response

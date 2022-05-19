@@ -90,6 +90,27 @@ public class RatingResource {
     }
 
     /**
+     * Gets all Ratings made by a specific user.
+     *
+     * @param id id of the  user
+     * @return all ratings for the user
+     * @author Zwazel
+     * @since 0.3
+     */
+    @GET
+    @Path("/user/{id}")
+    @Produces("application/json")
+    public Response getRatingsByUser(@PathParam("id") String id) {
+        RatingDao ratingDao = new RatingDao();
+
+        try {
+            return Response.status(200).entity(ToJson.toJson(ratingDao.findByUserId(id), getFilterProviderChatbot())).build();
+        } catch (JsonProcessingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
      * Utility method to get a filter provider for the chatbot. So that we don't get all the texts from the chatbot, and only its name and id.
      *
      * @return filter provider

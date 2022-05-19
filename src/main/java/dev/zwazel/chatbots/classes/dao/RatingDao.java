@@ -47,6 +47,30 @@ public class RatingDao extends Dao<Rating, String> {
     }
 
     /**
+     * Gets all Rating objects that are made by a given user.
+     *
+     * @param userId The id of the User to get the ratings for.
+     * @return A collection of Rating objects.
+     * @author Zwazel
+     * @since 0.3
+     */
+    public Iterable<Rating> findByUserId(String userId) {
+        EntityManagerFactory entityManagerFactory = getEntityManagerFactory();
+        List<Rating> t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            t = entityManager.createQuery("SELECT t FROM Rating t where t.user.id = :userID", Rating.class)
+                    .setParameter("userID", userId)
+                    .getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
+        }
+        return t;
+    }
+
+    /**
      * Saves a Rating object.
      *
      * @param rating Rating object to save.

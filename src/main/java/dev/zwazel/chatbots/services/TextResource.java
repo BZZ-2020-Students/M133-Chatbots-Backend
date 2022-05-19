@@ -55,7 +55,7 @@ public class TextResource {
     public Response getTexts() {
         TextDao textDao = new TextDao();
         try {
-            return Response.status(200).entity(ToJson.arrayToJson(textDao.findAll())).build();
+            return Response.status(200).entity(ToJson.toJson(textDao.findAll())).build();
         } catch (JsonProcessingException e) {
             return Response.status(500).build();
         }
@@ -81,7 +81,7 @@ public class TextResource {
         }
 
         try {
-            return Response.status(200).entity(ToJson.arrayToJson(texts)).build();
+            return Response.status(200).entity(ToJson.toJson(texts)).build();
         } catch (JsonProcessingException e) {
             return Response.status(500).build();
         }

@@ -1,6 +1,5 @@
 package dev.zwazel.chatbots;
 
-import jakarta.ejb.Startup;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
@@ -8,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -73,10 +73,10 @@ public class HelloApplication extends Application {
     private static void checkIfPropertyExists() {
         if (properties == null) {
             properties = new Properties();
-            try (InputStream input = new FileInputStream(HelloApplication.class.getClassLoader().getResource("config.properties").getFile())) {
+            try (InputStream input = new FileInputStream(Objects.requireNonNull(HelloApplication.class.getClassLoader().getResource("testing/config.properties")).getFile())) {
                 properties.load(input);
-            } catch (IOException e) {
-                System.err.println("Could not load config.properties, using default values");
+            } catch (IOException | NullPointerException e) {
+                System.out.println("Could not load config.properties, using default values");
 
                 properties.setProperty("jwt.secret", defaultConfJwtSecret);
                 properties.setProperty("jwt.issuer", defaultConfJwtIssuer);

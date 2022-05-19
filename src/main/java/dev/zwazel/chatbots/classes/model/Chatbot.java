@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -25,6 +26,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Entity
 @JsonIgnoreProperties({"createdAt"})
+@JsonFilter("ChatbotFilter")
 public class Chatbot {
     /**
      * The date the chatbot was created

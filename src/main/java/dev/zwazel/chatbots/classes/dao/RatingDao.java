@@ -18,8 +18,6 @@ public class RatingDao extends Dao<Rating, String> {
         super(Rating.class);
     }
 
-    // TODO: 19.05.2022 - need to find a way to check if the rating already exists. Users should not be able to rate the same thing twice.
-
     /**
      * Saves a Rating object.
      *
@@ -27,12 +25,11 @@ public class RatingDao extends Dao<Rating, String> {
      * @author Zwazel
      * @since 0.3
      */
+    // TODO: 19.05.2022 - need to find a way to check if the rating already exists. Users should not be able to rate the same thing twice.
     @Override
     public void save(Rating rating) {
         super.save(rating);
     }
-
-    // TODO: 19.05.2022 - need to find a way to check if the rating already exists. Users should not be able to rate the same thing twice.
 
     /**
      * saves an iterable of Rating objects.
@@ -41,6 +38,7 @@ public class RatingDao extends Dao<Rating, String> {
      * @author Zwazel
      * @since 0.3
      */
+    // TODO: 19.05.2022 - need to find a way to check if the rating already exists. Users should not be able to rate the same thing twice.
     @Override
     public void saveCollection(Iterable<Rating> t) {
         super.saveCollection(t);

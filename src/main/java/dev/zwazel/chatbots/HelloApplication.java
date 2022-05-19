@@ -30,7 +30,7 @@ public class HelloApplication extends Application {
      *
      * @since 0.1
      */
-    public static final String defaultConfJwtSecret = "this-secret-is-a-very-secure-secret";
+    public static final String defaultConfJwtSecret = "zwazels-very-secure-and-secret-secret";
 
     /**
      * The default JWT Name

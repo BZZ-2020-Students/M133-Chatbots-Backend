@@ -29,4 +29,24 @@ public class RatingResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    /**
+     * gets all ratings
+     *
+     * @return all ratings
+     * @author Zwazel
+     * @since 0.3
+     */
+    @GET
+    @Path("/list")
+    @Produces("application/json")
+    public Response getRatings() {
+        RatingDao ratingDao = new RatingDao();
+
+        try {
+            return Response.status(200).entity(ToJson.toJson(ratingDao.findAll())).build();
+        } catch (JsonProcessingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

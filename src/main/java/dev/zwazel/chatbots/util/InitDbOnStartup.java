@@ -1,20 +1,19 @@
 package dev.zwazel.chatbots.util;
 
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
-import dev.zwazel.chatbots.classes.dao.Dao;
+import dev.zwazel.chatbots.classes.dao.RatingDao;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.dao.UserDao;
+import dev.zwazel.chatbots.classes.enums.RatingEnum;
 import dev.zwazel.chatbots.classes.enums.UserRole;
-import dev.zwazel.chatbots.classes.model.Chatbot;
-import dev.zwazel.chatbots.classes.model.QuestionAnswer;
-import dev.zwazel.chatbots.classes.model.Text;
-import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.classes.model.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -63,6 +62,11 @@ public class InitDbOnStartup {
                 System.out.println(c.getChatbotName() + " already exists");
             }
         }
+        Iterable<Chatbot> persistedChatbots = chatbotDao.findAll();
+
+        List<Rating> ratings = getRatings(persistedUsers, persistedChatbots);
+        RatingDao ratingDao = new RatingDao();
+        ratingDao.saveCollection(ratings);
 
         System.out.println("DB initiation finished");
     }
@@ -155,5 +159,31 @@ public class InitDbOnStartup {
         users.add(admin);
 
         return users;
+    }
+
+    /**
+     * Gets dummy ratings for the Database.
+     *
+     * @param users    the users to be added to the ratings
+     * @param chatbots the chatbots to be added to the ratings
+     * @return the ratings for the Database
+     * @author Zwazel
+     * @since 0.3
+     */
+    private List<Rating> getRatings(Iterable<User> users, Iterable<Chatbot> chatbots) {
+        List<Rating> ratings = new ArrayList<>();
+        User randomUser = users.iterator().next();
+        Chatbot randomChatbot = chatbots.iterator().next();
+
+        Rating rating = Rating.builder()
+                .rating(RatingEnum.UPVOTE)
+                .user(randomUser)
+                .chatbot(randomChatbot)
+                .favourite((new Random().nextInt(2) == 0))
+                .build();
+
+        ratings.add(rating);
+
+        return ratings;
     }
 }

@@ -1,6 +1,9 @@
 package dev.zwazel.chatbots.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.util.ToJson;
@@ -28,6 +31,7 @@ public class ChatbotResource {
      */
     @GET
     @Path("/{id}")
+    @Produces("application/json")
     public Response getChatbot(@PathParam("id") String id) {
         Chatbot chatbot = new ChatbotDao().findById(id);
 
@@ -48,7 +52,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(new ChatbotDao().findAll()))
+                    .entity(ToJson.toJson(new ChatbotDao().findAll(), getFilterProviderChatbot()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -87,7 +91,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(chatbot))
+                    .entity(ToJson.toJson(chatbot, getFilterProviderChatbot()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -95,5 +99,16 @@ public class ChatbotResource {
                     .entity(e.getMessage())
                     .build();
         }
+    }
+
+    /**
+     * Utility method to get a filter provider for the chatbot. So that we don't get all the texts from the chatbot, and only its name and id.
+     *
+     * @return filter provider
+     * @author Zwazel
+     * @since 0.3
+     */
+    private FilterProvider getFilterProviderChatbot() {
+        return new SimpleFilterProvider().addFilter("ChatbotFilter", SimpleBeanPropertyFilter.serializeAll());
     }
 }

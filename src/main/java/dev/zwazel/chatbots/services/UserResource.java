@@ -31,7 +31,7 @@ public class UserResource {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getUser(@PathParam("id") String id) {
-        User user = new UserDao().find(id);
+        User user = new UserDao().findById(id);
 
         return getResponseForUser(user);
     }

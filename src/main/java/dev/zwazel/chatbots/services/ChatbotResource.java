@@ -29,7 +29,7 @@ public class ChatbotResource {
     @GET
     @Path("/{id}")
     public Response getChatbot(@PathParam("id") String id) {
-        Chatbot chatbot = new ChatbotDao().find(id);
+        Chatbot chatbot = new ChatbotDao().findById(id);
 
         return getResponseForChatbot(chatbot);
     }

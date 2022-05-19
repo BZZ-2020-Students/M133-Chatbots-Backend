@@ -1,14 +1,12 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.enums.UserRole;
-import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Helper class for CRUD operations on User objects.
@@ -28,6 +26,44 @@ public class UserDao extends Dao<User, String> {
     }
 
     /**
+     * saves a user and makes sure that the username is unique.
+     *
+     * @param user The user to save.
+     * @author Zwazel
+     * @since 0.3
+     */
+    @Override
+    public void save(User user) throws IllegalArgumentException {
+        User user1 = findByUsername(user.getUsername());
+        if (user1 != null) {
+            user.setId(user1.getId());
+            throw new IllegalArgumentException("Username " + user.getUsername() + " already exists");
+        }
+
+        super.save(user);
+    }
+
+    /**
+     * saves a bunch of users and makes sure that the username is unique.
+     *
+     * @param users The users to save.
+     * @author Zwazel
+     * @since 0.3
+     */
+    @Override
+    public void saveCollection(Iterable<User> users) throws IllegalArgumentException {
+        for (User user : users) {
+            User user1 = findByUsername(user.getUsername());
+            if (user1 != null) {
+                user.setId(user1.getId());
+                throw new IllegalArgumentException("Username " + user.getUsername() + " already exists");
+            }
+        }
+
+        super.saveCollection(users);
+    }
+
+    /**
      * Finds a user by their username.
      *
      * @param username The username to search for.
@@ -36,7 +72,7 @@ public class UserDao extends Dao<User, String> {
      * @since 0.3
      */
     public User findByUsername(String username) {
-        return findBy("username", username);
+        return findBy("username", username, false);
     }
 
     /**
@@ -75,29 +111,5 @@ public class UserDao extends Dao<User, String> {
         UserRole userRole = UserRole.valueOf(role.toUpperCase(Locale.ROOT));
 
         return filterByRole(userRole);
-    }
-
-    /**
-     * Finds a user by their ID.
-     *
-     * @param id The ID to search for.
-     * @return The user with the given ID.
-     * @author Zwazel
-     * @since 0.3
-     */
-    public User findById(String id) {
-        return findBy("id", id);
-    }
-
-    /**
-     * Finds a user by their ID.
-     *
-     * @param id The ID to search for.
-     * @return The user with the given ID.
-     * @author Zwazel
-     * @since 0.3
-     */
-    public User findById(UUID id) {
-        return findBy("id", id.toString());
     }
 }

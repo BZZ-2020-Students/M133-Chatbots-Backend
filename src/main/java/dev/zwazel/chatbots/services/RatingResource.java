@@ -35,7 +35,7 @@ public class RatingResource {
     public Response getRating(@PathParam("id") String id) {
         RatingDao ratingDao = new RatingDao();
 
-        Rating rating = ratingDao.find(id);
+        Rating rating = ratingDao.findById(id);
 
         if (rating == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

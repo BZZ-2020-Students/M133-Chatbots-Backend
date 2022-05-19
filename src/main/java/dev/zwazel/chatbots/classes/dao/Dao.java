@@ -86,12 +86,42 @@ public class Dao<T, I extends Serializable> {
      * @author Zwazel
      * @since 0.3
      */
-    public T find(I i) {
+    public T findById(I i) {
         T t = null;
         try {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
             t = entityManager.find(tClass, i);
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
+        }
+        return t;
+    }
+
+    /**
+     * finds an entity by a certain field.
+     *
+     * <br>
+     * Important: The field must be called like the Java field name. Not the database name.
+     *
+     * @param field         The field to search by.
+     * @param value         The value to search for.
+     * @param caseSensitive Whether the search is case-sensitive or not.
+     * @return The entity if found, null otherwise.
+     * @author Zwazel
+     * @since 0.3
+     */
+    public T findBy(String field, Object value, boolean caseSensitive) {
+        T t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            if (caseSensitive) {
+                t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'", tClass).getSingleResult();
+            } else {
+                t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t WHERE LOWER(t." + field + ") = LOWER('" + value + "')", tClass).getSingleResult();
+            }
             entityManager.getTransaction().commit();
         } catch (Exception ignored) {
 
@@ -112,16 +142,7 @@ public class Dao<T, I extends Serializable> {
      * @since 0.3
      */
     public T findBy(String field, Object value) {
-        T t = null;
-        try {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'", tClass).getSingleResult();
-            entityManager.getTransaction().commit();
-        } catch (Exception ignored) {
-
-        }
-        return t;
+        return findBy(field, value, true);
     }
 
     /**

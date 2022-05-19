@@ -34,7 +34,7 @@ public class TextDao extends Dao<Text, String> {
      */
     public Iterable<Text> findAllByChatbotId(String chatbotId) {
         ChatbotDao chatbotDao = new ChatbotDao();
-        Chatbot chatbot = chatbotDao.find(chatbotId);
+        Chatbot chatbot = chatbotDao.findById(chatbotId);
         return this.findAllByChatbotFromDB(chatbot);
     }
 

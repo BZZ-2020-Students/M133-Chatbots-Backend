@@ -29,7 +29,7 @@ public class TextResource {
     @Produces("application/json")
     public Response getText(@PathParam("id") String id) {
         TextDao textDao = new TextDao();
-        Text text = textDao.find(id);
+        Text text = textDao.findById(id);
 
         if (text == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

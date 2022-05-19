@@ -36,7 +36,9 @@ public class RatingDao extends Dao<Rating, String> {
         try {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
-            t = entityManager.createQuery("SELECT t FROM Rating t where t.chatbot.id = '" + chatbotId + "'", Rating.class).getResultList();
+            t = entityManager.createQuery("SELECT t FROM Rating t where t.chatbot.id = :chatbotID", Rating.class)
+                    .setParameter("chatbotID", chatbotId)
+                    .getResultList();
             entityManager.getTransaction().commit();
         } catch (Exception ignored) {
 

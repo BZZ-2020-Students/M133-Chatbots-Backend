@@ -104,4 +104,30 @@ public class UserResource {
                     .build();
         }
     }
+
+    /**
+     * Returns all users with the given role
+     *
+     * @param role the role to search for
+     * @return a list of all users with the given role
+     * @author Zwazel
+     * @since 0.3
+     */
+    @GET
+    @Path("/role/{role}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getUsersByRole(@PathParam("role") String role) {
+        Iterable<User> users = new UserDao().filterByRole(role);
+
+        try {
+            return Response
+                    .status(200)
+                    .entity(ToJson.arrayToJson(users))
+                    .build();
+        } catch (JsonProcessingException e) {
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
 }

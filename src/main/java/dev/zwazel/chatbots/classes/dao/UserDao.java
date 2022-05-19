@@ -1,7 +1,13 @@
 package dev.zwazel.chatbots.classes.dao;
 
+import dev.zwazel.chatbots.classes.enums.UserRole;
+import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -31,6 +37,44 @@ public class UserDao extends Dao<User, String> {
      */
     public User findByUsername(String username) {
         return findBy("username", username);
+    }
+
+    /**
+     * Finds all users with the given role.
+     *
+     * @param role The role to search for.
+     * @return A list of users with the given role.
+     * @author Zwazel
+     * @since 0.3
+     */
+    public List<User> filterByRole(UserRole role) {
+        EntityManagerFactory entityManagerFactory = getEntityManagerFactory();
+        List<User> t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            t = entityManager.createQuery("SELECT u FROM User u where u.userRole = :userRole", User.class)
+                    .setParameter("userRole", role)
+                    .getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
+        }
+        return t;
+    }
+
+    /**
+     * Finds all users with the given role.
+     *
+     * @param role The role to search for.
+     * @return A list of users with the given role.
+     * @author Zwazel
+     * @since 0.3
+     */
+    public List<User> filterByRole(String role) {
+        UserRole userRole = UserRole.valueOf(role.toUpperCase(Locale.ROOT));
+
+        return filterByRole(userRole);
     }
 
     /**

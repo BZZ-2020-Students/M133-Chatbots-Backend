@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Utility class for DAO layer.
@@ -116,6 +117,38 @@ public class Dao<T, I extends Serializable> {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             entityManager.getTransaction().begin();
             t = entityManager.createQuery("SELECT t FROM " + tClass.getName() + " t WHERE t." + field + " = '" + value + "'", tClass).getSingleResult();
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
+        }
+        return t;
+    }
+
+    /**
+     * finds an entity by multiple fields and values.
+     *
+     * <br>
+     * Important: The field must be called like the Java field name. Not the database name.
+     *
+     * @param fields The fields to search by with their values.
+     * @return The entity if found, null otherwise.
+     * @author Zwazel
+     * @since 0.3
+     */
+    public T findBy(Map<String, Object> fields) {
+        T t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+
+            StringBuilder query = new StringBuilder("SELECT t FROM " + tClass.getName() + " t WHERE ");
+            for (Map.Entry<String, Object> entry : fields.entrySet()) {
+                query.append("t.").append(entry.getKey()).append(" = '").append(entry.getValue()).append("' AND ");
+            }
+            query = new StringBuilder(query.substring(0, query.length() - 5));
+
+            t = entityManager.createQuery(query.toString(), tClass).getSingleResult();
+
             entityManager.getTransaction().commit();
         } catch (Exception ignored) {
 

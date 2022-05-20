@@ -6,8 +6,8 @@ import dev.zwazel.chatbots.classes.model.Chatbot;
  * Helper class for CRUD operations on User objects.
  *
  * @author Zwazel
- * @since 0.3
  * @see Dao
+ * @since 0.3
  */
 public class ChatbotDao extends Dao<Chatbot, String> {
     /**
@@ -28,5 +28,18 @@ public class ChatbotDao extends Dao<Chatbot, String> {
      */
     public Chatbot findByName(String name) {
         return this.findBy("chatbotName", name, false);
+    }
+
+    @Override
+    public void save(Chatbot chatbot) {
+        TextDao textDao = new TextDao();
+        textDao.saveCollection(chatbot.getUnknownTexts());
+
+        super.save(chatbot);
+    }
+
+    @Override
+    public void saveCollection(Iterable<Chatbot> t) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

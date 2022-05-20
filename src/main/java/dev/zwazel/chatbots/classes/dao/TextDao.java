@@ -111,12 +111,12 @@ public class TextDao extends Dao<Text, String> {
         t.forEach(text -> {
             Text textInDB = findByText(text.getText());
             if (textInDB == null) {
-                System.out.println("Saving " + text.getText());
                 em.persist(text);
             } else {
-                System.out.println("Skipping " + text.getText());
                 text.setId(textInDB.getId());
             }
         });
+        em.getTransaction().commit();
+        em.close();
     }
 }

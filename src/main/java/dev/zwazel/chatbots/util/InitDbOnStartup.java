@@ -174,9 +174,10 @@ public class InitDbOnStartup {
         List<Rating> ratings = new ArrayList<>();
         User randomUser = users.iterator().next();
         Chatbot randomChatbot = chatbots.iterator().next();
+        RatingEnum randomRatingEnum = RatingEnum.values()[new Random().nextInt(RatingEnum.values().length)];
 
         Rating rating = Rating.builder()
-                .rating(RatingEnum.UPVOTE)
+                .rating(randomRatingEnum)
                 .user(randomUser)
                 .chatbot(randomChatbot)
                 .favourite((new Random().nextInt(2) == 0))

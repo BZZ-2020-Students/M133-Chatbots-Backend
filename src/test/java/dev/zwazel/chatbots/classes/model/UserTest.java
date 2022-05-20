@@ -1,3 +1,5 @@
+package dev.zwazel.chatbots.classes.model;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.zwazel.chatbots.classes.enums.UserRole;

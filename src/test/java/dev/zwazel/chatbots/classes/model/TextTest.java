@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class TextTest {
+public class TextTest {
     @Test
     void testTextNeeded() {
         assertThrows(NullPointerException.class,

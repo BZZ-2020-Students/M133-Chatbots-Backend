@@ -1,7 +1,7 @@
 {
-	"id": "94f06bbc-9e22-4275-b781-fa3da6e6f643",
+	"id": "9581764f-045f-4388-9af2-94836d4bb2c8",
 	"name": "Chatbot-M133",
-	"timestamp": "2022-05-23T07:13:55.281Z",
+	"timestamp": "2022-05-23T08:05:06.378Z",
 	"collection_id": "19464364-d502eed0-be90-4dff-b219-dceadf708a76",
 	"folder_id": 0,
 	"environment_id": "0",
@@ -12,7 +12,7 @@
 			"id": "5cb21500-9b7f-4230-b218-90b70d2ddfca",
 			"name": "TestGetAllChatbots",
 			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/list",
-			"time": 32,
+			"time": 52,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -27,7 +27,7 @@
 				}
 			},
 			"times": [
-				32
+				52
 			],
 			"allTests": [
 				{
@@ -39,7 +39,7 @@
 			"id": "5e7ce965-1716-4667-8080-0bd62dc106e6",
 			"name": "TestGetSingleChatbotByName",
 			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/name/MRVN",
-			"time": 41,
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -59,7 +59,7 @@
 				}
 			},
 			"times": [
-				41
+				13
 			],
 			"allTests": [
 				{
@@ -72,7 +72,7 @@
 			"id": "b3b0e301-8b2e-4f69-aeb0-ded9eae242ce",
 			"name": "TestGetSingleNonExistentChatbotByName",
 			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/name/ndiuwadwa",
-			"time": 15,
+			"time": 11,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -87,7 +87,7 @@
 				}
 			},
 			"times": [
-				15
+				11
 			],
 			"allTests": [
 				{
@@ -99,7 +99,7 @@
 			"id": "6bd9f81e-fab5-4e2d-9a54-5ab166feccd1",
 			"name": "TestGetSingleChatbotByID",
 			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/97152b9d-e8d3-47bd-9005-94701a7ac3b6",
-			"time": 19,
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -119,7 +119,7 @@
 				}
 			},
 			"times": [
-				19
+				14
 			],
 			"allTests": [
 				{
@@ -132,7 +132,7 @@
 			"id": "50a7f8b0-ec37-4944-90d1-945da93ff2a8",
 			"name": "TestGetSingleNonExistentChatbotById",
 			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/12321",
-			"time": 16,
+			"time": 14,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -147,7 +147,7 @@
 				}
 			},
 			"times": [
-				16
+				14
 			],
 			"allTests": [
 				{
@@ -156,10 +156,37 @@
 			]
 		},
 		{
+			"id": "815f478e-5470-4e24-a772-06be8d03e885",
+			"name": "TestGetAllUsers",
+			"url": "http://localhost:8080/chatbots-0.3/api/user/list",
+			"time": 18,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
 			"id": "e824c743-a3eb-456c-81be-a45871f402c5",
 			"name": "TestGetSingleUserByName",
 			"url": "http://localhost:8080/chatbots-0.3/api/user/name/user",
-			"time": 32,
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -184,7 +211,7 @@
 				}
 			},
 			"times": [
-				32
+				13
 			],
 			"allTests": [
 				{
@@ -198,7 +225,7 @@
 			"id": "941c3bac-6527-4272-bf42-38e6f227928b",
 			"name": "TestGetSingleNonExistentUserByName",
 			"url": "http://localhost:8080/chatbots-0.3/api/user/name/dwadwa",
-			"time": 17,
+			"time": 11,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -213,7 +240,7 @@
 				}
 			},
 			"times": [
-				17
+				11
 			],
 			"allTests": [
 				{
@@ -222,37 +249,10 @@
 			]
 		},
 		{
-			"id": "815f478e-5470-4e24-a772-06be8d03e885",
-			"name": "TestGetAllUsers",
-			"url": "http://localhost:8080/chatbots-0.3/api/user/list",
-			"time": 17,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				17
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
 			"id": "7568ec95-dd59-4562-a596-94e70d8cb6d9",
 			"name": "TestGetSingleUserByID",
 			"url": "http://localhost:8080/chatbots-0.3/api/user/06f367f3-6c86-41cc-9ada-a2850ec4fcc0",
-			"time": 16,
+			"time": 10,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -277,7 +277,7 @@
 				}
 			},
 			"times": [
-				16
+				10
 			],
 			"allTests": [
 				{
@@ -291,7 +291,7 @@
 			"id": "b32bf35f-c7a8-4303-b826-3c801f1f04fe",
 			"name": "TestGetSingleNonExistentUserById",
 			"url": "http://localhost:8080/chatbots-0.3/api/user/2312312",
-			"time": 22,
+			"time": 12,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -306,7 +306,7 @@
 				}
 			},
 			"times": [
-				22
+				12
 			],
 			"allTests": [
 				{
@@ -318,7 +318,7 @@
 			"id": "cf621672-4f71-48f7-80af-bc6f6268a6a9",
 			"name": "TestGetAllUsersByRole",
 			"url": "http://localhost:8080/chatbots-0.3/api/user/role/USER",
-			"time": 17,
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -333,7 +333,7 @@
 				}
 			},
 			"times": [
-				17
+				14
 			],
 			"allTests": [
 				{
@@ -345,7 +345,7 @@
 			"id": "fce3dbfe-1295-4f5c-abcd-1d4d6effa6e1",
 			"name": "TestGetAllTexts",
 			"url": "http://localhost:8080/chatbots-0.3/api/text/list",
-			"time": 26,
+			"time": 13,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -360,7 +360,7 @@
 				}
 			},
 			"times": [
-				26
+				13
 			],
 			"allTests": [
 				{
@@ -372,7 +372,7 @@
 			"id": "c1fbb7ad-d9f4-4e4d-85bc-d8dafa227658",
 			"name": "TestGetSingleTextByID",
 			"url": "http://localhost:8080/chatbots-0.3/api/text/04459d84-8853-42b4-b940-dfa1ea3e6af5",
-			"time": 16,
+			"time": 12,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -392,7 +392,7 @@
 				}
 			},
 			"times": [
-				16
+				12
 			],
 			"allTests": [
 				{
@@ -405,7 +405,7 @@
 			"id": "8ef40df5-6525-4ff5-ab66-65f2a893e6fe",
 			"name": "TestGetNonExistentTextById",
 			"url": "http://localhost:8080/chatbots-0.3/api/text/1231212",
-			"time": 16,
+			"time": 17,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -420,7 +420,7 @@
 				}
 			},
 			"times": [
-				16
+				17
 			],
 			"allTests": [
 				{
@@ -432,7 +432,7 @@
 			"id": "33f1ede0-4b03-427d-acd7-99993ac85fa8",
 			"name": "TestGetAllTextsOfAChatbot",
 			"url": "http://localhost:8080/chatbots-0.3/api/text/chatbot/97152b9d-e8d3-47bd-9005-94701a7ac3b6",
-			"time": 45,
+			"time": 25,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -447,7 +447,7 @@
 				}
 			},
 			"times": [
-				45
+				25
 			],
 			"allTests": [
 				{
@@ -459,7 +459,7 @@
 			"id": "6b6aa3c4-1c8a-4df7-8207-d8942a166d56",
 			"name": "TestGetAllRatings",
 			"url": "http://localhost:8080/chatbots-0.3/api/rating/list",
-			"time": 26,
+			"time": 11,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -474,7 +474,7 @@
 				}
 			},
 			"times": [
-				26
+				11
 			],
 			"allTests": [
 				{
@@ -486,7 +486,7 @@
 			"id": "af54ab06-f244-48b9-9450-d5969a33abc0",
 			"name": "TestGetSingleRatingById",
 			"url": "http://localhost:8080/chatbots-0.3/api/rating/d82d9426-5949-4e64-b473-529d27ea9d5a",
-			"time": 23,
+			"time": 11,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -511,7 +511,7 @@
 				}
 			},
 			"times": [
-				23
+				11
 			],
 			"allTests": [
 				{
@@ -525,7 +525,7 @@
 			"id": "b07a1954-75f0-42bb-80cf-10cae800fd97",
 			"name": "TestGetSingleNonExistentRatingById",
 			"url": "http://localhost:8080/chatbots-0.3/api/rating/213111",
-			"time": 28,
+			"time": 14,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -540,7 +540,7 @@
 				}
 			},
 			"times": [
-				28
+				14
 			],
 			"allTests": [
 				{
@@ -552,7 +552,7 @@
 			"id": "b5ce7158-8aac-43b3-95f8-b1a784b04732",
 			"name": "TestGetAllRatingsByAUser",
 			"url": "http://localhost:8080/chatbots-0.3/api/rating/user/06f367f3-6c86-41cc-9ada-a2850ec4fcc0",
-			"time": 17,
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -577,7 +577,7 @@
 				}
 			},
 			"times": [
-				17
+				14
 			],
 			"allTests": [
 				{
@@ -624,7 +624,7 @@
 			"id": "6a6dfb88-3529-487b-9edb-b4abc71e2c16",
 			"name": "Login",
 			"url": "http://localhost:8080/chatbots-0.3/api/auth/login",
-			"time": 8,
+			"time": 7,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -639,7 +639,7 @@
 				}
 			},
 			"times": [
-				8
+				7
 			],
 			"allTests": [
 				{
@@ -649,7 +649,7 @@
 		}
 	],
 	"count": 1,
-	"totalTime": 454,
+	"totalTime": 311,
 	"collection": {
 		"requests": [
 			{
@@ -673,15 +673,15 @@
 				"method": "GET"
 			},
 			{
+				"id": "815f478e-5470-4e24-a772-06be8d03e885",
+				"method": "GET"
+			},
+			{
 				"id": "e824c743-a3eb-456c-81be-a45871f402c5",
 				"method": "GET"
 			},
 			{
 				"id": "941c3bac-6527-4272-bf42-38e6f227928b",
-				"method": "GET"
-			},
-			{
-				"id": "815f478e-5470-4e24-a772-06be8d03e885",
 				"method": "GET"
 			},
 			{

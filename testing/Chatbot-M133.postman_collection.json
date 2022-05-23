@@ -12,6 +12,42 @@
 					"name": "Chatbot",
 					"item": [
 						{
+							"name": "TestGetAllChatbots",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"chatbotInDbName\", jsonData[0].chatbotName);\r",
+											"pm.collectionVariables.set(\"chatbotInDbId\", jsonData[0].id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url_chatbot}}/chatbot/list",
+									"host": [
+										"{{base_url_chatbot}}"
+									],
+									"path": [
+										"chatbot",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "TestGetSingleChatbotByName",
 							"event": [
 								{
@@ -35,14 +71,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/name/MRVN",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/chatbot/name/MRVN",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"chatbot",
 										"name",
 										"MRVN"
@@ -70,56 +103,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/name/ndiuwadwa",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/chatbot/name/ndiuwadwa",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"chatbot",
 										"name",
 										"ndiuwadwa"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "TestGetAllChatbots",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"\r",
-											"const jsonData = pm.response.json();\r",
-											"pm.collectionVariables.set(\"chatbotInDbName\", jsonData[0].chatbotName);\r",
-											"pm.collectionVariables.set(\"chatbotInDbId\", jsonData[0].id);"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/list",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"{{base_url_chatbot}}",
-										"chatbot",
-										"list"
 									]
 								}
 							},
@@ -151,14 +142,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/{{chatbotInDbId}}",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/chatbot/{{chatbotInDbId}}",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"chatbot",
 										"{{chatbotInDbId}}"
 									]
@@ -185,14 +173,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/chatbot/12321",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/chatbot/12321",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"chatbot",
 										"12321"
 									]
@@ -234,14 +219,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/name/user",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/user/name/user",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"user",
 										"name",
 										"user"
@@ -269,14 +251,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/name/dwadwa",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/user/name/dwadwa",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"user",
 										"name",
 										"dwadwa"
@@ -309,14 +288,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/list",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/user/list",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"user",
 										"list"
 									]
@@ -357,14 +333,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/{{userInDbId}}",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/user/{{userInDbId}}",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"user",
 										"{{userInDbId}}"
 									]
@@ -391,14 +364,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/2312312",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/user/2312312",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"user",
 										"2312312"
 									]
@@ -425,14 +395,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/user/role/USER",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/user/role/USER",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"user",
 										"role",
 										"USER"
@@ -469,14 +436,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/list",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/text/list",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"text",
 										"list"
 									]
@@ -510,14 +474,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/{{textInDbId}}",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/text/{{textInDbId}}",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"text",
 										"{{textInDbId}}"
 									]
@@ -544,14 +505,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/1231212",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/text/1231212",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"text",
 										"1231212"
 									]
@@ -578,14 +536,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/text/chatbot/{{chatbotInDbId}}",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/text/chatbot/{{chatbotInDbId}}",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"text",
 										"chatbot",
 										"{{chatbotInDbId}}"
@@ -623,14 +578,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/list",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/rating/list",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"rating",
 										"list"
 									]
@@ -671,14 +623,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/{{ratingInDbId}}",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/rating/{{ratingInDbId}}",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"rating",
 										"{{ratingInDbId}}"
 									]
@@ -705,14 +654,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/213111",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/rating/213111",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"rating",
 										"213111"
 									]
@@ -757,14 +703,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/{{base_url_chatbot}}/rating/user/{{ratingInDbUserId}}",
-									"protocol": "http",
+									"raw": "{{base_url_chatbot}}/rating/user/{{ratingInDbUserId}}",
 									"host": [
-										"localhost"
+										"{{base_url_chatbot}}"
 									],
-									"port": "8080",
 									"path": [
-										"{{base_url_chatbot}}",
 										"rating",
 										"user",
 										"{{ratingInDbUserId}}"
@@ -798,14 +741,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/{{base_url_chatbot}}/hello-world",
-							"protocol": "http",
+							"raw": "{{base_url_chatbot}}/hello-world",
 							"host": [
-								"localhost"
+								"{{base_url_chatbot}}"
 							],
-							"port": "8080",
 							"path": [
-								"{{base_url_chatbot}}",
 								"hello-world"
 							]
 						}
@@ -848,14 +788,11 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/{{base_url_chatbot}}/auth/login",
-					"protocol": "http",
+					"raw": "{{base_url_chatbot}}/auth/login",
 					"host": [
-						"localhost"
+						"{{base_url_chatbot}}"
 					],
-					"port": "8080",
 					"path": [
-						"{{base_url_chatbot}}",
 						"auth",
 						"login"
 					]
@@ -887,7 +824,7 @@
 	"variable": [
 		{
 			"key": "base_url_chatbot",
-			"value": "chatbots-0.3/api",
+			"value": "http://localhost:8080/chatbots-0.3/api",
 			"type": "string"
 		},
 		{

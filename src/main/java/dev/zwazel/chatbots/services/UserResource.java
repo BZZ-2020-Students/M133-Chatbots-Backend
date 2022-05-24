@@ -111,7 +111,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(user, getFilterProviderChatbotAndRating()))
+                    .entity(ToJson.toJson(user, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -136,7 +136,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users, getFilterProviderChatbotAndRating()))
+                    .entity(ToJson.toJson(users, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -164,7 +164,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users, getFilterProviderChatbotAndRating()))
+                    .entity(ToJson.toJson(users, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -174,13 +174,13 @@ public class UserResource {
     }
 
     /**
-     * This method returns a FilterProvider to filter out specific fields of Chatbtot objects.
+     * This method returns a FilterProvider to filter out specific fields.
      *
-     * @return a FilterProvider to filter out specific fields of Chatbtot objects.
+     * @return a FilterProvider to filter out specific fields.
      * @author Zwazel
      * @since 1.1.0
      */
-    private FilterProvider getFilterProviderChatbotAndRating() {
+    private FilterProvider getFilterProvider() {
         return new SimpleFilterProvider()
                 .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
                 .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))

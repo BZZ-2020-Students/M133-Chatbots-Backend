@@ -1,6 +1,9 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.util.ToJson;
 import org.junit.jupiter.api.Test;
@@ -92,7 +95,7 @@ public class UserTest {
 
         String json = null;
         try {
-            json = ToJson.toJson(user);
+            json = ToJson.toJson(user, getFilterProvider());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -152,5 +155,17 @@ public class UserTest {
         assertNull(user.getUsername());
         assertNull(user.getPassword());
         assertNull(user.getUserRole());
+    }
+
+    /**
+     * This method returns a FilterProvider to filter out specific fields.
+     *
+     * @return a FilterProvider to filter out specific fields.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    private FilterProvider getFilterProvider() {
+        return new SimpleFilterProvider()
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAll());
     }
 }

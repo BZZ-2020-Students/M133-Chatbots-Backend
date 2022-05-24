@@ -73,15 +73,6 @@ public class Text {
     @ToString.Exclude
     private Set<QuestionAnswer> questionAnswers_answers = new LinkedHashSet<>();
 
-    /**
-     * All the chatbots this text is in.
-     *
-     * @since 1.1.0
-     */
-    @ManyToMany(mappedBy = "unknownTexts", cascade = {CascadeType.REMOVE})
-    @ToString.Exclude
-    private Set<Chatbot> chatbots = new LinkedHashSet<>();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -21,10 +21,10 @@ import jakarta.ws.rs.core.Response;
 @Path("/rating")
 public class RatingResource {
     /**
-     * Deletes a chatbot by its id.
+     * Deletes a rating by its id.
      * todo: Implement authorization
      *
-     * @param id the id of the chatbot
+     * @param id the id of the rating
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0

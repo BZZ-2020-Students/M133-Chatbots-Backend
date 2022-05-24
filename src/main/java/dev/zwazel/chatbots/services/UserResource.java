@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.ToJson;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -19,6 +16,46 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/user")
 public class UserResource {
+    /**
+     * Deletes a User by its id.
+     * todo: Implement authorization
+     *
+     * @param id the id of the User to delete
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteUser(@PathParam("id") String id) {
+        new UserDao().delete(id);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
+    /**
+     * Deletes a User by its name.
+     * todo: Implement authorization
+     *
+     * @param username the username of the User to delete
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/name/{username}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteUserByUsername(@PathParam("username") String username) {
+        new UserDao().deleteByUsername(username);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
     /**
      * this method returns the user with the given ID
      *

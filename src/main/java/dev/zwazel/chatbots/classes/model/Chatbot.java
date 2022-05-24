@@ -77,7 +77,7 @@ public class Chatbot {
      * @since 0.2
      */
     @NonNull
-    @OneToMany(mappedBy = "chatbot", orphanRemoval = true, cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "chatbot", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
@@ -88,7 +88,7 @@ public class Chatbot {
      * @since 0.2
      */
     @Builder.Default
-    @ManyToMany(cascade = {})
+    @ManyToMany(cascade = {CascadeType.REMOVE})
     @JoinTable(name = "Chatbot_unknownTexts",
             joinColumns = @JoinColumn(name = "chatbot_id"),
             inverseJoinColumns = @JoinColumn(name = "unknownTexts_id"))

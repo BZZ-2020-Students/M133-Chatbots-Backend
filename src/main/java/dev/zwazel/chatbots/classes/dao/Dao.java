@@ -217,4 +217,41 @@ public class Dao<T, I extends Serializable> {
         entityManager.close();
         return t;
     }
+
+    /**
+     * Removes an entity from the database.
+     *
+     * @param t The entity to remove.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public void delete(T t) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        if (!entityManager.contains(t)) {
+            t = entityManager.merge(t);
+        }
+
+        entityManager.remove(t);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    /**
+     * Removes an entity from the database.
+     *
+     * @param i The id of the entity to remove.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public void delete(I i) throws IllegalArgumentException {
+        T t = findById(i);
+
+        if (t != null) {
+            delete(t);
+        } else {
+            throw new IllegalArgumentException("Entity with id " + i + " does not exist.");
+        }
+    }
 }

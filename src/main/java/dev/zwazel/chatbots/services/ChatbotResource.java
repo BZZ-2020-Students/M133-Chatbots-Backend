@@ -7,10 +7,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.util.ToJson;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -21,6 +19,26 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/chatbot")
 public class ChatbotResource {
+    /**
+     * Deletes a chatbot by its id.
+     * todo: Implement authorization
+     *
+     * @param id the id of the chatbot
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteChatbot(@PathParam("id") String id) {
+        new ChatbotDao().delete(id);
+
+        return Response
+                .status(Response.Status.OK)
+                .build();
+    }
+
     /**
      * Get a chatbot by its id.
      *

@@ -4,13 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.RatingDao;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.util.ToJson;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -21,6 +20,26 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/rating")
 public class RatingResource {
+    /**
+     * Deletes a chatbot by its id.
+     * todo: Implement authorization
+     *
+     * @param id the id of the chatbot
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteRating(@PathParam("id") String id) {
+        new RatingDao().delete(id);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
     /**
      * Gets a single rating by its id.
      *

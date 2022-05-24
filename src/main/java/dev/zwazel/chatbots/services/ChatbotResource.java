@@ -35,7 +35,7 @@ public class ChatbotResource {
         new ChatbotDao().delete(id);
 
         return Response
-                .status(Response.Status.OK)
+                .status(200)
                 .build();
     }
 

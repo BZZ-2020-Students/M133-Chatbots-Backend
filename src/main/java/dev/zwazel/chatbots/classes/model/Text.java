@@ -1,14 +1,15 @@
 package dev.zwazel.chatbots.classes.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -25,6 +26,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@JsonIgnoreProperties({"questionAnswers_questions", "questionAnswers_answers"})
 public class Text {
     /**
      * Text ID
@@ -53,6 +55,24 @@ public class Text {
      */
     @Builder.Default
     private Integer amountUsed = 0;
+
+    /**
+     * All the questions this text is in.
+     *
+     * @since 1.1.0
+     */
+    @ManyToMany(mappedBy = "questions", cascade = {CascadeType.REMOVE})
+    @ToString.Exclude
+    private Set<QuestionAnswer> questionAnswers_questions = new LinkedHashSet<>();
+
+    /**
+     * All the questions this text is in.
+     *
+     * @since 1.1.0
+     */
+    @ManyToMany(mappedBy = "answers", cascade = {CascadeType.REMOVE})
+    @ToString.Exclude
+    private Set<QuestionAnswer> questionAnswers_answers = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

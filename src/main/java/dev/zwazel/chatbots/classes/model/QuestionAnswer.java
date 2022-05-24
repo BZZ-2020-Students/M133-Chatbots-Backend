@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -24,7 +25,6 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @Entity
 @JsonIgnoreProperties("chatbot")
 public class QuestionAnswer {
@@ -47,11 +47,11 @@ public class QuestionAnswer {
      * @since 0.2
      */
     @NonNull
-    @ManyToMany(cascade = {})
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(name = "QuestionAnswer_questions",
             joinColumns = @JoinColumn(name = "questionAnswer_id"),
             inverseJoinColumns = @JoinColumn(name = "questions_id"))
-    @ToString.Exclude
     private Set<Text> questions = new LinkedHashSet<>();
 
     /**
@@ -61,11 +61,11 @@ public class QuestionAnswer {
      * @since 0.2
      */
     @NonNull
-    @ManyToMany(cascade = {})
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(name = "QuestionAnswer_answers",
             joinColumns = @JoinColumn(name = "questionAnswer_id"),
             inverseJoinColumns = @JoinColumn(name = "answers_id"))
-    @ToString.Exclude
     private Set<Text> answers = new LinkedHashSet<>();
 
     /**

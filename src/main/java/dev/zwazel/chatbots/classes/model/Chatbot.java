@@ -79,11 +79,11 @@ public class Chatbot {
      * @since 0.2
      */
     @Builder.Default
-    @ManyToMany(cascade = {CascadeType.REMOVE})
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(name = "Chatbot_unknownTexts",
             joinColumns = @JoinColumn(name = "chatbot_id"),
             inverseJoinColumns = @JoinColumn(name = "unknownTexts_id"))
-    @ToString.Exclude
     private Set<Text> unknownTexts = new LinkedHashSet<>();
 
     /**

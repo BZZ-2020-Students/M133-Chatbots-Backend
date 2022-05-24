@@ -1,6 +1,5 @@
 package dev.zwazel.chatbots.classes.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -26,7 +25,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@JsonIgnoreProperties({"questionAnswers_questions", "questionAnswers_answers"})
+@JsonIgnoreProperties({"questionAnswers_questions", "questionAnswers_answers", "chatbots"})
 public class Text {
     /**
      * Text ID
@@ -73,6 +72,15 @@ public class Text {
     @ManyToMany(mappedBy = "answers", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
     private Set<QuestionAnswer> questionAnswers_answers = new LinkedHashSet<>();
+
+    /**
+     * All the chatbots this text is in.
+     *
+     * @since 1.1.0
+     */
+    @ManyToMany(mappedBy = "unknownTexts", cascade = {CascadeType.REMOVE})
+    @ToString.Exclude
+    private Set<Chatbot> chatbots = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

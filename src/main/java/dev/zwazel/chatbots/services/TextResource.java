@@ -37,6 +37,26 @@ public class TextResource {
     }
 
     /**
+     * Deletes a text by its text.
+     * todo: Implement authorization
+     *
+     * @param text the text of the text
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/text/{text}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteTextByItsText(@PathParam("text") String text) {
+        new TextDao().deleteByText(text);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
+    /**
      * Returns a Text object by its id.
      *
      * @param id The id of the Text object.

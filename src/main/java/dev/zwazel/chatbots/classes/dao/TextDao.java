@@ -125,4 +125,20 @@ public class TextDao extends Dao<Text, String> {
         em.getTransaction().commit();
         em.close();
     }
+
+    /**
+     * Deletes a text by its text.
+     *
+     * @param text The text to delete.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public void deleteByText(String text) {
+        Text textObject = findByText(text);
+        if (textObject != null) {
+            super.delete(textObject);
+        } else {
+            throw new IllegalArgumentException("Text object with text \"" + text + "\" does not exist");
+        }
+    }
 }

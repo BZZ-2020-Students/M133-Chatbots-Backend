@@ -95,5 +95,14 @@ public class Chatbot {
     @ToString.Exclude
     private Set<Text> unknownTexts = new LinkedHashSet<>();
 
+    /**
+     * All the ratings associated with the chatbot
+     *
+     * @see Rating
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "chatbot", orphanRemoval = true)
+    private Set<Rating> ratings = new LinkedHashSet<>();
+
 // TODO: 16.05.2022 LEVENSHTEIN DISTANCE
 }

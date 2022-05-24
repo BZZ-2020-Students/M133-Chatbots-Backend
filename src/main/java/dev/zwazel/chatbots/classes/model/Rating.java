@@ -45,16 +45,6 @@ public class Rating {
     @NonNull
     private User user;
 
-    /**
-     * The chatbot that was rated.
-     *
-     * @see Chatbot
-     * @since 0.2
-     */
-    @ManyToOne(cascade = {})
-    @JoinColumn(name = "chatbot_id")
-    @NonNull
-    private Chatbot chatbot;
 
     /**
      * The rating value.
@@ -73,4 +63,14 @@ public class Rating {
      */
     @Builder.Default
     private boolean favourite = false;
+
+    /**
+     * The chatbot that was rated.
+     *
+     * @see Chatbot
+     * @since 0.2
+     */
+    @ManyToOne(cascade = {})
+    @JoinColumn(name = "chatbot_id")
+    private Chatbot chatbot;
 }

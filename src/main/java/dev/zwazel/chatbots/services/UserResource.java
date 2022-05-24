@@ -1,6 +1,9 @@
 package dev.zwazel.chatbots.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.ToJson;
@@ -108,7 +111,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(user))
+                    .entity(ToJson.toJson(user, getFilterProviderChatbotAndRating()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -133,11 +136,13 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users))
+                    .entity(ToJson.toJson(users, getFilterProviderChatbotAndRating()))
                     .build();
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
                     .build();
         }
     }
@@ -159,12 +164,26 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users))
+                    .entity(ToJson.toJson(users, getFilterProviderChatbotAndRating()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .build();
         }
+    }
+
+    /**
+     * This method returns a FilterProvider to filter out specific fields of Chatbtot objects.
+     *
+     * @return a FilterProvider to filter out specific fields of Chatbtot objects.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    private FilterProvider getFilterProviderChatbotAndRating() {
+        return new SimpleFilterProvider()
+                .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
+                .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAll());
     }
 }

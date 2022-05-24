@@ -49,16 +49,6 @@ public class Chatbot {
     @Size(max = 36)
     private String id = UUID.randomUUID().toString();
 
-    /**
-     * the owner of the chatbot
-     *
-     * @see User
-     * @since 0.2
-     */
-    @ManyToOne(cascade = {})
-    @JoinColumn(name = "owner_id")
-    @NonNull
-    private User owner;
 
     /**
      * the name of the chatbot
@@ -79,6 +69,7 @@ public class Chatbot {
     @NonNull
     @OneToMany(mappedBy = "chatbot", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
+    @Builder.Default
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
     /**
@@ -102,7 +93,19 @@ public class Chatbot {
      * @since 1.1.0
      */
     @OneToMany(mappedBy = "chatbot", orphanRemoval = true)
+    @ToString.Exclude
+    @Builder.Default
     private Set<Rating> ratings = new LinkedHashSet<>();
+
+    /**
+     * the owner of the chatbot
+     *
+     * @see User
+     * @since 0.2
+     */
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 // TODO: 16.05.2022 LEVENSHTEIN DISTANCE
 }

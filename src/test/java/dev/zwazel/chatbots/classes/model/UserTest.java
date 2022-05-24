@@ -1,9 +1,8 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.zwazel.chatbots.classes.enums.UserRole;
-import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.util.ToJson;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -91,15 +90,14 @@ public class UserTest {
                 .userRole(UserRole.USER)
                 .build();
 
-        ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(user);
+            json = ToJson.toJson(user);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        String expected = "{\"id\":\"" + testUuid + "\",\"username\":\"name\",\"userRole\":\"USER\"}";
+        String expected = "{\"id\":\"" + testUuid + "\",\"username\":\"name\",\"userRole\":\"USER\",\"chatbots\":[],\"ratings\":[]}";
 
         assertEquals(expected, json);
     }

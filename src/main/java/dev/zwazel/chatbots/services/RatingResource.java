@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.RatingDao;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.util.ToJson;
@@ -61,9 +60,12 @@ public class RatingResource {
         }
 
         try {
-            return Response.status(200).entity(ToJson.toJson(rating, getFilterProviderChatbot())).build();
+            return Response.status(200).entity(ToJson.toJson(rating, getFilterProvider())).build();
         } catch (JsonProcessingException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 
@@ -81,9 +83,12 @@ public class RatingResource {
         RatingDao ratingDao = new RatingDao();
 
         try {
-            return Response.status(200).entity(ToJson.toJson(ratingDao.findAll(), getFilterProviderChatbot())).build();
+            return Response.status(200).entity(ToJson.toJson(ratingDao.findAll(), getFilterProvider())).build();
         } catch (JsonProcessingException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 
@@ -102,9 +107,12 @@ public class RatingResource {
         RatingDao ratingDao = new RatingDao();
 
         try {
-            return Response.status(200).entity(ToJson.toJson(ratingDao.findByChatbotId(id), getFilterProviderChatbot())).build();
+            return Response.status(200).entity(ToJson.toJson(ratingDao.findByChatbotId(id), getFilterProvider())).build();
         } catch (JsonProcessingException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 
@@ -123,9 +131,12 @@ public class RatingResource {
         RatingDao ratingDao = new RatingDao();
 
         try {
-            return Response.status(200).entity(ToJson.toJson(ratingDao.findByUserId(id), getFilterProviderChatbot())).build();
+            return Response.status(200).entity(ToJson.toJson(ratingDao.findByUserId(id), getFilterProvider())).build();
         } catch (JsonProcessingException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 
@@ -136,7 +147,10 @@ public class RatingResource {
      * @author Zwazel
      * @since 0.3
      */
-    private FilterProvider getFilterProviderChatbot() {
-        return new SimpleFilterProvider().addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"));
+    private FilterProvider getFilterProvider() {
+        return new SimpleFilterProvider()
+                .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"))
+                .addFilter("RatingFilter", SimpleBeanPropertyFilter.serializeAll());
     }
 }

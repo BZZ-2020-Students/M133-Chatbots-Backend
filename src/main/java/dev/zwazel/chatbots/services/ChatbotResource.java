@@ -70,7 +70,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(new ChatbotDao().findAll(), getFilterProviderChatbot()))
+                    .entity(ToJson.toJson(new ChatbotDao().findAll(), getFilterProviderChatbotAndRating()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -109,7 +109,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(chatbot, getFilterProviderChatbot()))
+                    .entity(ToJson.toJson(chatbot, getFilterProviderChatbotAndRating()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -126,7 +126,10 @@ public class ChatbotResource {
      * @author Zwazel
      * @since 0.3
      */
-    private FilterProvider getFilterProviderChatbot() {
-        return new SimpleFilterProvider().addFilter("ChatbotFilter", SimpleBeanPropertyFilter.serializeAll());
+    private FilterProvider getFilterProviderChatbotAndRating() {
+        return new SimpleFilterProvider()
+                .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.serializeAll())
+                .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"));
     }
 }

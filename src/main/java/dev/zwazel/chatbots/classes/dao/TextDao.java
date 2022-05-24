@@ -4,6 +4,7 @@ import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Text;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +36,11 @@ public class TextDao extends Dao<Text, String> {
     public Iterable<Text> findAllByChatbotId(String chatbotId) {
         ChatbotDao chatbotDao = new ChatbotDao();
         Chatbot chatbot = chatbotDao.findById(chatbotId);
+
+        if (chatbot == null) {
+            return List.of();
+        }
+
         return this.findAllByChatbotFromDB(chatbot);
     }
 

@@ -65,11 +65,21 @@ public class Text {
     @Builder.Default
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
+    /**
+     * Questions this text belongs to
+     *
+     * @since 1.1.0
+     */
     @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @Builder.Default
     @ToString.Exclude
     private Set<QuestionAnswerQuestion> questionAnswerQuestions = new LinkedHashSet<>();
 
+    /**
+     * Answers this text belongs to
+     *
+     * @since 1.1.0
+     */
     @OneToMany(mappedBy = "answer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @Builder.Default
     @ToString.Exclude

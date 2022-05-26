@@ -2,9 +2,6 @@ package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -78,6 +75,11 @@ public class User {
     @ToString.Exclude
     private Set<Chatbot> chatbots = new LinkedHashSet<>();
 
+    /**
+     * All the ratings of the user
+     *
+     * @since 1.1.0
+     */
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude

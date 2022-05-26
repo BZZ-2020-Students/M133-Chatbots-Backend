@@ -1,7 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -52,11 +51,23 @@ public class QuestionAnswer {
     @NonNull
     private Chatbot chatbot;
 
+    /**
+     * All questions which this question answer contains.
+     *
+     * @see QuestionAnswerQuestion
+     * @since 1.1.0
+     */
     @OneToMany(mappedBy = "questionAnswer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @Builder.Default
     @ToString.Exclude
     private Set<QuestionAnswerQuestion> questionAnswerQuestions = new LinkedHashSet<>();
 
+    /**
+     * All answers which this question answer contains.
+     *
+     * @see QuestionAnswerAnswer
+     * @since 1.1.0
+     */
     @OneToMany(mappedBy = "questionAnswer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
     @Builder.Default

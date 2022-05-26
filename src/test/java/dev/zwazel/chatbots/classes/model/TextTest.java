@@ -4,7 +4,19 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Text.
+ *
+ * @author Zwazel
+ * @since 1.1.0
+ */
 public class TextTest {
+    /**
+     * Tests if a NullPointerException is thrown when the text is not specified.
+     *
+     * @author Zwazel
+     * @since 1.1.0
+     */
     @Test
     public void testTextNeeded() {
         assertThrows(NullPointerException.class,
@@ -13,6 +25,12 @@ public class TextTest {
         );
     }
 
+    /**
+     * Tests if the Text is built correctly without an amount used specified.
+     *
+     * @author Zwazel
+     * @since 1.1.0
+     */
     @Test
     public void testSuccessfulBuild() {
         Text text = Text.builder().text("text").build();
@@ -21,6 +39,12 @@ public class TextTest {
         assertEquals("text", text.getText());
     }
 
+    /**
+     * Tests if the Text is built correctly with an amount used specified.
+     *
+     * @author Zwazel
+     * @since 1.1.0
+     */
     @Test
     public void testSuccessfulBuildWithAmountUsed() {
         Text text = Text.builder().text("text").amountUsed(1).build();
@@ -29,6 +53,12 @@ public class TextTest {
         assertEquals("text", text.getText());
     }
 
+    /**
+     * Tests if the no argument constructor works correctly.
+     *
+     * @author Zwazel
+     * @since 1.1.0
+     */
     @Test
     public void testNoArgConstructor() {
         Text text = new Text();

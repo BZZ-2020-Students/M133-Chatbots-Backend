@@ -8,6 +8,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import javax.persistence.EntityExistsException;
+
 /**
  * Resource class for Text objects.
  *
@@ -16,6 +18,36 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/text")
 public class TextResource {
+    @POST
+    @Path("/create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createText(@FormParam("text") String text) {
+        TextDao textDao = new TextDao();
+        Text newText = new Text(text);
+        try {
+            textDao.save(newText);
+        } catch (EntityExistsException e) {
+            e.printStackTrace();
+            return Response
+                    .status(Response.Status.CONFLICT)
+                    .entity("{\"error\":\"Text already exists\"}")
+                    .build();
+        }
+
+        try {
+            return Response
+                    .status(200)
+                    .entity(ToJson.toJson(newText))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return build JSON.\"}")
+                    .build();
+        }
+    }
+
     /**
      * Deletes a text by its id.
      * todo: Implement authorization

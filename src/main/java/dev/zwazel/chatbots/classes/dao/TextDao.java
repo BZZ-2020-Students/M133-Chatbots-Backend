@@ -134,30 +134,6 @@ public class TextDao extends Dao<Text, String> {
         em.close();
     }
 
-    @Override
-    public void delete(String id) throws IllegalArgumentException {
-        Text text = findById(id);
-
-        if (text == null) {
-            throw new IllegalArgumentException("Text with id " + id + " does not exist.");
-        }
-
-        delete(text);
-    }
-
-    @Override
-    public void delete(Text text) {
-        if (text == null) {
-            throw new IllegalArgumentException("Text is null.");
-        }
-
-//        EntityManager em = getEntityManagerFactory().createEntityManager();
-//        em.getTransaction().begin();
-        List<Chatbot> chatbotsWithThisText = new ChatbotDao().findByUnknownText(text);
-
-        System.out.println("chatbotsWithThisText = " + chatbotsWithThisText);
-    }
-
     /**
      * Deletes a text by its text.
      *

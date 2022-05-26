@@ -37,12 +37,11 @@ public class ChatbotDao extends Dao<Chatbot, String> {
         return this.findBy("chatbotName", name, false);
     }
 
-    public List<Chatbot> findByText(Text text) {
+    public List<Chatbot> findByUnknownText(Text text) {
         EntityManager em = getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
         List<Chatbot> chatbots = em.createQuery(
-                        "SELECT c FROM Chatbot c WHERE :text IN (c.unknownTexts)"
-                        , Chatbot.class)
+                        "SELECT c FROM Chatbot c, ChatbotUnknownTexts ut WHERE LOWER(:text) = LOWER(ut.unknownText.text) AND c.id = ut.chatbot.id", Chatbot.class)
                 .setParameter("text", text.getText())
                 .getResultList();
         em.getTransaction().commit();

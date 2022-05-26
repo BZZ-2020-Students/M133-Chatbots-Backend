@@ -153,7 +153,7 @@ public class TextDao extends Dao<Text, String> {
 
 //        EntityManager em = getEntityManagerFactory().createEntityManager();
 //        em.getTransaction().begin();
-        List<Chatbot> chatbotsWithThisText = new ChatbotDao().findByText(text);
+        List<Chatbot> chatbotsWithThisText = new ChatbotDao().findByUnknownText(text);
 
         System.out.println("chatbotsWithThisText = " + chatbotsWithThisText);
     }

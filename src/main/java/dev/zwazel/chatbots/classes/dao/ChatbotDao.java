@@ -1,6 +1,13 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.ChatbotUnknownTexts;
+import dev.zwazel.chatbots.classes.model.Text;
+import jakarta.persistence.EntityManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Helper class for CRUD operations on User objects.
@@ -30,10 +37,31 @@ public class ChatbotDao extends Dao<Chatbot, String> {
         return this.findBy("chatbotName", name, false);
     }
 
+    public List<Chatbot> findByText(Text text) {
+        EntityManager em = getEntityManagerFactory().createEntityManager();
+        em.getTransaction().begin();
+        List<Chatbot> chatbots = em.createQuery(
+                        "SELECT c FROM Chatbot c WHERE :text IN (c.unknownTexts)"
+                        , Chatbot.class)
+                .setParameter("text", text.getText())
+                .getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return chatbots;
+    }
+
     @Override
     public void save(Chatbot chatbot) {
         TextDao textDao = new TextDao();
-        textDao.saveCollection(chatbot.getUnknownTexts());
+
+        Set<ChatbotUnknownTexts> unknownTextsChatbot = chatbot.getChatbotUnknownTexts();
+        List<Text> unknownTexts = new ArrayList<>();
+
+        unknownTextsChatbot.forEach(ut -> {
+            unknownTexts.add(ut.getUnknownText());
+        });
+
+        textDao.saveCollection(unknownTexts);
 
         super.save(chatbot);
     }

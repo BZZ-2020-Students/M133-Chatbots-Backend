@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.ChatbotUnknownTexts;
 import dev.zwazel.chatbots.classes.model.Text;
 import jakarta.persistence.EntityManager;
 
@@ -65,7 +66,14 @@ public class TextDao extends Dao<Text, String> {
      * @since 0.3
      */
     private Iterable<Text> findAllByChatbotFromDB(Chatbot chatbot) {
-        Set<Text> texts = chatbot.getUnknownTexts();
+        Set<Text> texts = new java.util.HashSet<>(Set.of());
+
+        Set<ChatbotUnknownTexts> unknownTextsChatbot = chatbot.getChatbotUnknownTexts();
+        unknownTextsChatbot.forEach(ut -> {
+            texts.add(ut.getUnknownText());
+        });
+
+
         chatbot.getQuestionAnswers().forEach(qa -> {
             texts.addAll(qa.getQuestions());
             texts.addAll(qa.getAnswers());
@@ -127,11 +135,11 @@ public class TextDao extends Dao<Text, String> {
     }
 
     @Override
-    public void delete(String s) throws IllegalArgumentException {
-        Text text = findById(s);
+    public void delete(String id) throws IllegalArgumentException {
+        Text text = findById(id);
 
         if (text == null) {
-            throw new IllegalArgumentException("Text with id " + s + " does not exist.");
+            throw new IllegalArgumentException("Text with id " + id + " does not exist.");
         }
 
         delete(text);
@@ -143,9 +151,11 @@ public class TextDao extends Dao<Text, String> {
             throw new IllegalArgumentException("Text is null.");
         }
 
-        EntityManager em = getEntityManagerFactory().createEntityManager();
-        em.getTransaction().begin();
-        List<Chatbot> chatbotsWithThisText = chatbotDao.findAllByText(text);
+//        EntityManager em = getEntityManagerFactory().createEntityManager();
+//        em.getTransaction().begin();
+        List<Chatbot> chatbotsWithThisText = new ChatbotDao().findByText(text);
+
+        System.out.println("chatbotsWithThisText = " + chatbotsWithThisText);
     }
 
     /**
@@ -158,7 +168,7 @@ public class TextDao extends Dao<Text, String> {
     public void deleteByText(String text) {
         Text textObject = findByText(text);
         if (textObject != null) {
-            super.delete(textObject);
+            delete(textObject);
         } else {
             throw new IllegalArgumentException("Text object with text \"" + text + "\" does not exist");
         }

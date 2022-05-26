@@ -71,7 +71,17 @@ public class Text {
      */
     @ManyToMany(mappedBy = "answers", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
+    @Builder.Default
     private Set<QuestionAnswer> questionAnswers_answers = new LinkedHashSet<>();
+
+    /**
+     * All the unknown texts of a Chatbot.
+     *
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "unknownText", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ToString.Exclude
+    private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

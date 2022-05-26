@@ -53,7 +53,15 @@ public class InitDbOnStartup {
             Chatbot chatbotFromDb = chatbotDao.findByName(c.getChatbotName());
             if (chatbotFromDb == null) {
                 TextDao textDao = new TextDao();
-                textDao.saveCollection(c.getUnknownTexts());
+
+                Set<ChatbotUnknownTexts> unknownTextsChatbot = c.getChatbotUnknownTexts();
+                List<Text> unknownTexts = new ArrayList<>();
+
+                unknownTextsChatbot.forEach(ut -> {
+                    unknownTexts.add(ut.getUnknownText());
+                });
+
+                textDao.saveCollection(unknownTexts);
                 c.getQuestionAnswers().forEach(qa -> textDao.saveCollection(qa.getAnswers()));
                 c.getQuestionAnswers().forEach(qa -> textDao.saveCollection(qa.getQuestions()));
 
@@ -115,17 +123,24 @@ public class InitDbOnStartup {
                 .questionAnswers(Set.of(
                         questionAnswer
                 ))
-                .unknownTexts(Set.of(
-                        Text.builder()
-                                .text("Unknown Text 1")
-                                .build(),
-                        Text.builder()
-                                .text("Unknown Text 2")
-                                .build()
-                ))
                 .build();
 
         questionAnswer.setChatbot(chatbot);
+        Set<ChatbotUnknownTexts> unknownTexts = Set.of(
+                ChatbotUnknownTexts.builder()
+                        .chatbot(chatbot)
+                        .unknownText(Text.builder()
+                                .text("Unknown Text 1")
+                                .build())
+                        .build(),
+                ChatbotUnknownTexts.builder()
+                        .chatbot(chatbot)
+                        .unknownText(Text.builder()
+                                .text("Unknown Text 2")
+                                .build())
+                        .build()
+        );
+        chatbot.setChatbotUnknownTexts(unknownTexts);
 
         chatbots.add(chatbot);
 

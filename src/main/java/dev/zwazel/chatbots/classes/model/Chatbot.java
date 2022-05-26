@@ -73,20 +73,6 @@ public class Chatbot {
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
     /**
-     * all the questions the chatbot can't yet respond to
-     *
-     * @see Text
-     * @since 0.2
-     */
-    @Builder.Default
-    @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "Chatbot_unknownTexts",
-            joinColumns = @JoinColumn(name = "chatbot_id"),
-            inverseJoinColumns = @JoinColumn(name = "unknownTexts_id"))
-    private Set<Text> unknownTexts = new LinkedHashSet<>();
-
-    /**
      * All the ratings associated with the chatbot
      *
      * @see Rating
@@ -106,6 +92,16 @@ public class Chatbot {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    /**
+     * All the texts the chatbot can't respond to yet.
+     *
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "chatbot", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ToString.Exclude
+    @Builder.Default
+    private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
 // TODO: 16.05.2022 LEVENSHTEIN DISTANCE
 }

@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Builder
 @ToString
 @Entity
+@JsonFilter("QuestionAnswerAnswerFilter")
 public class QuestionAnswerAnswer {
     @Id
     @Column(name = "id", nullable = false)

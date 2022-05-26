@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonFilter("ChatbotUnknownTextsFilter")
 public class ChatbotUnknownTexts {
     @Id
     @Column(name = "id", nullable = false)

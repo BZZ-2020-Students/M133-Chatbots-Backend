@@ -70,7 +70,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(new ChatbotDao().findAll(), getFilterProviderChatbotAndRating()))
+                    .entity(ToJson.toJson(new ChatbotDao().findAll(), getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -109,7 +109,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(chatbot, getFilterProviderChatbotAndRating()))
+                    .entity(ToJson.toJson(chatbot, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -120,16 +120,20 @@ public class ChatbotResource {
     }
 
     /**
-     * Utility method to get a filter provider for the chatbot. So that we don't get all the texts from the chatbot, and only its name and id.
+     * Utility method to get a filter provider. So that we don't get recursion and only return what we need.
      *
-     * @return filter provider
+     * @return filter provider with configured filters.
      * @author Zwazel
      * @since 0.3
      */
-    private FilterProvider getFilterProviderChatbotAndRating() {
+    private FilterProvider getFilterProvider() {
         return new SimpleFilterProvider()
                 .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.serializeAll())
                 .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
-                .addFilter("UserFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"));
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"))
+                .addFilter("QuestionAnswerFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "questionAnswerQuestions", "questionAnswerAnswers"))
+                .addFilter("QuestionAnswerQuestionFilter", SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
+                .addFilter("QuestionAnswerAnswerFilter", SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
+                .addFilter("ChatbotUnknownTextsFilter", SimpleBeanPropertyFilter.serializeAllExcept("chatbot"));
     }
 }

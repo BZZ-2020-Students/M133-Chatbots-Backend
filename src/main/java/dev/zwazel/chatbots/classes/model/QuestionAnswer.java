@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -25,7 +26,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@JsonIgnoreProperties("chatbot")
+@JsonFilter("QuestionAnswerFilter")
 public class QuestionAnswer {
     /**
      * The unique identifier of the question answer.

@@ -70,12 +70,14 @@ public class UserTest {
     @Test
     public void testBuilderMissingRole() {
         // assert null pointer exception
-        assertThrows(NullPointerException.class,
-                () -> User.builder()
-                        .password("password")
-                        .username("name")
-                        .build()
-        );
+        User user = User.builder()
+                .username("name")
+                .password("password")
+                .build();
+
+        assertEquals(UserRole.USER, user.getUserRole());
+        assertEquals("name", user.getUsername());
+        assertEquals("password", user.getPassword());
     }
 
     /**
@@ -134,7 +136,7 @@ public class UserTest {
      */
     @Test
     public void testRequiredArgsConstructor() {
-        User user = new User("name", "password", UserRole.USER);
+        User user = new User("name", "password");
 
         assertEquals("name", user.getUsername());
         assertEquals("password", user.getPassword());
@@ -154,7 +156,7 @@ public class UserTest {
         assertNotNull(user.getId());
         assertNull(user.getUsername());
         assertNull(user.getPassword());
-        assertNull(user.getUserRole());
+        assertEquals(UserRole.USER, user.getUserRole());
     }
 
     /**

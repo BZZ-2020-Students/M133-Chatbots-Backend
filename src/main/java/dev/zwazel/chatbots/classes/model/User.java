@@ -61,9 +61,9 @@ public class User {
      *
      * @since 0.2
      */
-    @NonNull
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    @Builder.Default
+    private UserRole userRole = UserRole.USER;
 
     /**
      * The users chatbots

@@ -11,6 +11,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import javax.persistence.EntityExistsException;
+
 /**
  * UserResource is a class that handles all requests to the /user endpoint.
  *
@@ -19,6 +21,46 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/user")
 public class UserResource {
+    /**
+     * Creates a new Text object and returns it.
+     *
+     * @param username The username of the Text object.
+     * @return The created username object if successful.
+     * @author Zwazel
+     * @since 1.2.0
+     */
+    @POST
+    @Path("/create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createText(@FormParam("username") String username) {
+        UserDao userDao = new UserDao();
+        User newUser = User.builder()
+                .username(username)
+                .build();
+        try {
+            userDao.save(newUser);
+        } catch (EntityExistsException e) {
+            e.printStackTrace();
+            return Response
+                    .status(Response.Status.CONFLICT)
+                    .entity("{\"error\":\"User already exists\"}")
+                    .build();
+        }
+
+        try {
+            return Response
+                    .status(200)
+                    .entity(ToJson.toJson(newUser))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
     /**
      * Deletes a User by its id.
      * todo: Implement authorization

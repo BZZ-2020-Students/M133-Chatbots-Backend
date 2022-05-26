@@ -51,7 +51,7 @@ public class TextResource {
             e.printStackTrace();
             return Response
                     .status(500)
-                    .entity("{\"error\": \"Could not return build JSON.\"}")
+                    .entity("{\"error\": \"Could not return JSON.\"}")
                     .build();
         }
     }

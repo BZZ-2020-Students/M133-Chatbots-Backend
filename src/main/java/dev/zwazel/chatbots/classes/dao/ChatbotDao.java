@@ -34,6 +34,14 @@ public class ChatbotDao extends Dao<Chatbot, String> {
         return this.findBy("chatbotName", name, false);
     }
 
+    /**
+     * Finds all chatbots with a given unknown text.
+     *
+     * @param text The unknown text to find.
+     * @return A list of chatbots with the given unknown text.
+     * @author Zwazel
+     * @since 1.1.0
+     */
     public List<Chatbot> findByUnknownText(Text text) {
         EntityManager em = getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
@@ -44,5 +52,22 @@ public class ChatbotDao extends Dao<Chatbot, String> {
         em.getTransaction().commit();
         em.close();
         return chatbots;
+    }
+
+    /**
+     * Deletes a chatbot by its name.
+     *
+     * @param name The name of the chatbot to delete.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public void deleteByName(String name) {
+        Chatbot chatbot = this.findByName(name);
+
+        if (chatbot != null) {
+            delete(chatbot);
+        } else {
+            throw new IllegalArgumentException("Chatbot with name " + name + " does not exist.");
+        }
     }
 }

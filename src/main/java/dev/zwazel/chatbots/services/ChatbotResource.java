@@ -40,6 +40,26 @@ public class ChatbotResource {
     }
 
     /**
+     * Deletes a chatbot by its name.
+     * todo: Implement authorization
+     *
+     * @param name the name of the chatbot
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/name/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteChatbotByName(@PathParam("name") String name) {
+        new ChatbotDao().deleteByName(name);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
+    /**
      * Get a chatbot by its id.
      *
      * @param id the id of the chatbot

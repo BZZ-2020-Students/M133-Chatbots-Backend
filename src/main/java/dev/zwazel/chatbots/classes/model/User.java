@@ -1,11 +1,14 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -23,6 +26,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @JsonIgnoreProperties(value = {"password"})
+@JsonFilter("UserFilter")
 public class User {
     /**
      * User id
@@ -60,4 +64,24 @@ public class User {
     @NonNull
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    /**
+     * The users chatbots
+     *
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    @Builder.Default
+    @ToString.Exclude
+    private Set<Chatbot> chatbots = new LinkedHashSet<>();
+
+    /**
+     * All the ratings of the user
+     *
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @Builder.Default
+    @ToString.Exclude
+    private Set<Rating> ratings = new LinkedHashSet<>();
 }

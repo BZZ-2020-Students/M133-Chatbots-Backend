@@ -44,6 +44,22 @@ public class UserDao extends Dao<User, String> {
     }
 
     /**
+     * Delets a user by their username.
+     *
+     * @param username The username to delete.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public void deleteByUsername(String username) {
+        User user = findByUsername(username);
+        if (user != null) {
+            super.delete(user);
+        } else {
+            throw new IllegalArgumentException("Username " + username + " does not exist");
+        }
+    }
+
+    /**
      * saves a bunch of users and makes sure that the username is unique.
      *
      * @param users The users to save.

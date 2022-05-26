@@ -1,9 +1,13 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.Text;
+import jakarta.persistence.EntityManager;
+
+import java.util.List;
 
 /**
- * Helper class for CRUD operations on User objects.
+ * Helper class for CRUD operations on Chatbot objects.
  *
  * @author Zwazel
  * @see Dao
@@ -30,16 +34,40 @@ public class ChatbotDao extends Dao<Chatbot, String> {
         return this.findBy("chatbotName", name, false);
     }
 
-    @Override
-    public void save(Chatbot chatbot) {
-        TextDao textDao = new TextDao();
-        textDao.saveCollection(chatbot.getUnknownTexts());
-
-        super.save(chatbot);
+    /**
+     * Finds all chatbots with a given unknown text.
+     *
+     * @param text The unknown text to find.
+     * @return A list of chatbots with the given unknown text.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public List<Chatbot> findByUnknownText(Text text) {
+        EntityManager em = getEntityManagerFactory().createEntityManager();
+        em.getTransaction().begin();
+        List<Chatbot> chatbots = em.createQuery(
+                        "SELECT c FROM Chatbot c, ChatbotUnknownTexts ut WHERE LOWER(:text) = LOWER(ut.unknownText.text) AND c.id = ut.chatbot.id", Chatbot.class)
+                .setParameter("text", text.getText())
+                .getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return chatbots;
     }
 
-    @Override
-    public void saveCollection(Iterable<Chatbot> t) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    /**
+     * Deletes a chatbot by its name.
+     *
+     * @param name The name of the chatbot to delete.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public void deleteByName(String name) {
+        Chatbot chatbot = this.findByName(name);
+
+        if (chatbot != null) {
+            delete(chatbot);
+        } else {
+            throw new IllegalArgumentException("Chatbot with name " + name + " does not exist.");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import dev.zwazel.chatbots.classes.enums.RatingEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@JsonFilter("RatingFilter")
 public class Rating {
     /**
      * The unique identifier of the rating.
@@ -40,21 +42,10 @@ public class Rating {
      * @see User
      * @since 0.2
      */
-    @ManyToOne(cascade = {})
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @NonNull
     private User user;
-
-    /**
-     * The chatbot that was rated.
-     *
-     * @see Chatbot
-     * @since 0.2
-     */
-    @ManyToOne(cascade = {})
-    @JoinColumn(name = "chatbot_id")
-    @NonNull
-    private Chatbot chatbot;
 
     /**
      * The rating value.
@@ -73,4 +64,15 @@ public class Rating {
      */
     @Builder.Default
     private boolean favourite = false;
+
+    /**
+     * The chatbot that was rated.
+     *
+     * @see Chatbot
+     * @since 0.2
+     */
+    @ManyToOne(cascade = {})
+    @JoinColumn(name = "chatbot_id")
+    @NonNull
+    private Chatbot chatbot;
 }

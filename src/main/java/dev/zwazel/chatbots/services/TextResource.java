@@ -4,10 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
 import dev.zwazel.chatbots.util.ToJson;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -18,6 +16,46 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/text")
 public class TextResource {
+    /**
+     * Deletes a text by its id.
+     * todo: Implement authorization
+     *
+     * @param id the id of the text
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteText(@PathParam("id") String id) {
+        new TextDao().delete(id);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
+    /**
+     * Deletes a text by its text.
+     * todo: Implement authorization
+     *
+     * @param text the text of the text
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/text/{text}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteTextByItsText(@PathParam("text") String text) {
+        new TextDao().deleteByText(text);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
     /**
      * Returns a Text object by its id.
      *

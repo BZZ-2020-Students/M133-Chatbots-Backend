@@ -1,9 +1,11 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.ChatbotUnknownTexts;
 import dev.zwazel.chatbots.classes.model.Text;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +37,11 @@ public class TextDao extends Dao<Text, String> {
     public Iterable<Text> findAllByChatbotId(String chatbotId) {
         ChatbotDao chatbotDao = new ChatbotDao();
         Chatbot chatbot = chatbotDao.findById(chatbotId);
+
+        if (chatbot == null) {
+            return List.of();
+        }
+
         return this.findAllByChatbotFromDB(chatbot);
     }
 
@@ -59,10 +66,22 @@ public class TextDao extends Dao<Text, String> {
      * @since 0.3
      */
     private Iterable<Text> findAllByChatbotFromDB(Chatbot chatbot) {
-        Set<Text> texts = chatbot.getUnknownTexts();
+        Set<Text> texts = new java.util.HashSet<>(Set.of());
+
+        Set<ChatbotUnknownTexts> unknownTextsChatbot = chatbot.getChatbotUnknownTexts();
+        unknownTextsChatbot.forEach(ut -> {
+            texts.add(ut.getUnknownText());
+        });
+
+
         chatbot.getQuestionAnswers().forEach(qa -> {
-            texts.addAll(qa.getQuestions());
-            texts.addAll(qa.getAnswers());
+            qa.getQuestionAnswerAnswers().forEach(qaa -> {
+                texts.add(qaa.getAnswer());
+            });
+
+            qa.getQuestionAnswerQuestions().forEach(qaq -> {
+                texts.add(qaq.getQuestion());
+            });
         });
 
         return texts;
@@ -118,5 +137,21 @@ public class TextDao extends Dao<Text, String> {
         });
         em.getTransaction().commit();
         em.close();
+    }
+
+    /**
+     * Deletes a text by its text.
+     *
+     * @param text The text to delete.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public void deleteByText(String text) {
+        Text textObject = findByText(text);
+        if (textObject != null) {
+            delete(textObject);
+        } else {
+            throw new IllegalArgumentException("Text object with text \"" + text + "\" does not exist");
+        }
     }
 }

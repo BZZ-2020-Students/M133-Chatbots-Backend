@@ -1,6 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -24,9 +24,8 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @Entity
-@JsonIgnoreProperties("chatbot")
+@JsonFilter("QuestionAnswerFilter")
 public class QuestionAnswer {
     /**
      * The unique identifier of the question answer.
@@ -41,34 +40,6 @@ public class QuestionAnswer {
     private String id = UUID.randomUUID().toString();
 
     /**
-     * A List containing all the questions.
-     *
-     * @see Text
-     * @since 0.2
-     */
-    @NonNull
-    @ManyToMany(cascade = {})
-    @JoinTable(name = "QuestionAnswer_questions",
-            joinColumns = @JoinColumn(name = "questionAnswer_id"),
-            inverseJoinColumns = @JoinColumn(name = "questions_id"))
-    @ToString.Exclude
-    private Set<Text> questions = new LinkedHashSet<>();
-
-    /**
-     * A List containing all the answers.
-     *
-     * @see Text
-     * @since 0.2
-     */
-    @NonNull
-    @ManyToMany(cascade = {})
-    @JoinTable(name = "QuestionAnswer_answers",
-            joinColumns = @JoinColumn(name = "questionAnswer_id"),
-            inverseJoinColumns = @JoinColumn(name = "answers_id"))
-    @ToString.Exclude
-    private Set<Text> answers = new LinkedHashSet<>();
-
-    /**
      * the Chatbot which this question answer belongs to.
      *
      * @see Chatbot
@@ -77,7 +48,30 @@ public class QuestionAnswer {
     @ManyToOne(cascade = {})
     @JoinColumn(name = "chatbot_id")
     @ToString.Exclude
+    @NonNull
     private Chatbot chatbot;
+
+    /**
+     * All questions which this question answer contains.
+     *
+     * @see QuestionAnswerQuestion
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "questionAnswer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Builder.Default
+    @ToString.Exclude
+    private Set<QuestionAnswerQuestion> questionAnswerQuestions = new LinkedHashSet<>();
+
+    /**
+     * All answers which this question answer contains.
+     *
+     * @see QuestionAnswerAnswer
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "questionAnswer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ToString.Exclude
+    @Builder.Default
+    private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

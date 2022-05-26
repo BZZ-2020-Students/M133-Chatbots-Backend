@@ -1,14 +1,14 @@
 package dev.zwazel.chatbots.classes.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -25,6 +25,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@JsonIgnoreProperties({"chatbotUnknownTexts", "questionAnswerQuestions", "questionAnswerAnswers"})
 public class Text {
     /**
      * Text ID
@@ -53,6 +54,36 @@ public class Text {
      */
     @Builder.Default
     private Integer amountUsed = 0;
+
+    /**
+     * All the unknown texts of a Chatbot.
+     *
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "unknownText", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ToString.Exclude
+    @Builder.Default
+    private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
+
+    /**
+     * Questions this text belongs to
+     *
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Builder.Default
+    @ToString.Exclude
+    private Set<QuestionAnswerQuestion> questionAnswerQuestions = new LinkedHashSet<>();
+
+    /**
+     * Answers this text belongs to
+     *
+     * @since 1.1.0
+     */
+    @OneToMany(mappedBy = "answer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Builder.Default
+    @ToString.Exclude
+    private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

@@ -1,9 +1,11 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.enums.UserRole;
-import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.util.ToJson;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -91,15 +93,14 @@ public class UserTest {
                 .userRole(UserRole.USER)
                 .build();
 
-        ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(user);
+            json = ToJson.toJson(user, getFilterProvider());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        String expected = "{\"id\":\"" + testUuid + "\",\"username\":\"name\",\"userRole\":\"USER\"}";
+        String expected = "{\"id\":\"" + testUuid + "\",\"username\":\"name\",\"userRole\":\"USER\",\"chatbots\":[],\"ratings\":[]}";
 
         assertEquals(expected, json);
     }
@@ -154,5 +155,17 @@ public class UserTest {
         assertNull(user.getUsername());
         assertNull(user.getPassword());
         assertNull(user.getUserRole());
+    }
+
+    /**
+     * This method returns a FilterProvider to filter out specific fields.
+     *
+     * @return a FilterProvider to filter out specific fields.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    private FilterProvider getFilterProvider() {
+        return new SimpleFilterProvider()
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAll());
     }
 }

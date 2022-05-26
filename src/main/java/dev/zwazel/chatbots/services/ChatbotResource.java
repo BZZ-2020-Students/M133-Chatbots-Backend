@@ -7,10 +7,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.util.ToJson;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -21,6 +19,46 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/chatbot")
 public class ChatbotResource {
+    /**
+     * Deletes a chatbot by its id.
+     * todo: Implement authorization
+     *
+     * @param id the id of the chatbot
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteChatbot(@PathParam("id") String id) {
+        new ChatbotDao().delete(id);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
+    /**
+     * Deletes a chatbot by its name.
+     * todo: Implement authorization
+     *
+     * @param name the name of the chatbot
+     * @return 200 if successful
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    @DELETE
+    @Path("/delete/name/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteChatbotByName(@PathParam("name") String name) {
+        new ChatbotDao().deleteByName(name);
+
+        return Response
+                .status(200)
+                .build();
+    }
+
     /**
      * Get a chatbot by its id.
      *
@@ -52,7 +90,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(new ChatbotDao().findAll(), getFilterProviderChatbot()))
+                    .entity(ToJson.toJson(new ChatbotDao().findAll(), getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -91,7 +129,7 @@ public class ChatbotResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(chatbot, getFilterProviderChatbot()))
+                    .entity(ToJson.toJson(chatbot, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -102,13 +140,20 @@ public class ChatbotResource {
     }
 
     /**
-     * Utility method to get a filter provider for the chatbot. So that we don't get all the texts from the chatbot, and only its name and id.
+     * Utility method to get a filter provider. So that we don't get recursion and only return what we need.
      *
-     * @return filter provider
+     * @return filter provider with configured filters.
      * @author Zwazel
      * @since 0.3
      */
-    private FilterProvider getFilterProviderChatbot() {
-        return new SimpleFilterProvider().addFilter("ChatbotFilter", SimpleBeanPropertyFilter.serializeAll());
+    private FilterProvider getFilterProvider() {
+        return new SimpleFilterProvider()
+                .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.serializeAll())
+                .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"))
+                .addFilter("QuestionAnswerFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "questionAnswerQuestions", "questionAnswerAnswers"))
+                .addFilter("QuestionAnswerQuestionFilter", SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
+                .addFilter("QuestionAnswerAnswerFilter", SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
+                .addFilter("ChatbotUnknownTextsFilter", SimpleBeanPropertyFilter.serializeAllExcept("chatbot"));
     }
 }

@@ -23,6 +23,7 @@ public class QuestionAnswerAnswer {
 
     @ManyToOne
     @JoinColumn(name = "answer_id")
+    @NonNull
     private Text answer;
 
     @ManyToOne

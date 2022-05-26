@@ -25,7 +25,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@JsonIgnoreProperties({"questionAnswers_questions", "questionAnswers_answers", "chatbots"})
+@JsonIgnoreProperties({"chatbotUnknownTexts", "questionAnswerQuestions", "questionAnswerAnswers"})
 public class Text {
     /**
      * Text ID
@@ -62,12 +62,17 @@ public class Text {
      */
     @OneToMany(mappedBy = "unknownText", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
+    @Builder.Default
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "question", orphanRemoval = true)
+    @OneToMany(mappedBy = "question", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Builder.Default
+    @ToString.Exclude
     private Set<QuestionAnswerQuestion> questionAnswerQuestions = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "answer", orphanRemoval = true)
+    @OneToMany(mappedBy = "answer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Builder.Default
+    @ToString.Exclude
     private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
     @Override

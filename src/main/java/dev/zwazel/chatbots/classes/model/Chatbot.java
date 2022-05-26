@@ -77,7 +77,7 @@ public class Chatbot {
      * @see Rating
      * @since 1.1.0
      */
-    @OneToMany(mappedBy = "chatbot", orphanRemoval = true)
+    @OneToMany(mappedBy = "chatbot", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
     @Builder.Default
     private Set<Rating> ratings = new LinkedHashSet<>();

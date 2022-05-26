@@ -1,6 +1,10 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.QuestionAnswer;
+import dev.zwazel.chatbots.classes.model.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Dao Class for QuestionAnswer objects
@@ -21,9 +25,19 @@ public class QuestionAnswerDao extends Dao<QuestionAnswer, String> {
 
     @Override
     public void save(QuestionAnswer questionAnswer) {
+        List<Text> questions = new ArrayList<>();
+        questionAnswer.getQuestionAnswerQuestions().forEach(question -> {
+            questions.add(question.getQuestion());
+        });
+
+        List<Text> answers = new ArrayList<>();
+        questionAnswer.getQuestionAnswerAnswers().forEach(answer -> {
+            answers.add(answer.getAnswer());
+        });
+
         TextDao textDao = new TextDao();
-        textDao.saveCollection(questionAnswer.getQuestions());
-        textDao.saveCollection(questionAnswer.getAnswers());
+        textDao.saveCollection(questions);
+        textDao.saveCollection(answers);
 
         super.save(questionAnswer);
     }

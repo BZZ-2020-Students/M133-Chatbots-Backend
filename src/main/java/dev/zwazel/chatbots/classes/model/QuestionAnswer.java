@@ -1,6 +1,5 @@
 package dev.zwazel.chatbots.classes.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -41,34 +40,6 @@ public class QuestionAnswer {
     private String id = UUID.randomUUID().toString();
 
     /**
-     * A List containing all the questions.
-     *
-     * @see Text
-     * @since 0.2
-     */
-    @NonNull
-    @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "QuestionAnswer_questions",
-            joinColumns = @JoinColumn(name = "questionAnswer_id"),
-            inverseJoinColumns = @JoinColumn(name = "questions_id"))
-    private Set<Text> questions = new LinkedHashSet<>();
-
-    /**
-     * A List containing all the answers.
-     *
-     * @see Text
-     * @since 0.2
-     */
-    @NonNull
-    @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "QuestionAnswer_answers",
-            joinColumns = @JoinColumn(name = "questionAnswer_id"),
-            inverseJoinColumns = @JoinColumn(name = "answers_id"))
-    private Set<Text> answers = new LinkedHashSet<>();
-
-    /**
      * the Chatbot which this question answer belongs to.
      *
      * @see Chatbot
@@ -77,7 +48,18 @@ public class QuestionAnswer {
     @ManyToOne(cascade = {})
     @JoinColumn(name = "chatbot_id")
     @ToString.Exclude
+    @NonNull
     private Chatbot chatbot;
+
+    @OneToMany(mappedBy = "questionAnswer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Builder.Default
+    @ToString.Exclude
+    private Set<QuestionAnswerQuestion> questionAnswerQuestions = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "questionAnswer", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ToString.Exclude
+    @Builder.Default
+    private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

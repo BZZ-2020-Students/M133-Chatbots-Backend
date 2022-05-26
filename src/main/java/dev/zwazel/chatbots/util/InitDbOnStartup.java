@@ -62,8 +62,19 @@ public class InitDbOnStartup {
                 });
 
                 textDao.saveCollection(unknownTexts);
-                c.getQuestionAnswers().forEach(qa -> textDao.saveCollection(qa.getAnswers()));
-                c.getQuestionAnswers().forEach(qa -> textDao.saveCollection(qa.getQuestions()));
+                c.getQuestionAnswers().forEach(qa -> {
+                    List<Text> answers = new ArrayList<>();
+                    qa.getQuestionAnswerAnswers().forEach(qaAnswer -> {
+                        answers.add(qaAnswer.getAnswer());
+                    });
+                    textDao.saveCollection(answers);
+
+                    List<Text> questions = new ArrayList<>();
+                    qa.getQuestionAnswerQuestions().forEach(qaQuestion -> {
+                        questions.add(qaQuestion.getQuestion());
+                    });
+                    textDao.saveCollection(questions);
+                });
 
                 chatbotDao.save(c);
             } else {
@@ -92,38 +103,53 @@ public class InitDbOnStartup {
 
         User user = users.iterator().next();
 
-        QuestionAnswer questionAnswer = QuestionAnswer.builder()
-                .answers(Set.of(
-                        Text.builder()
-                                .text("Answer 1")
-                                .build(),
-                        Text.builder()
-                                .text("Answer 2")
-                                .build(),
-                        Text.builder()
-                                .text("Answer 3")
-                                .build()
-                ))
-                .questions(Set.of(
-                        Text.builder()
-                                .text("Question 1")
-                                .build(),
-                        Text.builder()
-                                .text("Question 2")
-                                .build(),
-                        Text.builder()
-                                .text("Question 3")
-                                .build()
-                ))
-                .build();
-
         Chatbot chatbot = Chatbot.builder()
                 .chatbotName("MRVN")
                 .user(user)
-                .questionAnswers(Set.of(
-                        questionAnswer
-                ))
                 .build();
+
+        QuestionAnswer questionAnswer = QuestionAnswer.builder()
+                .questionAnswerAnswers(Set.of(
+                        QuestionAnswerAnswer.builder()
+                                .answer(Text.builder()
+                                        .text("Answer 1")
+                                        .build())
+                                .build(),
+                        QuestionAnswerAnswer.builder()
+                                .answer(Text.builder()
+                                        .text("Answer 2")
+                                        .build())
+                                .build(),
+                        QuestionAnswerAnswer.builder()
+                                .answer(Text.builder()
+                                        .text("Answer 3")
+                                        .build())
+                                .build()
+                ))
+                .questionAnswerQuestions(Set.of
+                        (
+                                QuestionAnswerQuestion.builder()
+                                        .question(Text.builder()
+                                                .text("Question 1")
+                                                .build())
+                                        .build(),
+                                QuestionAnswerQuestion.builder()
+                                        .question(Text.builder()
+                                                .text("Question 2")
+                                                .build())
+                                        .build(),
+                                QuestionAnswerQuestion.builder()
+                                        .question(Text.builder()
+                                                .text("Question 3")
+                                                .build())
+                                        .build()
+                        )
+                )
+                .chatbot(chatbot)
+                .build();
+
+        questionAnswer.getQuestionAnswerAnswers().forEach(answer -> answer.setQuestionAnswer(questionAnswer));
+        questionAnswer.getQuestionAnswerQuestions().forEach(question -> question.setQuestionAnswer(questionAnswer));
 
         questionAnswer.setChatbot(chatbot);
         Set<ChatbotUnknownTexts> unknownTexts = Set.of(
@@ -141,6 +167,7 @@ public class InitDbOnStartup {
                         .build()
         );
         chatbot.setChatbotUnknownTexts(unknownTexts);
+        chatbot.setQuestionAnswers(Set.of(questionAnswer));
 
         chatbots.add(chatbot);
 

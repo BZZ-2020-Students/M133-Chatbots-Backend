@@ -56,25 +56,6 @@ public class Text {
     private Integer amountUsed = 0;
 
     /**
-     * All the questions this text is in.
-     *
-     * @since 1.1.0
-     */
-    @ManyToMany(mappedBy = "questions", cascade = {CascadeType.REMOVE})
-    @ToString.Exclude
-    private Set<QuestionAnswer> questionAnswers_questions = new LinkedHashSet<>();
-
-    /**
-     * All the questions this text is in.
-     *
-     * @since 1.1.0
-     */
-    @ManyToMany(mappedBy = "answers", cascade = {CascadeType.REMOVE})
-    @ToString.Exclude
-    @Builder.Default
-    private Set<QuestionAnswer> questionAnswers_answers = new LinkedHashSet<>();
-
-    /**
      * All the unknown texts of a Chatbot.
      *
      * @since 1.1.0
@@ -82,6 +63,12 @@ public class Text {
     @OneToMany(mappedBy = "unknownText", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "question", orphanRemoval = true)
+    private Set<QuestionAnswerQuestion> questionAnswerQuestions = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "answer", orphanRemoval = true)
+    private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

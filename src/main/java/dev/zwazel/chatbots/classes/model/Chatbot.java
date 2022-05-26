@@ -66,7 +66,6 @@ public class Chatbot {
      * @see QuestionAnswer
      * @since 0.2
      */
-    @NonNull
     @OneToMany(mappedBy = "chatbot", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
     @Builder.Default

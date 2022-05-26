@@ -1,16 +1,13 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Chatbot;
-import dev.zwazel.chatbots.classes.model.ChatbotUnknownTexts;
 import dev.zwazel.chatbots.classes.model.Text;
 import jakarta.persistence.EntityManager;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
- * Helper class for CRUD operations on User objects.
+ * Helper class for CRUD operations on Chatbot objects.
  *
  * @author Zwazel
  * @see Dao
@@ -47,26 +44,5 @@ public class ChatbotDao extends Dao<Chatbot, String> {
         em.getTransaction().commit();
         em.close();
         return chatbots;
-    }
-
-    @Override
-    public void save(Chatbot chatbot) {
-        TextDao textDao = new TextDao();
-
-        Set<ChatbotUnknownTexts> unknownTextsChatbot = chatbot.getChatbotUnknownTexts();
-        List<Text> unknownTexts = new ArrayList<>();
-
-        unknownTextsChatbot.forEach(ut -> {
-            unknownTexts.add(ut.getUnknownText());
-        });
-
-        textDao.saveCollection(unknownTexts);
-
-        super.save(chatbot);
-    }
-
-    @Override
-    public void saveCollection(Iterable<Chatbot> t) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -75,8 +75,13 @@ public class TextDao extends Dao<Text, String> {
 
 
         chatbot.getQuestionAnswers().forEach(qa -> {
-            texts.addAll(qa.getQuestions());
-            texts.addAll(qa.getAnswers());
+            qa.getQuestionAnswerAnswers().forEach(qaa -> {
+                texts.add(qaa.getAnswer());
+            });
+
+            qa.getQuestionAnswerQuestions().forEach(qaq -> {
+                texts.add(qaq.getQuestion());
+            });
         });
 
         return texts;

@@ -18,6 +18,14 @@ import javax.persistence.EntityExistsException;
  */
 @Path("/text")
 public class TextResource {
+    /**
+     * Creates a new Text object and returns it.
+     *
+     * @param text The text of the Text object.
+     * @return The created text object if successful.
+     * @author Zwazel
+     * @since 1.2.0
+     */
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
+import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -19,6 +21,70 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/chatbot")
 public class ChatbotResource {
+    /**
+     * Creates a new Chatbot
+     *
+     * @param name     the name of the chatbot
+     * @param userId   the id of the user. If username is defined, this one can be left empty. If both are defined, the username will be used.
+     * @param username the username of the user. If UserID is defined, this one can be left empty.
+     * @return the newly created chatbot.
+     * @author Zwazel
+     * @since 1.2.0
+     */
+    @POST
+    @Path("/create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createChatbot(
+            @FormParam("name") String name,
+            @DefaultValue("") @FormParam("username") String username,
+            @DefaultValue("") @FormParam("userId") String userId
+    ) {
+        if ((userId.isBlank() || userId.isEmpty()) && (username.isBlank() || username.isEmpty())) {
+            return Response
+                    .status(400)
+                    .entity("{\"error\": \"userId or username must be provided\"}")
+                    .build();
+        }
+
+        UserDao userDao = new UserDao();
+        User user = (userId.isBlank() || userId.isEmpty()) ? userDao.findByUsername(username) : userDao.findById(userId);
+
+        if (user == null) {
+            // return response with error code for user not found
+            return Response
+                    .status(404)
+                    .entity("{\"error\": \"user not found\"}")
+                    .build();
+        }
+
+        Chatbot chatbot = Chatbot.builder()
+                .chatbotName(name)
+                .user(user)
+                .build();
+
+        try {
+            new ChatbotDao().save(chatbot);
+        } catch (IllegalArgumentException e) {
+            return Response
+                    .status(400)
+                    .entity("{\"error\": \"chatbot name already exists\"}")
+                    .build();
+        }
+
+        try {
+            return Response
+                    .status(200)
+                    .entity(ToJson.toJson(chatbot, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"internal server while processing JSON response\"}")
+                    .build();
+        }
+    }
+
     /**
      * Deletes a chatbot by its id.
      * todo: Implement authorization

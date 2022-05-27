@@ -23,6 +23,22 @@ public class ChatbotDao extends Dao<Chatbot, String> {
         super(Chatbot.class);
     }
 
+    @Override
+    public void save(Chatbot chatbot) {
+        Chatbot existingChatbot = findByName(chatbot.getChatbotName());
+
+        if (existingChatbot == null) {
+            super.save(chatbot);
+        } else {
+            throw new IllegalArgumentException("Chatbot with name " + chatbot.getChatbotName() + " already exists.");
+        }
+    }
+
+    @Override
+    public void saveCollection(Iterable<Chatbot> t) {
+        throw new UnsupportedOperationException("This method is not supported.");
+    }
+
     /**
      * Finds a chatbot by its name.
      *

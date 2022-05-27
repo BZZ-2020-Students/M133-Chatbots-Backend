@@ -34,10 +34,10 @@ public class Text {
      * @since 0.2
      */
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, length = Constants.MAX_UUID_LENGTH)
     @GeneratedValue(generator = "uuid")
     @Builder.Default
-    @Size(max = 36)
+    @Size(max = Constants.MAX_UUID_LENGTH)
     private String id = UUID.randomUUID().toString();
 
     /**

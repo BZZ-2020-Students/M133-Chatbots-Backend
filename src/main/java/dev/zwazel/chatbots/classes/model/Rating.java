@@ -2,6 +2,7 @@ package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import dev.zwazel.chatbots.classes.enums.RatingEnum;
+import dev.zwazel.chatbots.configs.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -30,10 +31,10 @@ public class Rating {
      * @since 0.3
      */
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, length = Constants.MAX_UUID_LENGTH)
     @GeneratedValue(generator = "uuid")
     @Builder.Default
-    @Size(max = 36)
+    @Size(max = Constants.MAX_UUID_LENGTH)
     private String id = UUID.randomUUID().toString();
 
     /**

@@ -53,8 +53,7 @@ public class UserResource {
                         .build();
         try {
             userDao.save(newUser);
-        } catch (EntityExistsException e) {
-            e.printStackTrace();
+        } catch (EntityExistsException | IllegalArgumentException e) {
             return Response
                     .status(Response.Status.CONFLICT)
                     .entity("{\"error\":\"User already exists\"}")

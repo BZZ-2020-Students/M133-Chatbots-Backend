@@ -25,7 +25,9 @@ public class UserResource {
     /**
      * Creates a new User object and returns it.
      *
-     * @param username The username of the Text object.
+     * @param username The username of the User object.
+     * @param password The password of the User object.
+     * @param role     The role of the User object.
      * @return The created user object if successful.
      * @author Zwazel
      * @since 1.2.0

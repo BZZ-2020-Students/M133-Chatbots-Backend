@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import dev.zwazel.chatbots.configs.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -45,6 +46,7 @@ public class Text {
      * @since 0.2
      */
     @NonNull
+    @Column(name = "text", nullable = false, length = Constants.MAX_TEXT_LENGTH)
     private String text;
 
     /**
@@ -96,5 +98,13 @@ public class Text {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public void setText(@NonNull String text) {
+        if (text.length() > Constants.MAX_TEXT_LENGTH) {
+            text = text.substring(0, Constants.MAX_TEXT_LENGTH);
+        }
+
+        this.text = text;
     }
 }

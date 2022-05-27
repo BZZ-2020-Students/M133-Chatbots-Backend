@@ -3,6 +3,7 @@ package dev.zwazel.chatbots.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
+import dev.zwazel.chatbots.configs.Constants;
 import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -31,6 +32,11 @@ public class TextResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createText(@FormParam("text") String text) {
         TextDao textDao = new TextDao();
+
+        if (text.length() > Constants.MAX_TEXT_LENGTH) {
+            text = text.substring(0, Constants.MAX_TEXT_LENGTH);
+        }
+
         Text newText = new Text(text);
         try {
             textDao.save(newText);

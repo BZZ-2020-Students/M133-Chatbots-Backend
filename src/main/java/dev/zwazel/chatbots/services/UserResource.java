@@ -33,7 +33,7 @@ public class UserResource {
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createText(
+    public Response createUser(
             @FormParam("username") String username,
             @FormParam("password") String password,
             @DefaultValue("") @FormParam("role") String role

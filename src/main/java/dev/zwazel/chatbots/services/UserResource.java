@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.UserDao;
+import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.*;
@@ -22,21 +23,34 @@ import javax.persistence.EntityExistsException;
 @Path("/user")
 public class UserResource {
     /**
-     * Creates a new Text object and returns it.
+     * Creates a new User object and returns it.
      *
      * @param username The username of the Text object.
-     * @return The created username object if successful.
+     * @return The created user object if successful.
      * @author Zwazel
      * @since 1.2.0
      */
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createText(@FormParam("username") String username) {
+    public Response createText(
+            @FormParam("username") String username,
+            @FormParam("password") String password,
+            @DefaultValue("") @FormParam("role") String role
+    ) {
+        UserRole userRole = (role.isEmpty() || role.isBlank()) ? null : UserRole.valueOf(role);
+
         UserDao userDao = new UserDao();
-        User newUser = User.builder()
-                .username(username)
-                .build();
+        User newUser = (userRole == null) ?
+                User.builder()
+                        .username(username)
+                        .password(password)
+                        .build() :
+                User.builder()
+                        .username(username)
+                        .password(password)
+                        .userRole(userRole)
+                        .build();
         try {
             userDao.save(newUser);
         } catch (EntityExistsException e) {
@@ -49,8 +63,8 @@ public class UserResource {
 
         try {
             return Response
-                    .status(200)
-                    .entity(ToJson.toJson(newUser))
+                    .status(201)
+                    .entity(ToJson.toJson(newUser, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();

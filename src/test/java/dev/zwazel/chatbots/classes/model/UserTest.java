@@ -136,7 +136,7 @@ public class UserTest {
      */
     @Test
     public void testRequiredArgsConstructor() {
-        User user = new User("name", "password");
+        User user = new User("name", "password", UserRole.USER);
 
         assertEquals("name", user.getUsername());
         assertEquals("password", user.getPassword());

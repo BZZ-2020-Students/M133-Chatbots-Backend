@@ -44,7 +44,7 @@ public class TextResource {
 
         try {
             return Response
-                    .status(200)
+                    .status(201)
                     .entity(ToJson.toJson(newText))
                     .build();
         } catch (JsonProcessingException e) {

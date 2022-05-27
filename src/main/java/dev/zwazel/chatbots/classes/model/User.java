@@ -63,6 +63,7 @@ public class User {
      */
     @Enumerated(EnumType.STRING)
     @Builder.Default
+    @NonNull
     private UserRole userRole = UserRole.USER;
 
     /**

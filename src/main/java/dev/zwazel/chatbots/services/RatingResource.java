@@ -4,12 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.RatingDao;
+import dev.zwazel.chatbots.classes.dao.UserDao;
+import dev.zwazel.chatbots.classes.enums.RatingEnum;
+import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
+import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.util.Arrays;
 
 /**
  * Resource class for the Rating entity.
@@ -19,6 +26,84 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/rating")
 public class RatingResource {
+    @POST
+    @Path("/create")
+    @Produces("application/json")
+    public Response createRating(
+            @DefaultValue("") @FormParam("userId") String userId,
+            @DefaultValue("") @FormParam("username") String username,
+            @DefaultValue("") @FormParam("chatbotId") String chatbotId,
+            @DefaultValue("") @FormParam("chatbotName") String chatbotName,
+            @FormParam("rating") String rating,
+            @FormParam("favourite") boolean favourite
+    ) {
+        if ((userId.isBlank() || userId.isEmpty()) && (username.isBlank() || username.isEmpty())) {
+            return Response
+                    .status(400)
+                    .entity("{\"error\": \"userId or username must be provided\"}")
+                    .build();
+        }
+
+        if ((chatbotId.isBlank() || chatbotId.isEmpty()) && (chatbotName.isBlank() || chatbotName.isEmpty())) {
+            return Response
+                    .status(400)
+                    .entity("{\"error\": \"chatbotId or chatbotName must be provided\"}")
+                    .build();
+        }
+
+        UserDao userDao = new UserDao();
+        User user = (userId.isBlank() || userId.isEmpty()) ? userDao.findByUsername(username) : userDao.findById(userId);
+
+        if (user == null) {
+            return Response
+                    .status(404)
+                    .entity("{\"error\": \"user not found\"}")
+                    .build();
+        }
+
+        ChatbotDao chatbotDao = new ChatbotDao();
+        Chatbot chatbot = (chatbotId.isBlank() || chatbotId.isEmpty()) ? chatbotDao.findByName(chatbotName) : chatbotDao.findById(chatbotId);
+
+        if (chatbot == null) {
+            return Response
+                    .status(404)
+                    .entity("{\"error\": \"chatbot not found\"}")
+                    .build();
+        }
+
+        RatingEnum ratingEnum;
+        try {
+            ratingEnum = RatingEnum.valueOf(rating);
+        } catch (IllegalArgumentException e) {
+            return Response
+                    .status(400)
+                    .entity("{\"error\": \"rating must be one of the following: " + Arrays.toString(RatingEnum.values()) + "\"}")
+                    .build();
+        }
+
+        RatingDao ratingDao = new RatingDao();
+        Rating ratingObj = Rating.builder()
+                .rating(ratingEnum)
+                .chatbot(chatbot)
+                .user(user)
+                .favourite(favourite)
+                .build();
+
+        ratingDao.save(ratingObj);
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(ratingObj, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"unable to serialize object\"}")
+                    .build();
+        }
+    }
+
     /**
      * Deletes a rating by its id.
      * todo: Implement authorization

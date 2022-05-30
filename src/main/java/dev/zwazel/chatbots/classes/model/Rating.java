@@ -72,7 +72,7 @@ public class Rating {
      * @see Chatbot
      * @since 0.2
      */
-    @ManyToOne(cascade = {})
+    @ManyToOne()
     @JoinColumn(name = "chatbot_id")
     @NonNull
     private Chatbot chatbot;

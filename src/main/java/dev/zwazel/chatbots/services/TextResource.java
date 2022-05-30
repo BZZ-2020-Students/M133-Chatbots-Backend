@@ -157,11 +157,15 @@ public class TextResource {
     @Path("/chatbot/{id}")
     @Produces("application/json")
     public Response getTextByChatbot(@PathParam("id") String id) {
+        System.out.println("hello");
         TextDao textDao = new TextDao();
         Iterable<Text> texts = textDao.findAllByChatbotId(id);
 
-        if (texts == null || !texts.iterator().hasNext()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+        if (texts == null) {
+            return Response.
+                    status(Response.Status.NOT_FOUND)
+                    .entity("{\"error\": \"Could not find Chatbot.\"}")
+                    .build();
         }
 
         try {

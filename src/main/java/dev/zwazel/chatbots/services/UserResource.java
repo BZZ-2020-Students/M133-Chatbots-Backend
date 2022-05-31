@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.UserDao;
+import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.ToJson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import javax.persistence.EntityExistsException;
 
 /**
  * UserResource is a class that handles all requests to the /user endpoint.
@@ -19,6 +22,60 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/user")
 public class UserResource {
+    /**
+     * Creates a new User object and returns it.
+     *
+     * @param username The username of the User object.
+     * @param password The password of the User object.
+     * @param role     The role of the User object.
+     * @return The created user object if successful.
+     * @author Zwazel
+     * @since 1.2.0
+     */
+    @POST
+    @Path("/create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createUser(
+            @FormParam("username") String username,
+            @FormParam("password") String password,
+            @DefaultValue("") @FormParam("role") String role
+    ) {
+        UserRole userRole = (role.isEmpty() || role.isBlank()) ? null : UserRole.valueOf(role);
+
+        UserDao userDao = new UserDao();
+        User newUser = (userRole == null) ?
+                User.builder()
+                        .username(username)
+                        .password(password)
+                        .build() :
+                User.builder()
+                        .username(username)
+                        .password(password)
+                        .userRole(userRole)
+                        .build();
+        try {
+            userDao.save(newUser);
+        } catch (EntityExistsException | IllegalArgumentException e) {
+            return Response
+                    .status(Response.Status.CONFLICT)
+                    .entity("{\"error\":\"User already exists\"}")
+                    .build();
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(newUser, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
     /**
      * Deletes a User by its id.
      * todo: Implement authorization

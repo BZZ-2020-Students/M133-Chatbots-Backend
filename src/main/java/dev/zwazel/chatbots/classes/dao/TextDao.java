@@ -3,6 +3,7 @@ package dev.zwazel.chatbots.classes.dao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.ChatbotUnknownTexts;
 import dev.zwazel.chatbots.classes.model.Text;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -113,6 +114,7 @@ public class TextDao extends Dao<Text, String> {
             super.save(text);
         } else {
             text.setId(textInDB.getId());
+            throw new EntityExistsException("Text already exists.");
         }
     }
 

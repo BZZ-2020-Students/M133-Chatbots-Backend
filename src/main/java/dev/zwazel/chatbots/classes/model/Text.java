@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import dev.zwazel.chatbots.configs.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -33,10 +34,10 @@ public class Text {
      * @since 0.2
      */
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, length = Constants.MAX_UUID_LENGTH)
     @GeneratedValue(generator = "uuid")
     @Builder.Default
-    @Size(max = 36)
+    @Size(max = Constants.MAX_UUID_LENGTH)
     private String id = UUID.randomUUID().toString();
 
     /**
@@ -45,6 +46,7 @@ public class Text {
      * @since 0.2
      */
     @NonNull
+    @Column(name = "text", nullable = false, length = Constants.MAX_TEXT_LENGTH)
     private String text;
 
     /**
@@ -96,5 +98,20 @@ public class Text {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    /**
+     * Sets the text of the Text object. If the text is longer than the maximum length, it will be truncated.
+     *
+     * @param text The text to set. Can't be null.
+     * @author Zwazel
+     * @since 1.2.0
+     */
+    public void setText(@NonNull String text) {
+        if (text.length() > Constants.MAX_TEXT_LENGTH) {
+            text = text.substring(0, Constants.MAX_TEXT_LENGTH);
+        }
+
+        this.text = text;
     }
 }

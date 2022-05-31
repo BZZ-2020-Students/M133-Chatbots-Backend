@@ -3,6 +3,7 @@ package dev.zwazel.chatbots.classes.dao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Text;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 
@@ -21,6 +22,46 @@ public class ChatbotDao extends Dao<Chatbot, String> {
      */
     public ChatbotDao() {
         super(Chatbot.class);
+    }
+
+    @Override
+    public void save(Chatbot chatbot) {
+        Chatbot existingChatbot = findByName(chatbot.getChatbotName());
+
+        if (existingChatbot == null) {
+            super.save(chatbot);
+        } else {
+            throw new IllegalArgumentException("Chatbot with name " + chatbot.getChatbotName() + " already exists.");
+        }
+    }
+
+    @Override
+    public void saveCollection(Iterable<Chatbot> t) {
+        throw new UnsupportedOperationException("This method is not supported.");
+    }
+
+    /**
+     * Finds all chatbots of a User
+     *
+     * @param userId The id of the user
+     * @return A list of chatbots of the user
+     * @author Zwazel
+     * @since 1.2.0
+     */
+    public Iterable<Chatbot> findByUserId(String userId) {
+        EntityManagerFactory entityManagerFactory = getEntityManagerFactory();
+        List<Chatbot> t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            t = entityManager.createQuery("SELECT t FROM Chatbot t where t.user.id = :userID", Chatbot.class)
+                    .setParameter("userID", userId)
+                    .getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
+        }
+        return t;
     }
 
     /**

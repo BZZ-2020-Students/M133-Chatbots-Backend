@@ -86,15 +86,15 @@ public class TextResource {
      * Deletes a text by its text.
      * todo: Implement authorization
      *
-     * @param text the text of the text
+     * @param text the Text of the Text
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
      */
     @DELETE
-    @Path("/delete/text/{text}")
+    @Path("/delete/content/{content}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteTextByItsText(@PathParam("text") String text) {
+    public Response deleteTextByItsText(@PathParam("content") String text) {
         new TextDao().deleteByText(text);
 
         return Response

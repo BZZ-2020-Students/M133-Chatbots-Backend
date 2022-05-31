@@ -1,10 +1,13 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.enums.UserRole;
+import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,10 +56,38 @@ public class UserDao extends Dao<User, String> {
     public void deleteByUsername(String username) {
         User user = findByUsername(username);
         if (user != null) {
-            super.delete(user);
+            delete(user);
         } else {
             throw new IllegalArgumentException("Username " + username + " does not exist");
         }
+    }
+
+    @Override
+    public void delete(User user) {
+        RatingDao ratingDao = new RatingDao();
+        Iterable<Rating> ratings = ratingDao.findByUserId(user.getId());
+        for (Rating rating : ratings) {
+            ratingDao.delete(rating);
+        }
+        user.setRatings(new HashSet<>(0));
+
+        ChatbotDao chatbotDao = new ChatbotDao();
+        Iterable<Chatbot> chatbots = chatbotDao.findByUserId(user.getId());
+        for (Chatbot chatbot : chatbots) {
+            chatbotDao.delete(chatbot);
+        }
+        user.setChatbots(new HashSet<>(0));
+
+        super.delete(user);
+    }
+
+    @Override
+    public void delete(String id) throws IllegalArgumentException {
+        User user = findById(id);
+        if (user == null) {
+            throw new IllegalArgumentException("User with id " + id + " does not exist");
+        }
+        delete(user);
     }
 
     /**

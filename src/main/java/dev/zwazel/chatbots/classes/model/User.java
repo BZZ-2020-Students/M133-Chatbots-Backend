@@ -76,7 +76,7 @@ public class User {
      *
      * @since 1.1.0
      */
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @Builder.Default
     @ToString.Exclude
     private Set<Chatbot> chatbots = new LinkedHashSet<>();
@@ -86,7 +86,7 @@ public class User {
      *
      * @since 1.1.0
      */
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @Builder.Default
     @ToString.Exclude
     private Set<Rating> ratings = new LinkedHashSet<>();

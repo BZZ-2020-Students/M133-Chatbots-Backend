@@ -1,4 +1,4 @@
-package dev.zwazel.chatbots.services;
+package dev.zwazel.chatbots.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;

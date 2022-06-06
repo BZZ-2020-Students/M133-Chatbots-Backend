@@ -1,4 +1,4 @@
-package dev.zwazel.chatbots.configs;
+package dev.zwazel.chatbots.config;
 
 import dev.zwazel.chatbots.classes.model.Text;
 
@@ -44,4 +44,6 @@ public class Constants {
      * @since 1.2.0
      */
     public static final int MAX_PASSWORD_LENGTH = 32;
+
+    public static final String REGEX_UUID = "/[a-f\\d]{8}-[a-f\\d]{4}-4[a-f\\d]{3}-[89aAbB][a-f\\d]{3}-[a-f\\d]{12}/";
 }

@@ -2,7 +2,7 @@ package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import dev.zwazel.chatbots.classes.enums.RatingEnum;
-import dev.zwazel.chatbots.configs.Constants;
+import dev.zwazel.chatbots.config.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;

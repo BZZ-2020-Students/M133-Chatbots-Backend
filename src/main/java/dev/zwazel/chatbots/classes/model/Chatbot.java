@@ -2,7 +2,7 @@ package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import dev.zwazel.chatbots.configs.Constants;
+import dev.zwazel.chatbots.config.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.FormParam;
@@ -113,6 +113,7 @@ public class Chatbot {
     @Transient
     @Size(min = Constants.MAX_UUID_LENGTH, max = Constants.MAX_UUID_LENGTH)
     @FormParam("userId")
+    @dev.zwazel.chatbots.util.annotation.UUID
     private String userID;
 
     /**

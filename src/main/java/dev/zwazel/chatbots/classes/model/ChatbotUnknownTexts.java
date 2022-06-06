@@ -47,9 +47,19 @@ public class ChatbotUnknownTexts {
 
     /**
      * The chatbot of the unknown text.
+     *
+     * @since 1.1.0
      */
     @ManyToOne
     @JoinColumn(name = "chatbot_id")
     @NonNull
     private Chatbot chatbot;
+
+    /**
+     * The amount of times this unknown text has been used.
+     *
+     * @since 1.3.0
+     */
+    @Builder.Default
+    private int amountUsed = 0;
 }

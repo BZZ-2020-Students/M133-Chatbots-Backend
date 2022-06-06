@@ -50,14 +50,6 @@ public class Text {
     private String text;
 
     /**
-     * How often this exact text has been used
-     *
-     * @since 0.2
-     */
-    @Builder.Default
-    private Integer amountUsed = 0;
-
-    /**
      * All the unknown texts of a Chatbot.
      *
      * @since 1.1.0

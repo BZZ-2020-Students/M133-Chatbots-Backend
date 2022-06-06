@@ -53,4 +53,12 @@ public class QuestionAnswerQuestion {
     @ManyToOne
     @JoinColumn(name = "question_answer_id")
     private QuestionAnswer questionAnswer;
+
+    /**
+     * How often this Question has been used
+     *
+     * @since 1.3.0
+     */
+    @Builder.Default
+    private int amountUsed = 0;
 }

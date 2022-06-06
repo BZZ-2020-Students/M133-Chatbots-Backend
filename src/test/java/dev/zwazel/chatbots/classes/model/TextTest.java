@@ -35,21 +35,6 @@ public class TextTest {
     public void testSuccessfulBuild() {
         Text text = Text.builder().text("text").build();
 
-        assertEquals(0, text.getAmountUsed());
-        assertEquals("text", text.getText());
-    }
-
-    /**
-     * Tests if the Text is built correctly with an amount used specified.
-     *
-     * @author Zwazel
-     * @since 1.1.0
-     */
-    @Test
-    public void testSuccessfulBuildWithAmountUsed() {
-        Text text = Text.builder().text("text").amountUsed(1).build();
-
-        assertEquals(1, text.getAmountUsed());
         assertEquals("text", text.getText());
     }
 
@@ -63,7 +48,6 @@ public class TextTest {
     public void testNoArgConstructor() {
         Text text = new Text();
 
-        assertEquals(0, text.getAmountUsed());
         assertNull(text.getText());
     }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
 import dev.zwazel.chatbots.configs.Constants;
-import dev.zwazel.chatbots.util.ToJson;
+import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;

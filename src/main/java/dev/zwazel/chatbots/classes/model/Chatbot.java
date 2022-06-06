@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dev.zwazel.chatbots.configs.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.FormParam;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@JsonIgnoreProperties({"createdAt"})
+@JsonIgnoreProperties({"userID", "username"})
 @JsonFilter("ChatbotFilter")
 public class Chatbot {
     /**
@@ -58,7 +59,8 @@ public class Chatbot {
      */
     @NonNull
     @Column(nullable = false, length = Constants.MAX_NAME_LENGTH)
-    @Size(max = Constants.MAX_NAME_LENGTH)
+    @Size(min = Constants.MIN_NAME_LENGTH, max = Constants.MAX_NAME_LENGTH)
+    @FormParam("name")
     private String chatbotName;
 
     /**
@@ -103,5 +105,13 @@ public class Chatbot {
     @Builder.Default
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
-// TODO: 16.05.2022 LEVENSHTEIN DISTANCE
+    @Transient
+    @Size(min = Constants.MAX_UUID_LENGTH, max = Constants.MAX_UUID_LENGTH)
+    @FormParam("userId")
+    private String userID;
+
+    @Transient
+    @Size(min = Constants.MIN_NAME_LENGTH, max = Constants.MAX_NAME_LENGTH)
+    @FormParam("username")
+    private String username;
 }

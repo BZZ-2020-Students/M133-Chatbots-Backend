@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.enums.UserRole;
-import dev.zwazel.chatbots.util.ToJson;
+import dev.zwazel.chatbots.util.json.ToJson;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

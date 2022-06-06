@@ -11,7 +11,7 @@ import dev.zwazel.chatbots.classes.enums.RatingEnum;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
-import dev.zwazel.chatbots.util.ToJson;
+import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;

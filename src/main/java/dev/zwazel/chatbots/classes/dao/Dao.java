@@ -53,7 +53,7 @@ public class Dao<T, I extends Serializable> {
      * @author Zwazel
      * @since 0.3
      */
-    public void save(T t) {
+    public void save(T t) throws IllegalArgumentException {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(t);

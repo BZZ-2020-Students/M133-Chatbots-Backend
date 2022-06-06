@@ -71,16 +71,48 @@ public class RatingDao extends Dao<Rating, String> {
     }
 
     /**
+     * Gets the one rating object made by one user for one chatbot
+     *
+     * @param userId    The id of the User to get the rating for.
+     * @param chatbotId The id of the Chatbot to get the rating for.
+     * @return The Rating object.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    public Rating findByUserAndChatbot(String userId, String chatbotId) {
+        EntityManagerFactory entityManagerFactory = getEntityManagerFactory();
+        Rating t = null;
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            entityManager.getTransaction().begin();
+            t = entityManager.createQuery("SELECT t FROM Rating t where t.user.id = :userID and t.chatbot.id = :chatbotID", Rating.class)
+                    .setParameter("userID", userId)
+                    .setParameter("chatbotID", chatbotId)
+                    .getSingleResult();
+            entityManager.getTransaction().commit();
+        } catch (Exception ignored) {
+
+        }
+        return t;
+    }
+
+    /**
      * Saves a Rating object.
      *
      * @param rating Rating object to save.
      * @author Zwazel
      * @since 0.3
      */
-    // TODO: 19.05.2022 - need to find a way to check if the rating already exists. Users should not be able to rate the same thing twice.
     @Override
-    public void save(Rating rating) {
-        super.save(rating);
+    public void save(Rating rating) throws IllegalArgumentException {
+        Rating ratingInDb = findByUserAndChatbot(rating.getUser().getId(), rating.getChatbot().getId());
+
+        if (ratingInDb == null) {
+            super.save(rating);
+        } else {
+            rating.setId(ratingInDb.getId());
+            throw new IllegalArgumentException("You can not rate the same chatbot twice.");
+        }
     }
 
     /**
@@ -90,9 +122,14 @@ public class RatingDao extends Dao<Rating, String> {
      * @author Zwazel
      * @since 0.3
      */
-    // TODO: 19.05.2022 - need to find a way to check if the rating already exists. Users should not be able to rate the same thing twice.
     @Override
     public void saveCollection(Iterable<Rating> t) {
-        super.saveCollection(t);
+        for (Rating rating : t) {
+            try {
+                save(rating);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -45,5 +45,5 @@ public class Constants {
      */
     public static final int MAX_PASSWORD_LENGTH = 32;
 
-    public static final String REGEX_UUID = "/[a-f\\d]{8}-[a-f\\d]{4}-4[a-f\\d]{3}-[89aAbB][a-f\\d]{3}-[a-f\\d]{12}/";
+    public static final String REGEX_UUID = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
 }

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.config.Constants;
+import dev.zwazel.chatbots.util.annotation.Password;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.FormParam;
 import lombok.*;
 
 import java.util.LinkedHashSet;
@@ -49,6 +51,7 @@ public class User {
     @NonNull
     @Column(nullable = false, length = Constants.MAX_NAME_LENGTH)
     @Size(max = Constants.MAX_NAME_LENGTH)
+    @FormParam("username")
     private String username;
 
     /**
@@ -58,7 +61,9 @@ public class User {
      */
     @NonNull
     @Column(nullable = false, length = Constants.MAX_PASSWORD_LENGTH)
-    @Size(max = Constants.MAX_PASSWORD_LENGTH)
+    @Size(min = Constants.MIN_PASSWORD_LENGTH, max = Constants.MAX_PASSWORD_LENGTH)
+    @Password
+    @FormParam("password")
     private String password;
 
     /**
@@ -69,6 +74,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @NonNull
+    @FormParam("role")
     private UserRole userRole = UserRole.USER;
 
     /**

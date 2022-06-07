@@ -12,7 +12,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
  * @author Zwazel
  * @since 0.3
  */
-public class ToJson<T> {
+public class ToJson {
     /**
      * Converts a Java object to a JSON string, with a filter.
      *

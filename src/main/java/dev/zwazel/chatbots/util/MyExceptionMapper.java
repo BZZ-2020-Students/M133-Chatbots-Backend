@@ -12,15 +12,26 @@ public class MyExceptionMapper implements ExceptionMapper<ConstraintViolationExc
     @Override
     public Response toResponse(final ConstraintViolationException exception) {
         return Response.status(Response.Status.BAD_REQUEST)
-                .entity(prepareMessage(exception))
-                .type("text/plain")
+                .entity("{" +
+                        "\"error\":\"" + prepareMessageSimple(exception) + "\"" +
+                        "\"errorDetailed\":\"" + prepareMessageDetailed(exception) + "\"" +
+                        "}")
+                .type("application/json")
                 .build();
     }
 
-    private String prepareMessage(ConstraintViolationException exception) {
+    private String prepareMessageSimple(ConstraintViolationException exception) {
+        StringBuilder sb = new StringBuilder();
+        for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
+            sb.append(violation.getMessage()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    private String prepareMessageDetailed(ConstraintViolationException exception) {
         StringBuilder msg = new StringBuilder();
-        for (ConstraintViolation<?> cv : exception.getConstraintViolations()) {
-            msg.append(cv.getPropertyPath()).append(" ").append(cv.getMessage()).append("\n");
+        for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
+            msg.append(violation.getPropertyPath()).append(" ").append(violation.getMessage()).append("\n");
         }
         return msg.toString();
     }

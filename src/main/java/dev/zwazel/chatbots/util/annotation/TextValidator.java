@@ -4,20 +4,20 @@ import dev.zwazel.chatbots.config.Constants;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class UUIDValidator implements ConstraintValidator<UUID, String> {
+public class TextValidator implements ConstraintValidator<Text, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        // null values are valid
+        // null values are not valid
         if (value == null) {
-            return true;
-        }
-
-        // check if the length is correct
-        if (value.length() != Constants.UUID_LENGTH) {
             return false;
         }
 
-        // Check if the string matches the regex
-        return value.matches("^[\\da-f]{8}-[\\da-f]{4}-[\\da-f]{4}-[\\da-f]{4}-[\\da-f]{12}$");
+        // check if the length is correct
+        if (value.length() > Constants.MAX_TEXT_LENGTH) {
+            return false;
+        }
+
+        // Check if the String is empty or blank
+        return !value.isEmpty() && !value.trim().isEmpty();
     }
 }

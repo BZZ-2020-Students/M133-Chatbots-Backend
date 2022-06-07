@@ -3,7 +3,7 @@ package dev.zwazel.chatbots.classes.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dev.zwazel.chatbots.config.Constants;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.FormParam;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -47,6 +47,8 @@ public class Text {
      */
     @NonNull
     @Column(name = "text", nullable = false, length = Constants.MAX_TEXT_LENGTH)
+    @dev.zwazel.chatbots.util.annotation.Text
+    @FormParam("text")
     private String text;
 
     /**
@@ -90,20 +92,5 @@ public class Text {
     @Override
     public int hashCode() {
         return getClass().hashCode();
-    }
-
-    /**
-     * Sets the text of the Text object. If the text is longer than the maximum length, it will be truncated.
-     *
-     * @param text The text to set. Can't be null.
-     * @author Zwazel
-     * @since 1.2.0
-     */
-    public void setText(@NonNull String text) {
-        if (text.length() > Constants.MAX_TEXT_LENGTH) {
-            text = text.substring(0, Constants.MAX_TEXT_LENGTH);
-        }
-
-        this.text = text;
     }
 }

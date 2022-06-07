@@ -46,9 +46,9 @@ public class Constants {
     public static final int MAX_PASSWORD_LENGTH = 32;
 
     /**
-     * The regex for UUIDs
+     * The min length of any password
      *
      * @since 1.3.0
      */
-    public static final String REGEX_UUID = "^[\\da-f]{8}-[\\da-f]{4}-[\\da-f]{4}-[\\da-f]{4}-[\\da-f]{12}$";
+    public static final int MIN_PASSWORD_LENGTH = 6;
 }

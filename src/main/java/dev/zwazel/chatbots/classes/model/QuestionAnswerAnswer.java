@@ -3,7 +3,7 @@ package dev.zwazel.chatbots.classes.model;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import dev.zwazel.chatbots.config.Constants;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.FormParam;
 import lombok.*;
 
 import java.util.UUID;
@@ -43,6 +43,8 @@ public class QuestionAnswerAnswer {
     @ManyToOne
     @JoinColumn(name = "answer_id")
     @NonNull
+    @dev.zwazel.chatbots.util.annotation.Text
+    @FormParam("answer")
     private Text answer;
 
     /**
@@ -53,6 +55,16 @@ public class QuestionAnswerAnswer {
     @ManyToOne
     @JoinColumn(name = "question_answer_id")
     private QuestionAnswer questionAnswer;
+
+    /**
+     * The ID of the questionAnswer
+     *
+     * @since 1.3.0
+     */
+    @Transient
+    @dev.zwazel.chatbots.util.annotation.UUID
+    @FormParam("questionAnswerId")
+    private String questionAnswerId;
 
     /**
      * How often this Answer has been used

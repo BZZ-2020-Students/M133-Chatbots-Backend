@@ -34,10 +34,10 @@ public class QuestionAnswer {
      * @since 0.3
      */
     @Id
-    @Column(name = "id", nullable = false, length = Constants.MAX_UUID_LENGTH)
+    @Column(name = "id", nullable = false, length = Constants.UUID_LENGTH)
     @GeneratedValue(generator = "uuid")
     @Builder.Default
-    @Size(max = Constants.MAX_UUID_LENGTH)
+    @dev.zwazel.chatbots.util.annotation.UUID
     private String id = UUID.randomUUID().toString();
 
     /**

@@ -45,10 +45,10 @@ public class Chatbot {
      * @since 0.2
      */
     @Id
-    @Column(name = "id", nullable = false, length = Constants.MAX_UUID_LENGTH)
+    @Column(name = "id", nullable = false, length = Constants.UUID_LENGTH)
     @GeneratedValue(generator = "uuid")
     @Builder.Default
-    @Size(max = Constants.MAX_UUID_LENGTH)
+    @dev.zwazel.chatbots.util.annotation.UUID
     private String id = UUID.randomUUID().toString();
 
 
@@ -111,7 +111,6 @@ public class Chatbot {
      * @since 1.3.0
      */
     @Transient
-    @Size(min = Constants.MAX_UUID_LENGTH, max = Constants.MAX_UUID_LENGTH)
     @FormParam("userId")
     @dev.zwazel.chatbots.util.annotation.UUID
     private String userID;

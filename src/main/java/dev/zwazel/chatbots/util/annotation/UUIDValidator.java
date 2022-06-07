@@ -19,6 +19,12 @@ public class UUIDValidator implements ConstraintValidator<UUID, String> {
             return true;
         }
 
+        // check if the length is correct
+        if (value.length() != Constants.UUID_LENGTH) {
+            return false;
+        }
+
+        // Check if the string matches the regex
         return value.matches(Constants.REGEX_UUID);
     }
 }

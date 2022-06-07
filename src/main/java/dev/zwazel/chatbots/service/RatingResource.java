@@ -53,7 +53,6 @@ public class RatingResource {
 
         UserDao userDao = new UserDao();
         User user = (userId.isBlank() || userId.isEmpty()) ? userDao.findByUsername(username) : userDao.findById(userId);
-
         if (user == null) {
             return Response
                     .status(404)
@@ -63,7 +62,6 @@ public class RatingResource {
 
         ChatbotDao chatbotDao = new ChatbotDao();
         Chatbot chatbot = (chatbotId.isBlank() || chatbotId.isEmpty()) ? chatbotDao.findByName(chatbotName) : chatbotDao.findById(chatbotId);
-
         if (chatbot == null) {
             return Response
                     .status(404)
@@ -89,7 +87,14 @@ public class RatingResource {
                 .favourite(favourite)
                 .build();
 
-        ratingDao.save(ratingObj);
+        try {
+            ratingDao.save(ratingObj);
+        } catch (IllegalArgumentException e) {
+            return Response
+                    .status(409)
+                    .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                    .build();
+        }
 
         try {
             return Response

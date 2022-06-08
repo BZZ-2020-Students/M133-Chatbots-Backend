@@ -7,16 +7,14 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.RatingDao;
 import dev.zwazel.chatbots.classes.dao.UserDao;
-import dev.zwazel.chatbots.classes.enums.RatingEnum;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.util.Arrays;
 
 /**
  * Resource class for the Rating entity.
@@ -30,21 +28,29 @@ public class RatingResource {
     @Path("/create")
     @Produces("application/json")
     public Response createRating(
-            @DefaultValue("") @FormParam("userId") String userId,
-            @DefaultValue("") @FormParam("username") String username,
-            @DefaultValue("") @FormParam("chatbotId") String chatbotId,
-            @DefaultValue("") @FormParam("chatbotName") String chatbotName,
-            @FormParam("rating") String rating,
-            @FormParam("favourite") boolean favourite
+            @Valid @BeanParam Rating rating
     ) {
-        if ((userId.isBlank() || userId.isEmpty()) && (username.isBlank() || username.isEmpty())) {
+        boolean userIdSpecified = rating.getUserId() == null ||
+                rating.getUserId().isBlank() ||
+                rating.getUserId().isEmpty();
+        boolean usernameSpecified = rating.getUsername() == null ||
+                rating.getUsername().isBlank() ||
+                rating.getUsername().isEmpty();
+        boolean chatbotIdSpecified = rating.getChatbotId() == null ||
+                rating.getChatbotId().isBlank() ||
+                rating.getChatbotId().isEmpty();
+        boolean chatbotNameSpecified = rating.getChatbotName() == null ||
+                rating.getChatbotName().isBlank() ||
+                rating.getChatbotName().isEmpty();
+
+        if (!userIdSpecified && !usernameSpecified) {
             return Response
                     .status(400)
                     .entity("{\"error\": \"userId or username must be provided\"}")
                     .build();
         }
 
-        if ((chatbotId.isBlank() || chatbotId.isEmpty()) && (chatbotName.isBlank() || chatbotName.isEmpty())) {
+        if (!chatbotIdSpecified && !chatbotNameSpecified) {
             return Response
                     .status(400)
                     .entity("{\"error\": \"chatbotId or chatbotName must be provided\"}")
@@ -52,7 +58,8 @@ public class RatingResource {
         }
 
         UserDao userDao = new UserDao();
-        User user = (userId.isBlank() || userId.isEmpty()) ? userDao.findByUsername(username) : userDao.findById(userId);
+        User user = (!userIdSpecified) ? userDao.findByUsername(rating.getUsername()) :
+                userDao.findById(rating.getId());
         if (user == null) {
             return Response
                     .status(404)
@@ -61,7 +68,8 @@ public class RatingResource {
         }
 
         ChatbotDao chatbotDao = new ChatbotDao();
-        Chatbot chatbot = (chatbotId.isBlank() || chatbotId.isEmpty()) ? chatbotDao.findByName(chatbotName) : chatbotDao.findById(chatbotId);
+        Chatbot chatbot = (!chatbotIdSpecified) ? chatbotDao.findByName(rating.getChatbotName()) :
+                chatbotDao.findById(rating.getChatbotId());
         if (chatbot == null) {
             return Response
                     .status(404)
@@ -69,26 +77,9 @@ public class RatingResource {
                     .build();
         }
 
-        RatingEnum ratingEnum;
-        try {
-            ratingEnum = RatingEnum.valueOf(rating);
-        } catch (IllegalArgumentException e) {
-            return Response
-                    .status(400)
-                    .entity("{\"error\": \"rating must be one of the following: " + Arrays.toString(RatingEnum.values()) + "\"}")
-                    .build();
-        }
-
         RatingDao ratingDao = new RatingDao();
-        Rating ratingObj = Rating.builder()
-                .rating(ratingEnum)
-                .chatbot(chatbot)
-                .user(user)
-                .favourite(favourite)
-                .build();
-
         try {
-            ratingDao.save(ratingObj);
+            ratingDao.save(rating);
         } catch (IllegalArgumentException e) {
             return Response
                     .status(409)
@@ -99,7 +90,7 @@ public class RatingResource {
         try {
             return Response
                     .status(201)
-                    .entity(ToJson.toJson(ratingObj, getFilterProvider()))
+                    .entity(ToJson.toJson(rating, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response

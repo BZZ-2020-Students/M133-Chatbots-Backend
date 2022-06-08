@@ -57,22 +57,16 @@ public class InitDbOnStartup {
                 Set<ChatbotUnknownTexts> unknownTextsChatbot = c.getChatbotUnknownTexts();
                 List<Text> unknownTexts = new ArrayList<>();
 
-                unknownTextsChatbot.forEach(ut -> {
-                    unknownTexts.add(ut.getUnknownText());
-                });
+                unknownTextsChatbot.forEach(ut -> unknownTexts.add(ut.getUnknownText()));
 
                 textDao.saveCollection(unknownTexts);
                 c.getQuestionAnswers().forEach(qa -> {
                     List<Text> answers = new ArrayList<>();
-                    qa.getQuestionAnswerAnswers().forEach(qaAnswer -> {
-                        answers.add(qaAnswer.getAnswer());
-                    });
+                    qa.getQuestionAnswerAnswers().forEach(qaAnswer -> answers.add(qaAnswer.getAnswer()));
                     textDao.saveCollection(answers);
 
                     List<Text> questions = new ArrayList<>();
-                    qa.getQuestionAnswerQuestions().forEach(qaQuestion -> {
-                        questions.add(qaQuestion.getQuestion());
-                    });
+                    qa.getQuestionAnswerQuestions().forEach(qaQuestion -> questions.add(qaQuestion.getQuestion()));
                     textDao.saveCollection(questions);
                 });
 
@@ -183,10 +177,11 @@ public class InitDbOnStartup {
      */
     private List<User> getUsers() {
         List<User> users = new ArrayList<>();
+        String verySecureUserPassword = "v3Ry$ecUre";
 
         User user = User.builder()
                 .username("user")
-                .password("user")
+                .password(verySecureUserPassword)
                 .userRole(UserRole.USER)
                 .build();
 
@@ -194,7 +189,7 @@ public class InitDbOnStartup {
 
         User admin = User.builder()
                 .username("admin")
-                .password("admin")
+                .password(verySecureUserPassword)
                 .userRole(UserRole.ADMIN)
                 .build();
 

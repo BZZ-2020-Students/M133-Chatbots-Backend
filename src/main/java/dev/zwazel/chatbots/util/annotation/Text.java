@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target({java.lang.annotation.ElementType.FIELD})
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {TextValidator.class})
+@Constraint(validatedBy = {TextValidatorString.class, TextValidator.class})
 public @interface Text {
     String message() default "Invalid Text";
 

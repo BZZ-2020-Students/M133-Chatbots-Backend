@@ -11,28 +11,32 @@ public class MyExceptionMapper implements ExceptionMapper<ConstraintViolationExc
 
     @Override
     public Response toResponse(final ConstraintViolationException exception) {
+
+
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity("{" +
-                        "\"error\":\"" + prepareMessageSimple(exception) + "\"" +
-                        "\"errorDetailed\":\"" + prepareMessageDetailed(exception) + "\"" +
+                        "\"errorSimple\":" + prepareMessageSimple(exception) +
+                        ",\"errorDetailed\":" + prepareMessageDetailed(exception) +
                         "}")
                 .type("application/json")
                 .build();
     }
 
     private String prepareMessageSimple(ConstraintViolationException exception) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("[");
         for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
-            sb.append(violation.getMessage()).append("\n");
+            sb.append("{\"error\":\"").append(violation.getMessage()).append("\"},");
         }
-        return sb.toString();
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.append("]").toString();
     }
 
     private String prepareMessageDetailed(ConstraintViolationException exception) {
-        StringBuilder msg = new StringBuilder();
+        StringBuilder msg = new StringBuilder("[");
         for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
-            msg.append(violation.getPropertyPath()).append(" ").append(violation.getMessage()).append("\n");
+            msg.append("{\"property\":\"").append(violation.getPropertyPath()).append("\",\"message\":\"").append(violation.getMessage()).append("\"},");
         }
-        return msg.toString();
+        msg.deleteCharAt(msg.length() - 1);
+        return msg.append("]").toString();
     }
 }

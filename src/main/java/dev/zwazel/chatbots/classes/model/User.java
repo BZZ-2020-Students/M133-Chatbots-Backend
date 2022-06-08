@@ -50,7 +50,7 @@ public class User {
      */
     @NonNull
     @Column(nullable = false, length = Constants.MAX_NAME_LENGTH)
-    @Size(max = Constants.MAX_NAME_LENGTH)
+    @Size(min = Constants.MIN_NAME_LENGTH, max = Constants.MAX_NAME_LENGTH)
     @FormParam("username")
     private String username;
 
@@ -61,7 +61,6 @@ public class User {
      */
     @NonNull
     @Column(nullable = false, length = Constants.MAX_PASSWORD_LENGTH)
-    @Size(min = Constants.MIN_PASSWORD_LENGTH, max = Constants.MAX_PASSWORD_LENGTH)
     @Password
     @FormParam("password")
     private String password;

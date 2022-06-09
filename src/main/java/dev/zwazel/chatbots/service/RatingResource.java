@@ -30,27 +30,27 @@ public class RatingResource {
     public Response createRating(
             @Valid @BeanParam Rating rating
     ) {
-        boolean userIdSpecified = rating.getUserId() == null ||
+        boolean userIdNotSpecified = rating.getUserId() == null ||
                 rating.getUserId().isBlank() ||
                 rating.getUserId().isEmpty();
-        boolean usernameSpecified = rating.getUsername() == null ||
+        boolean usernameNotSpecified = rating.getUsername() == null ||
                 rating.getUsername().isBlank() ||
                 rating.getUsername().isEmpty();
-        boolean chatbotIdSpecified = rating.getChatbotId() == null ||
+        boolean chatbotIdNotSpecified = rating.getChatbotId() == null ||
                 rating.getChatbotId().isBlank() ||
                 rating.getChatbotId().isEmpty();
-        boolean chatbotNameSpecified = rating.getChatbotName() == null ||
+        boolean chatbotNameNotSpecified = rating.getChatbotName() == null ||
                 rating.getChatbotName().isBlank() ||
                 rating.getChatbotName().isEmpty();
 
-        if (!userIdSpecified && !usernameSpecified) {
+        if (userIdNotSpecified && usernameNotSpecified) {
             return Response
                     .status(400)
                     .entity("{\"error\": \"userId or username must be provided\"}")
                     .build();
         }
 
-        if (!chatbotIdSpecified && !chatbotNameSpecified) {
+        if (chatbotIdNotSpecified && chatbotNameNotSpecified) {
             return Response
                     .status(400)
                     .entity("{\"error\": \"chatbotId or chatbotName must be provided\"}")
@@ -58,8 +58,9 @@ public class RatingResource {
         }
 
         UserDao userDao = new UserDao();
-        User user = (!userIdSpecified) ? userDao.findByUsername(rating.getUsername()) :
-                userDao.findById(rating.getId());
+        User user = (userIdNotSpecified) ? userDao.findByUsername(rating.getUsername()) :
+                userDao.findById(rating.getUserId());
+
         if (user == null) {
             return Response
                     .status(404)
@@ -68,7 +69,7 @@ public class RatingResource {
         }
 
         ChatbotDao chatbotDao = new ChatbotDao();
-        Chatbot chatbot = (!chatbotIdSpecified) ? chatbotDao.findByName(rating.getChatbotName()) :
+        Chatbot chatbot = (chatbotIdNotSpecified) ? chatbotDao.findByName(rating.getChatbotName()) :
                 chatbotDao.findById(rating.getChatbotId());
         if (chatbot == null) {
             return Response

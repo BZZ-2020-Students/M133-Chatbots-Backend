@@ -105,6 +105,11 @@ public class RatingDao extends Dao<Rating, String> {
      */
     @Override
     public void save(Rating rating) throws IllegalArgumentException {
+        //noinspection ConstantConditions
+        if (rating.getChatbot() == null || rating.getUser() == null) {
+            throw new IllegalArgumentException("Rating object is missing Chatbot or User.");
+        }
+
         Rating ratingInDb = findByUserAndChatbot(rating.getUser().getId(), rating.getChatbot().getId());
 
         if (ratingInDb == null) {

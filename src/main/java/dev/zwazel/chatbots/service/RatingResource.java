@@ -60,7 +60,6 @@ public class RatingResource {
         UserDao userDao = new UserDao();
         User user = (userIdNotSpecified) ? userDao.findByUsername(rating.getUsername()) :
                 userDao.findById(rating.getUserId());
-
         if (user == null) {
             return Response
                     .status(404)
@@ -77,6 +76,10 @@ public class RatingResource {
                     .entity("{\"error\": \"chatbot not found\"}")
                     .build();
         }
+
+        // Needed for the save method to work
+        rating.setUser(user);
+        rating.setChatbot(chatbot);
 
         RatingDao ratingDao = new RatingDao();
         try {

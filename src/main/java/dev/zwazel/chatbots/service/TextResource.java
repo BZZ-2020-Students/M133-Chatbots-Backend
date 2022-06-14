@@ -20,9 +20,43 @@ import javax.persistence.EntityExistsException;
 @Path("/text")
 public class TextResource {
     /**
+     * Updates a text in the database.
+     *
+     * @param text The text to update.
+     * @return The updated text.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateText(@PathParam("id") String id, @Valid @BeanParam Text text) {
+        TextDao textDao = new TextDao();
+        Text textFromDb = textDao.findById(id);
+        if (textFromDb == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        textFromDb.setText(text.getText());
+        textDao.update(textFromDb);
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(textFromDb))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
+    /**
      * Creates a new Text object and returns it.
      *
-     * @param text The text of the Text object.
+     * @param text The text
      * @return The created text object if successful.
      * @author Zwazel
      * @since 1.2.0

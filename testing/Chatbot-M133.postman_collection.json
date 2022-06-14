@@ -308,12 +308,15 @@
 															"    })\r",
 															"});\r",
 															"\r",
-															"pm.test(\"All Chatbots are correct\", function() {\r",
+															"pm.test(\"No duplicate chatbots found\", function() {\r",
 															"    const ratings = pm.response.json();\r",
 															"\r",
-															"    const chatbotId = pm.collectionVariables.get(\"ratingInDbChatbotId\");\r",
 															"    ratings.forEach((rating, ratingIndex) => {\r",
-															"        pm.expect(rating.chatbot.id).to.eql(chatbotId);\r",
+															"        ratings.forEach((rating2, ratingIndex2) => {\r",
+															"            if(rating !== rating2) {\r",
+															"                pm.expect(rating.chatbot.id).to.not.eq(rating2.chatbot.id);\r",
+															"            }\r",
+															"        })\r",
 															"    })\r",
 															"});"
 														],
@@ -926,6 +929,103 @@
 											"response": []
 										}
 									]
+								},
+								{
+									"name": "Validation",
+									"item": [
+										{
+											"name": "TextEmpty",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 400\", function () {\r",
+															"    pm.response.to.have.status(400);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Error is correct\", function () {\r",
+															"    var jsonData = pm.response.json();\r",
+															"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Text\");\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "text",
+															"value": "",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/text/create",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"text",
+														"create"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "TextTooLong",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 400\", function () {\r",
+															"    pm.response.to.have.status(400);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Error is correct\", function () {\r",
+															"    var jsonData = pm.response.json();\r",
+															"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Text\");\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "text",
+															"value": "QZTblCGl9p9TfGOFq1dOOR21aIWpLEwONuTey895Loi2gfmoanrqwvNX5moU9cq93gtrIyvaYpeyCbCDSasvn2WpFTuh3hw9X46sCWCJcn26tZsrpmPAZH3oGGZpRNIRraYxH9rWRlKAObC4socPa2Ki21FOFcacPnbO3JHt0Nj9zyn9bLWekMGomTZNAEz772HlyKw3kHGPcked59WKOMV7qjcuGdij9N6HjOCqVsu34LkDMGu07Xqxrx99klZJOmuLEOXKuoIRUKRtEVWY9yjTbtZfKSQvDkHfXRgg8AtTAnVPiJpVYjnW6Eda4hMVcdJg3E2cD82hOmLku36Ma6wAPySpageMMM894VC8Bnfp1PEwJtJx3MtLtGYLzYPNbtRpyC1B489abqlGUp4ns3vIrqKc9n4Q1v6q2LXeJYrWWRN0NYfZxQ1eRP6YEeRnK5JNf5BulTPSKEfhmDKLYbXOFscFhzeLVRGM9tx67gesI9rIdKVJDzreZNcphigncKrD5HQwgKeg0YhcM3r8Ewh0l0hrYDOAghn0RWH8PAzpWpFgPV41u4ftZQ6UeljhTuAIdNHxz1KN49ALUXN6SJJoal9FzvvIXfqa6tsFVmTyFZSths2UzFqEjFW07HE6AckhiH0KjuOUjjd9cxjTeLVpdeqn6zM7nN3eri2ImK2vSYRk7fndv632GNCfIyVm34kEjd85kNIIQbqpGxASrxKxc0F1KxAII7R5u3v0gJ16p5ZCEzaFbphvcnSZPi1j7WpPok4iS2ZlzmxjMOZZjFmM06vf8y74k7qbWD5vPgUAx6RUKKP3Z9h3oVQkrJN3ASDiNiP02h3vJ6NnYbydrWFaiu9ZX5Am0hMMI248P7ycRffJzPnZ0H4velYsmtk3ZQ5A6rCtUqpwTMEMAbBJxdOGqQkcwJ2XVUwh48sLRumjMPlbxKUcI7f8osA4jz9dvOWVhe5x70cbQwXN5GqsfhyU2tYiOQioi7wFDkfZusddMBMEGqydXRULU9e9IG0Y9\n",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/text/create",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"text",
+														"create"
+													]
+												}
+											},
+											"response": []
+										}
+									]
 								}
 							]
 						},
@@ -984,7 +1084,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}",
+															"value": "{{$randomPassword}}$",
 															"type": "text"
 														}
 													]
@@ -1050,7 +1150,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}",
+															"value": "{{$randomPassword}}$",
 															"type": "text"
 														},
 														{
@@ -1121,7 +1221,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}",
+															"value": "{{$randomPassword}}$",
 															"type": "text"
 														},
 														{
@@ -1177,7 +1277,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}",
+															"value": "{{$randomPassword}}$",
 															"type": "text"
 														}
 													]
@@ -1196,114 +1296,12 @@
 											"response": []
 										}
 									]
-								}
-							]
-						},
-						{
-							"name": "Chatbot",
-							"item": [
+								},
 								{
 									"name": "Validation",
 									"item": [
 										{
-											"name": "ChatbotName",
-											"item": [
-												{
-													"name": "TestValidateChatbotNameTooShort",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 400\", function () {\r",
-																	"    pm.response.to.have.status(400);\r",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [],
-														"body": {
-															"mode": "urlencoded",
-															"urlencoded": [
-																{
-																	"key": "name",
-																	"value": "12",
-																	"type": "text"
-																},
-																{
-																	"key": "username",
-																	"value": "{{userInDbName}}",
-																	"type": "text"
-																}
-															]
-														},
-														"url": {
-															"raw": "{{base_url_chatbot}}/chatbot/create",
-															"host": [
-																"{{base_url_chatbot}}"
-															],
-															"path": [
-																"chatbot",
-																"create"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "TestValidateChatbotNameTooLong",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 400\", function () {\r",
-																	"    pm.response.to.have.status(400);\r",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [],
-														"body": {
-															"mode": "urlencoded",
-															"urlencoded": [
-																{
-																	"key": "name",
-																	"value": "123456789101112131415161718192021222324252627282930313233",
-																	"type": "text"
-																},
-																{
-																	"key": "username",
-																	"value": "{{userInDbName}}",
-																	"type": "text"
-																}
-															]
-														},
-														"url": {
-															"raw": "{{base_url_chatbot}}/chatbot/create",
-															"host": [
-																"{{base_url_chatbot}}"
-															],
-															"path": [
-																"chatbot",
-																"create"
-															]
-														}
-													},
-													"response": []
-												}
-											]
-										},
-										{
-											"name": "UserName",
+											"name": "Username",
 											"item": [
 												{
 													"name": "TestValidateUsernameTooShort",
@@ -1314,6 +1312,16 @@
 																"exec": [
 																	"pm.test(\"Status code is 400\", function () {\r",
 																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -1327,8 +1335,8 @@
 															"mode": "urlencoded",
 															"urlencoded": [
 																{
-																	"key": "name",
-																	"value": "{{$randomUserName}}",
+																	"key": "password",
+																	"value": "{{$randomPassword}}$",
 																	"type": "text"
 																},
 																{
@@ -1339,12 +1347,12 @@
 															]
 														},
 														"url": {
-															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"raw": "{{base_url_chatbot}}/user/create",
 															"host": [
 																"{{base_url_chatbot}}"
 															],
 															"path": [
-																"chatbot",
+																"user",
 																"create"
 															]
 														}
@@ -1352,7 +1360,7 @@
 													"response": []
 												},
 												{
-													"name": "TestValidateUserNameTooLong",
+													"name": "TestValidateUsernameTooLong",
 													"event": [
 														{
 															"listen": "test",
@@ -1360,6 +1368,16 @@
 																"exec": [
 																	"pm.test(\"Status code is 400\", function () {\r",
 																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -1373,24 +1391,365 @@
 															"mode": "urlencoded",
 															"urlencoded": [
 																{
-																	"key": "name",
-																	"value": "{{$randomUserName}}",
+																	"key": "username",
+																	"value": "123456789101112131415161718192021222324252627282930313233",
 																	"type": "text"
 																},
 																{
-																	"key": "username",
-																	"value": "123456789101112131415161718192021222324252627282930313233",
+																	"key": "password",
+																	"value": "{{$randomPassword}}$",
 																	"type": "text"
 																}
 															]
 														},
 														"url": {
-															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"raw": "{{base_url_chatbot}}/user/create",
 															"host": [
 																"{{base_url_chatbot}}"
 															],
 															"path": [
-																"chatbot",
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "password",
+											"item": [
+												{
+													"name": "PasswordMissingUppercaseLetter",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "1234$a",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "PasswordMissingLowercase",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "1234$A",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "PasswordMissingNumber",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "abcd$E",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "PasswordMissingSpecialChar",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "abcd1E",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "PasswordTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "aB1$",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "PasswordTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"The correct amount of errors\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "abcd1E$13gb12uzg3uz123zu12v3zu123z123tz12u398g123vb128zf318z72",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
 																"create"
 															]
 														}
@@ -1400,7 +1759,12 @@
 											]
 										}
 									]
-								},
+								}
+							]
+						},
+						{
+							"name": "Chatbot",
+							"item": [
 								{
 									"name": "Success",
 									"item": [
@@ -1603,6 +1967,348 @@
 												}
 											},
 											"response": []
+										}
+									]
+								},
+								{
+									"name": "Validation",
+									"item": [
+										{
+											"name": "ChatbotName",
+											"item": [
+												{
+													"name": "TestValidateChatbotNameTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "12",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{userInDbName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestValidateChatbotNameTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "123456789101112131415161718192021222324252627282930313233",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{userInDbName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Username",
+											"item": [
+												{
+													"name": "TestValidateUsernameTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "12",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestValidateUserNameTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "123456789101112131415161718192021222324252627282930313233",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "UserId",
+											"item": [
+												{
+													"name": "TestValidateUserIdTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "userId",
+																	"value": "12",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestValidateUserIdTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "userId",
+																	"value": "123456789101112131415161718192021222324252627282930313233343536",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestValidateUserIdNotValidUUID",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "userId",
+																	"value": "84f4c641-9009-4fb9-8a64-1?c69a932124",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
 										}
 									]
 								}
@@ -1879,10 +2585,1136 @@
 												}
 											},
 											"response": []
+										},
+										{
+											"name": "TestCreateRatingDuplicate",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 409\", function () {\r",
+															"    pm.response.to.have.status(409);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "userId",
+															"value": "{{newlyCreatedUserID}}",
+															"type": "text"
+														},
+														{
+															"key": "chatbotId",
+															"value": "{{newlyCreatedChatbotId}}",
+															"type": "text"
+														},
+														{
+															"key": "rating",
+															"value": "UPVOTE",
+															"type": "text"
+														},
+														{
+															"key": "favourite",
+															"value": "{{$randomBoolean}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/rating/create",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"rating",
+														"create"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Validation",
+									"item": [
+										{
+											"name": "username",
+											"item": [
+												{
+													"name": "UsernameTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "12",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "UsernameTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "321312312312312312312312321312381267371263781263871263781",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "DOWNVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "chatbotName",
+											"item": [
+												{
+													"name": "ChatbotNameTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "12",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "ChatbotNameTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "DOWNVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "321312312312312312312312321312381267371263781263871263781",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "userId",
+											"item": [
+												{
+													"name": "IdTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "{{$randomUUID}}X",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "IdTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "12c9e7d9-def8-4e5e-9728-efa8e4693b7",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "NotProperUUIDFormat",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "12c9e7d9-def8-4e5e-972-efa8e4693b7",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "DOWNVOTE",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "chatbotId",
+											"item": [
+												{
+													"name": "IdTooLong",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "{{$randomUUID}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotId",
+																	"value": "{{$randomUUID}}X",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "IdTooShort",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "{{$randomUUID}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotId",
+																	"value": "12c9e7d9-def8-4e5e-9728-efa8e4693b7",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "NotProperUUIDFormat",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "{{$randomUUID}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotId",
+																	"value": "12c9e7d9-def8-4e5e-972-efa8e4693b7",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "DOWNVOTE",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "rating",
+											"item": [
+												{
+													"name": "UnknownRating",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "{{newlyCreatedUserID}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{newlyCreatedChatbotName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "DINGENS",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "RatingButInLowerCase",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "{{newlyCreatedUserID}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{newlyCreatedChatbotName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "upvote",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "favourite",
+											"item": [
+												{
+													"name": "FavouriteNonBoolean",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Favourite is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.favourite).to.eql(false);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "userId",
+																	"value": "{{newlyCreatedUserID}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{newlyCreatedChatbotName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "dings",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "FavouriteBooleanUpperCase",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Favourite is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.favourite).to.eql(true);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{newlyCreatedUserForChatbot1Name}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{newlyCreatedChatbotName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "TRUE",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "FavouriteBooleanLowerCase",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Favourite is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.favourite).to.eql(true);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{newlyCreatedUserForChatbot1Name}}",
+																	"type": "text"
+																},
+																{
+																	"key": "chatbotName",
+																	"value": "{{chatbotInDbName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "true",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
 										}
 									]
 								}
 							]
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "User",
+							"item": []
+						},
+						{
+							"name": "Text",
+							"item": [
+								{
+									"name": "Success",
+									"item": [
+										{
+											"name": "UpdateText",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"The text is no longer the same\", function () {\r",
+															"    const oldText = pm.collectionVariables.get(\"textInDbText\");\r",
+															"    var jsonData = pm.response.json();\r",
+															"    pm.expect(jsonData.text).to.not.eql(oldText);\r",
+															"\r",
+															"    pm.collectionVariables.set(\"updatedTextInDb\", jsonData.text);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"The ID is still the same\", function () {\r",
+															"    const oldId = pm.collectionVariables.get(\"textInDbId\");\r",
+															"    var jsonData = pm.response.json();\r",
+															"    pm.expect(jsonData.id).to.eql(oldId);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "text",
+															"value": "{{$randomLoremText}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/text/update/{{textInDbId}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"text",
+														"update",
+														"{{textInDbId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Fail",
+									"item": [
+										{
+											"name": "UpdateTextWithAlreadyExistingText",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 500\", function () {\r",
+															"    pm.response.to.have.status(500);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "text",
+															"value": "{{updatedTextInDb}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/text/update/{{newlyCreatedTextID}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"text",
+														"update",
+														"{{newlyCreatedTextID}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Chatbot",
+							"item": []
+						},
+						{
+							"name": "Rating",
+							"item": []
 						}
 					]
 				},
@@ -2364,6 +4196,10 @@
 		},
 		{
 			"key": "newlyCreatedUserForChatbot1Name",
+			"value": ""
+		},
+		{
+			"key": "updatedTextInDb",
 			"value": ""
 		}
 	]

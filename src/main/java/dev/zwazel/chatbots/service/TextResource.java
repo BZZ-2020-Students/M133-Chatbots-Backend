@@ -3,8 +3,8 @@ package dev.zwazel.chatbots.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
-import dev.zwazel.chatbots.config.Constants;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -30,16 +30,10 @@ public class TextResource {
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createText(@FormParam("text") String text) {
+    public Response createText(@Valid @BeanParam Text text) {
         TextDao textDao = new TextDao();
-
-        if (text.length() > Constants.MAX_TEXT_LENGTH) {
-            text = text.substring(0, Constants.MAX_TEXT_LENGTH);
-        }
-
-        Text newText = new Text(text);
         try {
-            textDao.save(newText);
+            textDao.save(text);
         } catch (EntityExistsException e) {
             e.printStackTrace();
             return Response
@@ -51,7 +45,7 @@ public class TextResource {
         try {
             return Response
                     .status(201)
-                    .entity(ToJson.toJson(newText))
+                    .entity(ToJson.toJson(text))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();

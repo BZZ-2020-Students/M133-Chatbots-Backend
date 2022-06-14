@@ -15,7 +15,7 @@ public class Constants {
      * @see Text
      * @since 1.2.0
      */
-    public static final int MAX_TEXT_LENGTH = 512;
+    public static final int MAX_TEXT_LENGTH = 1024;
 
     /**
      * The max length of any UUID

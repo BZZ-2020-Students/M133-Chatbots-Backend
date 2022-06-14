@@ -8,6 +8,7 @@ import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -22,6 +23,50 @@ import javax.persistence.EntityExistsException;
  */
 @Path("/user")
 public class UserResource {
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateUser(@PathParam("id") String id, @Valid @BeanParam User user) {
+        UserDao userDao = new UserDao();
+        User userToUpdate = userDao.findById(id);
+        if (userToUpdate == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        boolean changed = false;
+        if (!user.getUsername().equals(userToUpdate.getUsername())) {
+            userToUpdate.setUsername(user.getUsername());
+            changed = true;
+        }
+
+        if (!user.getPassword().equals(userToUpdate.getPassword())) {
+            userToUpdate.setPassword(user.getPassword());
+            changed = true;
+        }
+
+        if (!user.getUserRole().equals(userToUpdate.getUserRole())) {
+            userToUpdate.setUserRole(user.getUserRole());
+            changed = true;
+        }
+
+        if (changed) {
+            userDao.update(userToUpdate);
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(userToUpdate, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
     /**
      * Creates a new User object and returns it.
      *

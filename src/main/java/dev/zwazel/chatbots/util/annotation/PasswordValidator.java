@@ -7,9 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 public class PasswordValidator implements ConstraintValidator<Password, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        // null values are not valid
+        // null values are valid
         if (value == null) {
-            return false;
+            return true;
         }
 
         // Checks for min and max characters, at least one uppercase letter, one lowercase letter, one number and one special character:

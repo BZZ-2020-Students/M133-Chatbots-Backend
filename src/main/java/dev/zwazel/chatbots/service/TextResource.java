@@ -36,8 +36,11 @@ public class TextResource {
         if (textFromDb == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        textFromDb.setText(text.getText());
-        textDao.update(textFromDb);
+
+        if (!text.getText().equals(textFromDb.getText())) {
+            textFromDb.setText(text.getText());
+            textDao.update(textFromDb);
+        }
 
         try {
             return Response

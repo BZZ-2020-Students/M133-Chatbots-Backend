@@ -34,17 +34,17 @@ public class UserResource {
         }
 
         boolean changed = false;
-        if (!user.getUsername().equals(userToUpdate.getUsername())) {
+        if (user.getUsername() != null && !user.getUsername().equals(userToUpdate.getUsername())) {
             userToUpdate.setUsername(user.getUsername());
             changed = true;
         }
 
-        if (!user.getPassword().equals(userToUpdate.getPassword())) {
+        if (user.getPassword() != null && !user.getPassword().equals(userToUpdate.getPassword())) {
             userToUpdate.setPassword(user.getPassword());
             changed = true;
         }
 
-        if (!user.getUserRole().equals(userToUpdate.getUserRole())) {
+        if (user.getUserRole() != null && !user.getUserRole().equals(userToUpdate.getUserRole())) {
             userToUpdate.setUserRole(user.getUserRole());
             changed = true;
         }
@@ -56,7 +56,7 @@ public class UserResource {
         try {
             return Response
                     .status(201)
-                    .entity(ToJson.toJson(userToUpdate, getFilterProvider()))
+                    .entity(ToJson.toJson(userToUpdate, getFilterProvider(false)))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -110,7 +110,7 @@ public class UserResource {
         try {
             return Response
                     .status(201)
-                    .entity(ToJson.toJson(newUser, getFilterProvider()))
+                    .entity(ToJson.toJson(newUser, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -213,7 +213,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(user, getFilterProvider()))
+                    .entity(ToJson.toJson(user, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -238,7 +238,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users, getFilterProvider()))
+                    .entity(ToJson.toJson(users, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -266,7 +266,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users, getFilterProvider()))
+                    .entity(ToJson.toJson(users, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -282,7 +282,14 @@ public class UserResource {
      * @author Zwazel
      * @since 1.1.0
      */
-    private FilterProvider getFilterProvider() {
+    private FilterProvider getFilterProvider(boolean filterOutPassword) {
+        if (filterOutPassword) {
+            return new SimpleFilterProvider()
+                    .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
+                    .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                    .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAllExcept("password"));
+        }
+
         return new SimpleFilterProvider()
                 .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
                 .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))

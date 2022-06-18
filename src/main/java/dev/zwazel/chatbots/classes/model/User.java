@@ -29,7 +29,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Entity
 @ToString
-@JsonIgnoreProperties(value = {"password"})
 @JsonFilter("UserFilter")
 public class User {
     /**

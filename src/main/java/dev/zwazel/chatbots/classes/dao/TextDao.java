@@ -129,7 +129,7 @@ public class TextDao extends Dao<Text, String> {
     @Override
     public void update(Text entity) {
         Text textInDB = findByText(entity.getText());
-        if (textInDB == null) {
+        if (textInDB == null || textInDB.getId().equals(entity.getId())) {
             super.update(entity);
         } else {
             throw new EntityExistsException("Text already exists.");

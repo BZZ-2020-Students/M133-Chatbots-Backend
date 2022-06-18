@@ -56,6 +56,7 @@ public class UserResource {
         try {
             return Response
                     .status(201)
+                    // the password isn't being filtered out only for testing purposes
                     .entity(ToJson.toJson(userToUpdate, getFilterProvider(false)))
                     .build();
         } catch (JsonProcessingException e) {

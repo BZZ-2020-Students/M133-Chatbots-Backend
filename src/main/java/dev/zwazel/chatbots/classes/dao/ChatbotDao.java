@@ -3,6 +3,7 @@ package dev.zwazel.chatbots.classes.dao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.Text;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -24,6 +25,24 @@ public class ChatbotDao extends Dao<Chatbot, String> {
      */
     public ChatbotDao() {
         super(Chatbot.class);
+    }
+
+    /**
+     * Updates a Chatbot in the database. Duplicate names are not allowed.
+     *
+     * @param entity The entity to update.
+     * @throws EntityExistsException If the entity already exists in the database.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @Override
+    public void update(Chatbot entity) {
+        Chatbot chatbotInDb = findByName(entity.getChatbotName());
+        if (chatbotInDb == null || chatbotInDb.getId().equals(entity.getId())) {
+            super.update(entity);
+        } else {
+            throw new EntityExistsException("Chatbot already exists.");
+        }
     }
 
     @Override

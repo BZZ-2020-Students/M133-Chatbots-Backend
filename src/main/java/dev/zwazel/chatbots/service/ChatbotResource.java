@@ -23,6 +23,43 @@ import jakarta.ws.rs.core.Response;
 @Path("/chatbot")
 public class ChatbotResource {
     /**
+     * Updates a chatbot in the database.
+     *
+     * @param chatbot The chatbot to update.
+     * @return The updated chatbot.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateText(@PathParam("id") String id, @Valid @BeanParam Chatbot chatbot) {
+        ChatbotDao chatbotDao = new ChatbotDao();
+        Chatbot chatbotFromDb = chatbotDao.findById(id);
+        if (chatbotFromDb == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (!chatbot.getChatbotName().equals(chatbotFromDb.getChatbotName())) {
+            chatbotFromDb.setChatbotName(chatbot.getChatbotName());
+            chatbotDao.update(chatbotFromDb);
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(chatbotFromDb, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
+    /**
      * Creates a new Chatbot
      *
      * @param chatbot the chatbot to create

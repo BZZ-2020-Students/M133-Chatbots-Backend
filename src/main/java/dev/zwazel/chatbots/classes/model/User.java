@@ -1,12 +1,10 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.config.Constants;
 import dev.zwazel.chatbots.util.annotation.Password;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.FormParam;
 import lombok.*;

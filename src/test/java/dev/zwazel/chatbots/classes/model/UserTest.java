@@ -102,7 +102,7 @@ public class UserTest {
             e.printStackTrace();
         }
 
-        String expected = "{\"id\":\"" + testUuid + "\",\"username\":\"name\",\"userRole\":\"USER\",\"chatbots\":[],\"ratings\":[]}";
+        String expected = "{\"id\":\"" + testUuid + "\",\"username\":\"name\",\"password\":\"password\",\"userRole\":\"USER\",\"chatbots\":[],\"ratings\":[]}";
 
         assertEquals(expected, json);
     }

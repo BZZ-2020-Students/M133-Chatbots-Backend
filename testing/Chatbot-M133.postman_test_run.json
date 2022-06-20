@@ -1,18 +1,18 @@
 {
-	"id": "9581764f-045f-4388-9af2-94836d4bb2c8",
+	"id": "b2923a63-006f-4d0a-ad18-dd18f095bf5c",
 	"name": "Chatbot-M133",
-	"timestamp": "2022-05-23T08:05:06.378Z",
+	"timestamp": "2022-06-20T07:04:08.132Z",
 	"collection_id": "19464364-d502eed0-be90-4dff-b219-dceadf708a76",
 	"folder_id": 0,
 	"environment_id": "0",
-	"totalPass": 33,
+	"totalPass": 174,
 	"totalFail": 0,
 	"results": [
 		{
 			"id": "5cb21500-9b7f-4230-b218-90b70d2ddfca",
 			"name": "TestGetAllChatbots",
-			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/list",
-			"time": 52,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/list",
+			"time": 161,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -27,7 +27,7 @@
 				}
 			},
 			"times": [
-				52
+				161
 			],
 			"allTests": [
 				{
@@ -38,8 +38,8 @@
 		{
 			"id": "5e7ce965-1716-4667-8080-0bd62dc106e6",
 			"name": "TestGetSingleChatbotByName",
-			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/name/MRVN",
-			"time": 13,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/name/MRVN",
+			"time": 19,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -59,7 +59,7 @@
 				}
 			},
 			"times": [
-				13
+				19
 			],
 			"allTests": [
 				{
@@ -69,37 +69,10 @@
 			]
 		},
 		{
-			"id": "b3b0e301-8b2e-4f69-aeb0-ded9eae242ce",
-			"name": "TestGetSingleNonExistentChatbotByName",
-			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/name/ndiuwadwa",
-			"time": 11,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Status code is 404": true
-			},
-			"testPassFailCounts": {
-				"Status code is 404": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				11
-			],
-			"allTests": [
-				{
-					"Status code is 404": true
-				}
-			]
-		},
-		{
 			"id": "6bd9f81e-fab5-4e2d-9a54-5ab166feccd1",
 			"name": "TestGetSingleChatbotByID",
-			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/97152b9d-e8d3-47bd-9005-94701a7ac3b6",
-			"time": 14,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/3915c7a7-7d33-4e18-99a8-f00b458579a3",
+			"time": 16,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -119,7 +92,7 @@
 				}
 			},
 			"times": [
-				14
+				16
 			],
 			"allTests": [
 				{
@@ -129,10 +102,37 @@
 			]
 		},
 		{
+			"id": "b3b0e301-8b2e-4f69-aeb0-ded9eae242ce",
+			"name": "TestGetSingleNonExistentChatbotByName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/name/e689cfdb-7e4a-43fa-9f5c-654c75bd50dd",
+			"time": 14,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
 			"id": "50a7f8b0-ec37-4944-90d1-945da93ff2a8",
 			"name": "TestGetSingleNonExistentChatbotById",
-			"url": "http://localhost:8080/chatbots-0.3/api/chatbot/12321",
-			"time": 14,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/662d12c6-bc68-43c5-a68f-5e685d0daf5e",
+			"time": 16,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -147,319 +147,19 @@
 				}
 			},
 			"times": [
-				14
+				16
 			],
 			"allTests": [
 				{
 					"Status code is 404": true
-				}
-			]
-		},
-		{
-			"id": "815f478e-5470-4e24-a772-06be8d03e885",
-			"name": "TestGetAllUsers",
-			"url": "http://localhost:8080/chatbots-0.3/api/user/list",
-			"time": 18,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				18
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "e824c743-a3eb-456c-81be-a45871f402c5",
-			"name": "TestGetSingleUserByName",
-			"url": "http://localhost:8080/chatbots-0.3/api/user/name/user",
-			"time": 13,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true,
-				"Name is correct": true,
-				"UserRole is correct": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Name is correct": {
-					"pass": 1,
-					"fail": 0
-				},
-				"UserRole is correct": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				13
-			],
-			"allTests": [
-				{
-					"Status code is 200": true,
-					"Name is correct": true,
-					"UserRole is correct": true
-				}
-			]
-		},
-		{
-			"id": "941c3bac-6527-4272-bf42-38e6f227928b",
-			"name": "TestGetSingleNonExistentUserByName",
-			"url": "http://localhost:8080/chatbots-0.3/api/user/name/dwadwa",
-			"time": 11,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Status code is 404": true
-			},
-			"testPassFailCounts": {
-				"Status code is 404": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				11
-			],
-			"allTests": [
-				{
-					"Status code is 404": true
-				}
-			]
-		},
-		{
-			"id": "7568ec95-dd59-4562-a596-94e70d8cb6d9",
-			"name": "TestGetSingleUserByID",
-			"url": "http://localhost:8080/chatbots-0.3/api/user/06f367f3-6c86-41cc-9ada-a2850ec4fcc0",
-			"time": 10,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true,
-				"Username is correct": true,
-				"UserRole is correct": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Username is correct": {
-					"pass": 1,
-					"fail": 0
-				},
-				"UserRole is correct": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				10
-			],
-			"allTests": [
-				{
-					"Status code is 200": true,
-					"Username is correct": true,
-					"UserRole is correct": true
-				}
-			]
-		},
-		{
-			"id": "b32bf35f-c7a8-4303-b826-3c801f1f04fe",
-			"name": "TestGetSingleNonExistentUserById",
-			"url": "http://localhost:8080/chatbots-0.3/api/user/2312312",
-			"time": 12,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Status code is 404": true
-			},
-			"testPassFailCounts": {
-				"Status code is 404": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				12
-			],
-			"allTests": [
-				{
-					"Status code is 404": true
-				}
-			]
-		},
-		{
-			"id": "cf621672-4f71-48f7-80af-bc6f6268a6a9",
-			"name": "TestGetAllUsersByRole",
-			"url": "http://localhost:8080/chatbots-0.3/api/user/role/USER",
-			"time": 14,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				14
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "fce3dbfe-1295-4f5c-abcd-1d4d6effa6e1",
-			"name": "TestGetAllTexts",
-			"url": "http://localhost:8080/chatbots-0.3/api/text/list",
-			"time": 13,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				13
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "c1fbb7ad-d9f4-4e4d-85bc-d8dafa227658",
-			"name": "TestGetSingleTextByID",
-			"url": "http://localhost:8080/chatbots-0.3/api/text/04459d84-8853-42b4-b940-dfa1ea3e6af5",
-			"time": 12,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true,
-				"Text is correct": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Text is correct": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				12
-			],
-			"allTests": [
-				{
-					"Status code is 200": true,
-					"Text is correct": true
-				}
-			]
-		},
-		{
-			"id": "8ef40df5-6525-4ff5-ab66-65f2a893e6fe",
-			"name": "TestGetNonExistentTextById",
-			"url": "http://localhost:8080/chatbots-0.3/api/text/1231212",
-			"time": 17,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Status code is 404": true
-			},
-			"testPassFailCounts": {
-				"Status code is 404": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				17
-			],
-			"allTests": [
-				{
-					"Status code is 404": true
-				}
-			]
-		},
-		{
-			"id": "33f1ede0-4b03-427d-acd7-99993ac85fa8",
-			"name": "TestGetAllTextsOfAChatbot",
-			"url": "http://localhost:8080/chatbots-0.3/api/text/chatbot/97152b9d-e8d3-47bd-9005-94701a7ac3b6",
-			"time": 25,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				25
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
 				}
 			]
 		},
 		{
 			"id": "6b6aa3c4-1c8a-4df7-8207-d8942a166d56",
 			"name": "TestGetAllRatings",
-			"url": "http://localhost:8080/chatbots-0.3/api/rating/list",
-			"time": 11,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/list",
+			"time": 15,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -474,7 +174,7 @@
 				}
 			},
 			"times": [
-				11
+				15
 			],
 			"allTests": [
 				{
@@ -485,8 +185,8 @@
 		{
 			"id": "af54ab06-f244-48b9-9450-d5969a33abc0",
 			"name": "TestGetSingleRatingById",
-			"url": "http://localhost:8080/chatbots-0.3/api/rating/d82d9426-5949-4e64-b473-529d27ea9d5a",
-			"time": 11,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/6f20ca14-903d-4f54-9a86-88fb7e8ac809",
+			"time": 12,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -511,7 +211,7 @@
 				}
 			},
 			"times": [
-				11
+				12
 			],
 			"allTests": [
 				{
@@ -522,9 +222,207 @@
 			]
 		},
 		{
+			"id": "b5ce7158-8aac-43b3-95f8-b1a784b04732",
+			"name": "TestGetAllRatingsByAUser",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/user/100c7523-5bd6-424d-aa9f-1c2f0b361c9f",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All Users are correct": true,
+				"No duplicate chatbots found": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All Users are correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"No duplicate chatbots found": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All Users are correct": true,
+					"No duplicate chatbots found": true
+				}
+			]
+		},
+		{
 			"id": "b07a1954-75f0-42bb-80cf-10cae800fd97",
 			"name": "TestGetSingleNonExistentRatingById",
-			"url": "http://localhost:8080/chatbots-0.3/api/rating/213111",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/f29c2496-7b1a-47b3-8972-79b799510080",
+			"time": 12,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "815f478e-5470-4e24-a772-06be8d03e885",
+			"name": "TestGetAllUsers",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/list",
+			"time": 20,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				20
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "e824c743-a3eb-456c-81be-a45871f402c5",
+			"name": "TestGetSingleUserByName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/name/user",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Name is correct": true,
+				"UserRole is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Name is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"UserRole is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Name is correct": true,
+					"UserRole is correct": true
+				}
+			]
+		},
+		{
+			"id": "7568ec95-dd59-4562-a596-94e70d8cb6d9",
+			"name": "TestGetSingleUserByID",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/100c7523-5bd6-424d-aa9f-1c2f0b361c9f",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Username is correct": true,
+				"UserRole is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Username is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"UserRole is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Username is correct": true,
+					"UserRole is correct": true
+				}
+			]
+		},
+		{
+			"id": "cf621672-4f71-48f7-80af-bc6f6268a6a9",
+			"name": "TestGetAllUsersByRole",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/role/USER",
+			"time": 18,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "941c3bac-6527-4272-bf42-38e6f227928b",
+			"name": "TestGetSingleNonExistentUserByName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/name/Leila_Lemke",
 			"time": 14,
 			"responseCode": {
 				"code": 404,
@@ -549,29 +447,1942 @@
 			]
 		},
 		{
-			"id": "b5ce7158-8aac-43b3-95f8-b1a784b04732",
-			"name": "TestGetAllRatingsByAUser",
-			"url": "http://localhost:8080/chatbots-0.3/api/rating/user/06f367f3-6c86-41cc-9ada-a2850ec4fcc0",
-			"time": 14,
+			"id": "b32bf35f-c7a8-4303-b826-3c801f1f04fe",
+			"name": "TestGetSingleNonExistentUserById",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/9ca8a25b-efbd-4c17-8a1e-b0d0eaaf112a",
+			"time": 13,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "fce3dbfe-1295-4f5c-abcd-1d4d6effa6e1",
+			"name": "TestGetAllTexts",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/list",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "c1fbb7ad-d9f4-4e4d-85bc-d8dafa227658",
+			"name": "TestGetSingleTextByID",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/1714c85b-357e-4df0-bf48-a4494d799360",
+			"time": 20,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
 			},
 			"tests": {
 				"Status code is 200": true,
-				"All Users are correct": true,
-				"All Chatbots are correct": true
+				"Text is correct": true
 			},
 			"testPassFailCounts": {
 				"Status code is 200": {
 					"pass": 1,
 					"fail": 0
 				},
-				"All Users are correct": {
+				"Text is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				20
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Text is correct": true
+				}
+			]
+		},
+		{
+			"id": "33f1ede0-4b03-427d-acd7-99993ac85fa8",
+			"name": "TestGetAllTextsOfAChatbot",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/chatbot/3915c7a7-7d33-4e18-99a8-f00b458579a3",
+			"time": 34,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				34
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "8ef40df5-6525-4ff5-ab66-65f2a893e6fe",
+			"name": "TestGetNonExistentTextById",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/11729220-66be-43fa-96c2-5f5cfd211d0c",
+			"time": 11,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "b01d7829-caaf-4c20-a9ac-45da6ad2ca92",
+			"name": "TestCreateNewText",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/create",
+			"time": 35,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Newly created Text is found": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
 					"pass": 1,
 					"fail": 0
 				},
-				"All Chatbots are correct": {
+				"Newly created Text is found": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				35
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Newly created Text is found": true
+				}
+			]
+		},
+		{
+			"id": "f5a612e5-8e89-4f8c-86af-7245677ded2f",
+			"name": "TestCreateNewText2",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/create",
+			"time": 17,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Newly created Text is found": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Newly created Text is found": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Newly created Text is found": true
+				}
+			]
+		},
+		{
+			"id": "985e456e-0abe-490c-8453-f7159b4d4368",
+			"name": "TestCreateSameTextAgain",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/create",
+			"time": 15,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			]
+		},
+		{
+			"id": "ce113c68-b048-4bbf-99e3-fc5ec000c950",
+			"name": "TextEmpty",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "9d4dcc99-79e4-4542-8b77-64cb1993e696",
+			"name": "TextTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "8d05e68e-9b70-4887-bbe1-ce4f229b1f28",
+			"name": "TestCreateNewUserNoRoleSpecified",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 19,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is User": true,
+				"Newly created User is found by name": true,
+				"Newly created User is found by id": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Role is User": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Newly created User is found by name": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Newly created User is found by id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is User": true,
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
+				}
+			]
+		},
+		{
+			"id": "0843f9ba-6dcc-4041-8197-6da204ec5bd7",
+			"name": "TestCreateNewUserRoleUser",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 15,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is User": true,
+				"Newly created User is found by name": true,
+				"Newly created User is found by id": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Role is User": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Newly created User is found by name": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Newly created User is found by id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is User": true,
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
+				}
+			]
+		},
+		{
+			"id": "ffc3d3c0-fb00-4fa4-a80b-689870cb45e3",
+			"name": "TestCreateNewUserRoleAdmin",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 17,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is Admin": true,
+				"Newly created User is found by name": true,
+				"Newly created User is found by id": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Role is Admin": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Newly created User is found by name": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Newly created User is found by id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is Admin": true,
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
+				}
+			]
+		},
+		{
+			"id": "8e03d6cc-631a-4ce7-beaa-431948f29584",
+			"name": "TestCreateUserWithSameNameAgain",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 12,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"Status code is 409": true
+			},
+			"testPassFailCounts": {
+				"Status code is 409": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 409": true
+				}
+			]
+		},
+		{
+			"id": "6322eb7c-e53e-4da5-9641-f0920a3a6a6c",
+			"name": "TestValidateUsernameTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 36,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "a924f6d8-119e-4328-bef6-c4f2df6c281e",
+			"name": "TestValidateUsernameTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 19,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "be594edc-40ce-41a7-b8e8-96d3622049a3",
+			"name": "PasswordMissingUppercaseLetter",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 16,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "2c8d3657-e6fb-4341-944e-edf3d5ffdc01",
+			"name": "PasswordMissingLowercase",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 23,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "d8be2e60-ba35-4c51-9aee-a1227d2db07e",
+			"name": "PasswordMissingNumber",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 15,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "edac160d-ca8e-49c5-98e5-095a837c1dbe",
+			"name": "PasswordMissingSpecialChar",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 15,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "9c46848a-8fd1-424d-91ba-1cde02b531bd",
+			"name": "PasswordTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 16,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "693939d3-aa61-449a-a553-220fdbec8aef",
+			"name": "PasswordTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/create",
+			"time": 17,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "be5573e5-11cf-4493-bbae-693e356a8961",
+			"name": "TestCreateNewChatbotWithUserName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 46,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				46
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "5a75e115-83e4-44dc-8aeb-826f6a8dbba7",
+			"name": "TestCreateNewChatbotWithUserID",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 26,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				26
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "0305f85a-6461-42cc-8655-cf7b8430a050",
+			"name": "TestCreateNewChatbotWithoutSpecifyingUser",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 4,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "75b38992-3e65-461d-9d12-d53f5616089b",
+			"name": "TestCreateNewChatbotWithSameName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 23,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "7751654a-c00f-40e0-9ffd-e2b2b17853f6",
+			"name": "TestValidateChatbotNameTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "1015a647-a395-4515-b3a8-4d47a64245eb",
+			"name": "TestValidateChatbotNameTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "34e5bbdb-bfce-44d6-81a7-c89700c58c9b",
+			"name": "TestValidateUsernameTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "f4f0f302-347e-40b8-b506-1e5635641cf1",
+			"name": "TestValidateUserNameTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 5,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "5d2e2a46-60db-4043-b959-cb2a275589e1",
+			"name": "TestValidateUserIdTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "f2fb3f12-4441-447e-9d27-6b8bcb2dafb5",
+			"name": "TestValidateUserIdTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "1e2d6a0f-5c6b-4157-8b08-a2579a89c31a",
+			"name": "TestValidateUserIdNotValidUUID",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "99eaec6d-db1c-4414-b54c-97ca24a817d1",
+			"name": "TestCreateRatingUserIdChatbotId",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 40,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"user is correct": true,
+				"chatbot is correct": true,
+				"rating is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"user is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"chatbot is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rating is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				40
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating is correct": true
+				}
+			]
+		},
+		{
+			"id": "6fb993cc-3e9b-44b7-a178-6175e1e3f09c",
+			"name": "TestCreateRatingUserNameChatbotName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 33,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"user is correct": true,
+				"chatbot is correct": true,
+				"rating is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"user is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"chatbot is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rating is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				33
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating is correct": true
+				}
+			]
+		},
+		{
+			"id": "3145d459-5f17-4cb6-821c-7f5b62145757",
+			"name": "TestCreateRatingWithoutUser",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 5,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"error is correct": true
+				}
+			]
+		},
+		{
+			"id": "eb2ea847-369d-466a-af2e-0af050d7e7ce",
+			"name": "TestCreateRatingWithoutChatbot",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"error is correct": true
+				}
+			]
+		},
+		{
+			"id": "2a4ed39e-a813-42a6-8bf0-48beb19b2be4",
+			"name": "TestCreateRatingDuplicate",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 38,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"Status code is 409": true
+			},
+			"testPassFailCounts": {
+				"Status code is 409": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				38
+			],
+			"allTests": [
+				{
+					"Status code is 409": true
+				}
+			]
+		},
+		{
+			"id": "273c68a5-3fff-44ac-852c-497a218ea250",
+			"name": "UsernameTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 4,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "6c26d19d-9c4c-4912-a638-e1e7de68c8c1",
+			"name": "UsernameTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "72264295-8ae1-40f0-a6e2-ac6f9202b98c",
+			"name": "ChatbotNameTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "a8580185-9880-458a-a140-7985811eba24",
+			"name": "ChatbotNameTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "43a589b0-9bd4-4bb9-9e84-2b4453ab0238",
+			"name": "IdTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "2c002a4a-4288-4304-a0c9-afaad5abf5b9",
+			"name": "IdTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "6a3ded04-7c5c-4e54-9861-5721f508c9eb",
+			"name": "NotProperUUIDFormat",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "eac9e017-f287-4a37-a3f4-e0cea2747dc2",
+			"name": "IdTooLong",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "439eefc8-9bf8-491a-8b4c-0c817183ad61",
+			"name": "IdTooShort",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "78dd1f25-ac94-424e-8b8b-a7999e5b6d07",
+			"name": "NotProperUUIDFormat",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "74f68acf-7662-4f31-ac95-ddda3158e56e",
+			"name": "UnknownRating",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "755ec93f-b1ae-46a3-ba08-c7eff0e19b75",
+			"name": "RatingButInLowerCase",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "839c13bf-47c0-4af4-8723-989422d0ca1b",
+			"name": "FavouriteNonBoolean",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 44,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Favourite is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Favourite is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				44
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true
+				}
+			]
+		},
+		{
+			"id": "17b9afbb-220a-4378-b4e7-5755ce82af7b",
+			"name": "FavouriteBooleanUpperCase",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 36,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Favourite is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Favourite is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true
+				}
+			]
+		},
+		{
+			"id": "55bdab28-4134-4e0a-9033-7b6e25c079fb",
+			"name": "FavouriteBooleanLowerCase",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/create",
+			"time": 34,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Favourite is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Favourite is correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				34
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true
+				}
+			]
+		},
+		{
+			"id": "44da0726-7686-4148-8a90-ae124c7df9fe",
+			"name": "FullyUpdateUser",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/update/73f3c945-1f88-4aed-8113-c6e61c5e776c",
+			"time": 21,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role isn't same as before": true,
+				"Username isn't same as before": true,
+				"Password isn't same as before": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Role isn't same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Username isn't same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Password isn't same as before": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role isn't same as before": true,
+					"Username isn't same as before": true,
+					"Password isn't same as before": true
+				}
+			]
+		},
+		{
+			"id": "ea1b922a-03c6-4b51-8455-a0e3e56a60e4",
+			"name": "UpdateUserUsername",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/update/73f3c945-1f88-4aed-8113-c6e61c5e776c",
+			"time": 21,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is same as before": true,
+				"Username isnt same as before": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Role is same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Username isnt same as before": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is same as before": true,
+					"Username isnt same as before": true
+				}
+			]
+		},
+		{
+			"id": "f97ff7e3-0757-4f06-8ee4-e43849458b17",
+			"name": "UpdateUserPassword",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/update/73f3c945-1f88-4aed-8113-c6e61c5e776c",
+			"time": 54,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is same as before": true,
+				"Username is same as before": true,
+				"Password isn't same as before": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Role is same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Username is same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Password isn't same as before": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				54
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is same as before": true,
+					"Username is same as before": true,
+					"Password isn't same as before": true
+				}
+			]
+		},
+		{
+			"id": "34dc9c20-3de7-4ea8-b1b8-e6e3fbee0c7b",
+			"name": "UpdateUserRole",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/update/73f3c945-1f88-4aed-8113-c6e61c5e776c",
+			"time": 17,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role isn't same as before": true,
+				"Username is same as before": true,
+				"Password is same as before": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Role isn't same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Username is same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Password is same as before": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role isn't same as before": true,
+					"Username is same as before": true,
+					"Password is same as before": true
+				}
+			]
+		},
+		{
+			"id": "1e8ce4da-2af7-474d-b210-b762fdbc1f3c",
+			"name": "UpdateUserUsernameDuplicate",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/update/73f3c945-1f88-4aed-8113-c6e61c5e776c",
+			"time": 14,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
 					"pass": 1,
 					"fail": 0
 				}
@@ -581,17 +2392,459 @@
 			],
 			"allTests": [
 				{
-					"Status code is 200": true,
-					"All Users are correct": true,
-					"All Chatbots are correct": true
+					"Status code is 500": true
+				}
+			]
+		},
+		{
+			"id": "e8717b45-3b6a-48ea-b5dd-92cd7aa00e0b",
+			"name": "UpdateText",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/update/1714c85b-357e-4df0-bf48-a4494d799360",
+			"time": 19,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"The text is no longer the same": true,
+				"The ID is still the same": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The text is no longer the same": {
+					"pass": 1,
+					"fail": 0
+				},
+				"The ID is still the same": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"The text is no longer the same": true,
+					"The ID is still the same": true
+				}
+			]
+		},
+		{
+			"id": "5e53c45f-1b57-4247-b7f5-047a84ba0669",
+			"name": "UpdateTextWithAlreadyExistingText",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/update/4d6f2777-7fc0-4a1a-b272-986bfdc73e25",
+			"time": 13,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			]
+		},
+		{
+			"id": "90f46985-4888-4edb-a1e8-06a38577876d",
+			"name": "UpdateChatbotName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/update/dab59968-3ab5-4075-9578-3d52fd6ff45a",
+			"time": 18,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Name not same": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Name not same": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Name not same": true
+				}
+			]
+		},
+		{
+			"id": "899e60a3-4931-4ac8-95e6-17f8109e0a40",
+			"name": "UpdateChatbotNameDuplicate",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/update/dab59968-3ab5-4075-9578-3d52fd6ff45a",
+			"time": 15,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				}
+			]
+		},
+		{
+			"id": "34de37ba-3105-415b-bcd7-f4617b93daa5",
+			"name": "updateRatingChangeFavourite",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/update/da396efc-cafb-4ca1-9c84-c6fddc75eb37",
+			"time": 18,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"user is correct": true,
+				"chatbot is correct": true,
+				"rating is correct": true,
+				"Favourite isn't the same anymore": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"user is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"chatbot is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rating is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Favourite isn't the same anymore": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating is correct": true,
+					"Favourite isn't the same anymore": true
+				}
+			]
+		},
+		{
+			"id": "b1f32e13-3053-4636-a0ac-c074eb70c684",
+			"name": "updateRatingChangeRating",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/update/da396efc-cafb-4ca1-9c84-c6fddc75eb37",
+			"time": 16,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"user is correct": true,
+				"chatbot is correct": true,
+				"rating isn't same as before": true,
+				"Favourite is the same as before": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"user is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"chatbot is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"rating isn't same as before": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Favourite is the same as before": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating isn't same as before": true,
+					"Favourite is the same as before": true
+				}
+			]
+		},
+		{
+			"id": "60fe40b3-f8be-48d3-80ad-87ff7c36f06f",
+			"name": "TestDeleteRating",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/rating/delete/da396efc-cafb-4ca1-9c84-c6fddc75eb37",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "1e057e5a-b41d-4bcc-bf42-4a72656e475e",
+			"name": "TestDeleteUserByName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/delete/name/userRoleAdmin_Elwin.Veum",
+			"time": 34,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				34
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "a0df17f1-980e-4b50-af33-48c83b413f5f",
+			"name": "TestDeleteUserByID",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/delete/73f3c945-1f88-4aed-8113-c6e61c5e776c",
+			"time": 31,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				31
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "c9c5ccb8-5400-4280-910c-23cb87154b1e",
+			"name": "TestDeleteChatbotByID",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/delete/dab59968-3ab5-4075-9578-3d52fd6ff45a",
+			"time": 24,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "eabf4293-dc67-47f0-a644-7224d2c567d3",
+			"name": "TestDeleteChatbotByName",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/chatbot/delete/name/Vicky0",
+			"time": 25,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				25
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "9899344d-ed09-4f28-8454-8db5e36e3a20",
+			"name": "TestDeleteTextByID",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/delete/4d6f2777-7fc0-4a1a-b272-986bfdc73e25",
+			"time": 15,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "54e27c60-b265-4c5c-b043-6d9a0225d849",
+			"name": "TestDeleteTextByItsText",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/text/delete/content/Sapiente%20inventore%20quia%20voluptatem%20eaque%20aspernatur%20odio.%20Rerum%20est%20modi%20possimus%20veniam%20perferendis%20enim%20rem.%20Cupiditate%20pariatur%20eum%20quasi%20ut%20labore%20quisquam%20qui.%20Reiciendis%20cum%20repellat.%20Nobis%20voluptates%20cupiditate%20vitae%20esse%20dolores.",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "6e7b96a9-2407-465b-b6b5-b3f118a38e36",
+			"name": "DeleteAdditionalUser",
+			"url": "http://localhost:8080/chatbots-1.3.0/api/user/delete/804f1e2d-882b-473f-bd54-bc16158df85b",
+			"time": 36,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
 				}
 			]
 		},
 		{
 			"id": "486f93ef-6ecf-4008-ad12-417085e3701d",
 			"name": "Hello World",
-			"url": "http://localhost:8080/chatbots-0.3/api/hello-world",
-			"time": 5,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/hello-world",
+			"time": 4,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -611,7 +2864,7 @@
 				}
 			},
 			"times": [
-				5
+				4
 			],
 			"allTests": [
 				{
@@ -623,8 +2876,8 @@
 		{
 			"id": "6a6dfb88-3529-487b-9edb-b4abc71e2c16",
 			"name": "Login",
-			"url": "http://localhost:8080/chatbots-0.3/api/auth/login",
-			"time": 7,
+			"url": "http://localhost:8080/chatbots-1.3.0/api/auth/login",
+			"time": 104,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -639,7 +2892,7 @@
 				}
 			},
 			"times": [
-				7
+				104
 			],
 			"allTests": [
 				{
@@ -649,7 +2902,7 @@
 		}
 	],
 	"count": 1,
-	"totalTime": 311,
+	"totalTime": 1730,
 	"collection": {
 		"requests": [
 			{
@@ -661,55 +2914,15 @@
 				"method": "GET"
 			},
 			{
-				"id": "b3b0e301-8b2e-4f69-aeb0-ded9eae242ce",
-				"method": "GET"
-			},
-			{
 				"id": "6bd9f81e-fab5-4e2d-9a54-5ab166feccd1",
 				"method": "GET"
 			},
 			{
+				"id": "b3b0e301-8b2e-4f69-aeb0-ded9eae242ce",
+				"method": "GET"
+			},
+			{
 				"id": "50a7f8b0-ec37-4944-90d1-945da93ff2a8",
-				"method": "GET"
-			},
-			{
-				"id": "815f478e-5470-4e24-a772-06be8d03e885",
-				"method": "GET"
-			},
-			{
-				"id": "e824c743-a3eb-456c-81be-a45871f402c5",
-				"method": "GET"
-			},
-			{
-				"id": "941c3bac-6527-4272-bf42-38e6f227928b",
-				"method": "GET"
-			},
-			{
-				"id": "7568ec95-dd59-4562-a596-94e70d8cb6d9",
-				"method": "GET"
-			},
-			{
-				"id": "b32bf35f-c7a8-4303-b826-3c801f1f04fe",
-				"method": "GET"
-			},
-			{
-				"id": "cf621672-4f71-48f7-80af-bc6f6268a6a9",
-				"method": "GET"
-			},
-			{
-				"id": "fce3dbfe-1295-4f5c-abcd-1d4d6effa6e1",
-				"method": "GET"
-			},
-			{
-				"id": "c1fbb7ad-d9f4-4e4d-85bc-d8dafa227658",
-				"method": "GET"
-			},
-			{
-				"id": "8ef40df5-6525-4ff5-ab66-65f2a893e6fe",
-				"method": "GET"
-			},
-			{
-				"id": "33f1ede0-4b03-427d-acd7-99993ac85fa8",
 				"method": "GET"
 			},
 			{
@@ -721,12 +2934,320 @@
 				"method": "GET"
 			},
 			{
+				"id": "b5ce7158-8aac-43b3-95f8-b1a784b04732",
+				"method": "GET"
+			},
+			{
 				"id": "b07a1954-75f0-42bb-80cf-10cae800fd97",
 				"method": "GET"
 			},
 			{
-				"id": "b5ce7158-8aac-43b3-95f8-b1a784b04732",
+				"id": "815f478e-5470-4e24-a772-06be8d03e885",
 				"method": "GET"
+			},
+			{
+				"id": "e824c743-a3eb-456c-81be-a45871f402c5",
+				"method": "GET"
+			},
+			{
+				"id": "7568ec95-dd59-4562-a596-94e70d8cb6d9",
+				"method": "GET"
+			},
+			{
+				"id": "cf621672-4f71-48f7-80af-bc6f6268a6a9",
+				"method": "GET"
+			},
+			{
+				"id": "941c3bac-6527-4272-bf42-38e6f227928b",
+				"method": "GET"
+			},
+			{
+				"id": "b32bf35f-c7a8-4303-b826-3c801f1f04fe",
+				"method": "GET"
+			},
+			{
+				"id": "fce3dbfe-1295-4f5c-abcd-1d4d6effa6e1",
+				"method": "GET"
+			},
+			{
+				"id": "c1fbb7ad-d9f4-4e4d-85bc-d8dafa227658",
+				"method": "GET"
+			},
+			{
+				"id": "33f1ede0-4b03-427d-acd7-99993ac85fa8",
+				"method": "GET"
+			},
+			{
+				"id": "8ef40df5-6525-4ff5-ab66-65f2a893e6fe",
+				"method": "GET"
+			},
+			{
+				"id": "b01d7829-caaf-4c20-a9ac-45da6ad2ca92",
+				"method": "POST"
+			},
+			{
+				"id": "f5a612e5-8e89-4f8c-86af-7245677ded2f",
+				"method": "POST"
+			},
+			{
+				"id": "985e456e-0abe-490c-8453-f7159b4d4368",
+				"method": "POST"
+			},
+			{
+				"id": "ce113c68-b048-4bbf-99e3-fc5ec000c950",
+				"method": "POST"
+			},
+			{
+				"id": "9d4dcc99-79e4-4542-8b77-64cb1993e696",
+				"method": "POST"
+			},
+			{
+				"id": "8d05e68e-9b70-4887-bbe1-ce4f229b1f28",
+				"method": "POST"
+			},
+			{
+				"id": "0843f9ba-6dcc-4041-8197-6da204ec5bd7",
+				"method": "POST"
+			},
+			{
+				"id": "ffc3d3c0-fb00-4fa4-a80b-689870cb45e3",
+				"method": "POST"
+			},
+			{
+				"id": "8e03d6cc-631a-4ce7-beaa-431948f29584",
+				"method": "POST"
+			},
+			{
+				"id": "6322eb7c-e53e-4da5-9641-f0920a3a6a6c",
+				"method": "POST"
+			},
+			{
+				"id": "a924f6d8-119e-4328-bef6-c4f2df6c281e",
+				"method": "POST"
+			},
+			{
+				"id": "be594edc-40ce-41a7-b8e8-96d3622049a3",
+				"method": "POST"
+			},
+			{
+				"id": "2c8d3657-e6fb-4341-944e-edf3d5ffdc01",
+				"method": "POST"
+			},
+			{
+				"id": "d8be2e60-ba35-4c51-9aee-a1227d2db07e",
+				"method": "POST"
+			},
+			{
+				"id": "edac160d-ca8e-49c5-98e5-095a837c1dbe",
+				"method": "POST"
+			},
+			{
+				"id": "9c46848a-8fd1-424d-91ba-1cde02b531bd",
+				"method": "POST"
+			},
+			{
+				"id": "693939d3-aa61-449a-a553-220fdbec8aef",
+				"method": "POST"
+			},
+			{
+				"id": "be5573e5-11cf-4493-bbae-693e356a8961",
+				"method": "POST"
+			},
+			{
+				"id": "5a75e115-83e4-44dc-8aeb-826f6a8dbba7",
+				"method": "POST"
+			},
+			{
+				"id": "0305f85a-6461-42cc-8655-cf7b8430a050",
+				"method": "POST"
+			},
+			{
+				"id": "75b38992-3e65-461d-9d12-d53f5616089b",
+				"method": "POST"
+			},
+			{
+				"id": "7751654a-c00f-40e0-9ffd-e2b2b17853f6",
+				"method": "POST"
+			},
+			{
+				"id": "1015a647-a395-4515-b3a8-4d47a64245eb",
+				"method": "POST"
+			},
+			{
+				"id": "34e5bbdb-bfce-44d6-81a7-c89700c58c9b",
+				"method": "POST"
+			},
+			{
+				"id": "f4f0f302-347e-40b8-b506-1e5635641cf1",
+				"method": "POST"
+			},
+			{
+				"id": "5d2e2a46-60db-4043-b959-cb2a275589e1",
+				"method": "POST"
+			},
+			{
+				"id": "f2fb3f12-4441-447e-9d27-6b8bcb2dafb5",
+				"method": "POST"
+			},
+			{
+				"id": "1e2d6a0f-5c6b-4157-8b08-a2579a89c31a",
+				"method": "POST"
+			},
+			{
+				"id": "99eaec6d-db1c-4414-b54c-97ca24a817d1",
+				"method": "POST"
+			},
+			{
+				"id": "6fb993cc-3e9b-44b7-a178-6175e1e3f09c",
+				"method": "POST"
+			},
+			{
+				"id": "3145d459-5f17-4cb6-821c-7f5b62145757",
+				"method": "POST"
+			},
+			{
+				"id": "eb2ea847-369d-466a-af2e-0af050d7e7ce",
+				"method": "POST"
+			},
+			{
+				"id": "2a4ed39e-a813-42a6-8bf0-48beb19b2be4",
+				"method": "POST"
+			},
+			{
+				"id": "273c68a5-3fff-44ac-852c-497a218ea250",
+				"method": "POST"
+			},
+			{
+				"id": "6c26d19d-9c4c-4912-a638-e1e7de68c8c1",
+				"method": "POST"
+			},
+			{
+				"id": "72264295-8ae1-40f0-a6e2-ac6f9202b98c",
+				"method": "POST"
+			},
+			{
+				"id": "a8580185-9880-458a-a140-7985811eba24",
+				"method": "POST"
+			},
+			{
+				"id": "43a589b0-9bd4-4bb9-9e84-2b4453ab0238",
+				"method": "POST"
+			},
+			{
+				"id": "2c002a4a-4288-4304-a0c9-afaad5abf5b9",
+				"method": "POST"
+			},
+			{
+				"id": "6a3ded04-7c5c-4e54-9861-5721f508c9eb",
+				"method": "POST"
+			},
+			{
+				"id": "eac9e017-f287-4a37-a3f4-e0cea2747dc2",
+				"method": "POST"
+			},
+			{
+				"id": "439eefc8-9bf8-491a-8b4c-0c817183ad61",
+				"method": "POST"
+			},
+			{
+				"id": "78dd1f25-ac94-424e-8b8b-a7999e5b6d07",
+				"method": "POST"
+			},
+			{
+				"id": "74f68acf-7662-4f31-ac95-ddda3158e56e",
+				"method": "POST"
+			},
+			{
+				"id": "755ec93f-b1ae-46a3-ba08-c7eff0e19b75",
+				"method": "POST"
+			},
+			{
+				"id": "839c13bf-47c0-4af4-8723-989422d0ca1b",
+				"method": "POST"
+			},
+			{
+				"id": "17b9afbb-220a-4378-b4e7-5755ce82af7b",
+				"method": "POST"
+			},
+			{
+				"id": "55bdab28-4134-4e0a-9033-7b6e25c079fb",
+				"method": "POST"
+			},
+			{
+				"id": "44da0726-7686-4148-8a90-ae124c7df9fe",
+				"method": "PUT"
+			},
+			{
+				"id": "ea1b922a-03c6-4b51-8455-a0e3e56a60e4",
+				"method": "PUT"
+			},
+			{
+				"id": "f97ff7e3-0757-4f06-8ee4-e43849458b17",
+				"method": "PUT"
+			},
+			{
+				"id": "34dc9c20-3de7-4ea8-b1b8-e6e3fbee0c7b",
+				"method": "PUT"
+			},
+			{
+				"id": "1e8ce4da-2af7-474d-b210-b762fdbc1f3c",
+				"method": "PUT"
+			},
+			{
+				"id": "e8717b45-3b6a-48ea-b5dd-92cd7aa00e0b",
+				"method": "PUT"
+			},
+			{
+				"id": "5e53c45f-1b57-4247-b7f5-047a84ba0669",
+				"method": "PUT"
+			},
+			{
+				"id": "90f46985-4888-4edb-a1e8-06a38577876d",
+				"method": "PUT"
+			},
+			{
+				"id": "899e60a3-4931-4ac8-95e6-17f8109e0a40",
+				"method": "PUT"
+			},
+			{
+				"id": "34de37ba-3105-415b-bcd7-f4617b93daa5",
+				"method": "PUT"
+			},
+			{
+				"id": "b1f32e13-3053-4636-a0ac-c074eb70c684",
+				"method": "PUT"
+			},
+			{
+				"id": "60fe40b3-f8be-48d3-80ad-87ff7c36f06f",
+				"method": "DELETE"
+			},
+			{
+				"id": "1e057e5a-b41d-4bcc-bf42-4a72656e475e",
+				"method": "DELETE"
+			},
+			{
+				"id": "a0df17f1-980e-4b50-af33-48c83b413f5f",
+				"method": "DELETE"
+			},
+			{
+				"id": "c9c5ccb8-5400-4280-910c-23cb87154b1e",
+				"method": "DELETE"
+			},
+			{
+				"id": "eabf4293-dc67-47f0-a644-7224d2c567d3",
+				"method": "DELETE"
+			},
+			{
+				"id": "9899344d-ed09-4f28-8454-8db5e36e3a20",
+				"method": "DELETE"
+			},
+			{
+				"id": "54e27c60-b265-4c5c-b043-6d9a0225d849",
+				"method": "DELETE"
+			},
+			{
+				"id": "6e7b96a9-2407-465b-b6b5-b3f118a38e36",
+				"method": "DELETE"
 			},
 			{
 				"id": "486f93ef-6ecf-4008-ad12-417085e3701d",

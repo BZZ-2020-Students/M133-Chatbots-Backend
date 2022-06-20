@@ -1042,18 +1042,19 @@
 													"listen": "test",
 													"script": {
 														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
 															"pm.test(\"Status code is 201\", function () {\r",
 															"    pm.response.to.have.status(201);\r",
 															"});\r",
 															"\r",
 															"pm.test(\"Role is User\", function () {\r",
-															"    var jsonData = pm.response.json();\r",
 															"    pm.expect(jsonData.userRole).to.eql(\"USER\");\r",
 															"});\r",
 															"\r",
-															"const jsonData = pm.response.json();\r",
 															"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Id\", jsonData.id);\r",
 															"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Name\", jsonData.username);\r",
+															"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Role\", jsonData.userRole);\r",
 															"\r",
 															"pm.sendRequest(pm.collectionVariables.get(\"base_url_chatbot\") + \"/user/name/\" + jsonData.username, function (err, response) {\r",
 															"    pm.test(\"Newly created User is found by name\", function() {\r",
@@ -1084,7 +1085,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}$",
+															"value": "{{userPassword}}",
 															"type": "text"
 														}
 													]
@@ -1150,7 +1151,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}$",
+															"value": "{{userPassword}}",
 															"type": "text"
 														},
 														{
@@ -1221,7 +1222,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}$",
+															"value": "{{userPassword}}",
 															"type": "text"
 														},
 														{
@@ -1277,7 +1278,7 @@
 														},
 														{
 															"key": "password",
-															"value": "{{$randomPassword}}$",
+															"value": "{{userPassword}}",
 															"type": "text"
 														}
 													]
@@ -1336,7 +1337,7 @@
 															"urlencoded": [
 																{
 																	"key": "password",
-																	"value": "{{$randomPassword}}$",
+																	"value": "{{userPassword}}",
 																	"type": "text"
 																},
 																{
@@ -1397,7 +1398,7 @@
 																},
 																{
 																	"key": "password",
-																	"value": "{{$randomPassword}}$",
+																	"value": "{{userPassword}}",
 																	"type": "text"
 																}
 															]
@@ -1780,7 +1781,8 @@
 															"});\r",
 															"\r",
 															"const jsonData = pm.response.json();\r",
-															"pm.collectionVariables.set(\"newlyCreatedChatbotId\", jsonData.id);"
+															"pm.collectionVariables.set(\"newlyCreatedChatbotId\", jsonData.id);\r",
+															"pm.collectionVariables.set(\"updatedChatbotName\", jsonData.name);"
 														],
 														"type": "text/javascript"
 													}
@@ -2344,10 +2346,27 @@
 															"});\r",
 															"\r",
 															"pm.test(\"rating is correct\", function () {\r",
-															"    pm.expect(jsonData.rating).to.eql(\"UPVOTE\");\r",
+															"    const ratingBefore = pm.collectionVariables.get(\"ratingForUpdateAndCreate\");\r",
+															"    pm.expect(jsonData.rating).to.eql(ratingBefore);\r",
 															"});\r",
 															"\r",
-															"pm.collectionVariables.set(\"newlyCreatedRating1Id\", jsonData.id);"
+															"pm.collectionVariables.set(\"newlyCreatedRating1Id\", jsonData.id);\r",
+															"pm.collectionVariables.set(\"ratingBefore\", jsonData.rating);\r",
+															"pm.collectionVariables.set(\"favouriteBefore\", jsonData.favourite);\r",
+															"\r",
+															"const currentRating = jsonData.rating;\r",
+															"if(currentRating == \"UPVOTE\") {\r",
+															"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"DOWNVOTE\")\r",
+															"} else {\r",
+															"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"UPVOTE\")\r",
+															"}\r",
+															"\r",
+															"const currentFavourite = jsonData.favourite;\r",
+															"if(currentFavourite) {\r",
+															"    pm.collectionVariables.set(\"ratingFavouriteForUpdate\", \"FALSE\")\r",
+															"} else {\r",
+															"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"TRUE\")\r",
+															"}"
 														],
 														"type": "text/javascript"
 													}
@@ -2371,12 +2390,12 @@
 														},
 														{
 															"key": "rating",
-															"value": "UPVOTE",
+															"value": "{{ratingForUpdateAndCreate}}",
 															"type": "text"
 														},
 														{
 															"key": "favourite",
-															"value": "{{$randomBoolean}}",
+															"value": "{{ratingFavouriteForUpdate}}",
 															"type": "text"
 														}
 													]
@@ -3593,7 +3612,325 @@
 					"item": [
 						{
 							"name": "User",
-							"item": []
+							"item": [
+								{
+									"name": "Success",
+									"item": [
+										{
+											"name": "FullyUpdateUser",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"pm.test(\"Status code is 201\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"const currentRole = jsonData.userRole;\r",
+															"pm.test(\"Role isn't same as before\", function () {\r",
+															"    var roleBefore = pm.collectionVariables.get(\"updatedUserRole\");\r",
+															"    pm.expect(currentRole).to.not.eql(roleBefore);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Username isn't same as before\", function () {\r",
+															"    var nameBefore = pm.collectionVariables.get(\"newlyCreatedUserForChatbot1Name\")\r",
+															"    pm.expect(jsonData.username).to.not.eql(nameBefore);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Password isn't same as before\", function () {\r",
+															"    var passwordBefore = pm.collectionVariables.get(\"updatedUserPassword\")\r",
+															"    pm.expect(jsonData.password).to.not.eql(passwordBefore);\r",
+															"});\r",
+															"\r",
+															"if(currentRole == \"ADMIN\") {\r",
+															"    pm.collectionVariables.set(\"userRoleForUpdatedUser\", \"USER\")\r",
+															"} else {\r",
+															"    pm.collectionVariables.set(\"userRoleForUpdatedUser\", \"ADMIN\")\r",
+															"}\r",
+															"\r",
+															"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Name\", jsonData.username);\r",
+															"pm.collectionVariables.set(\"updatedUserPassword\", jsonData.password);\r",
+															"pm.collectionVariables.set(\"updatedUserRole\", jsonData.userRole);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "username",
+															"value": "{{usernameForUpdatedUser}}_{{$randomUserName}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{$randomPassword}}$",
+															"type": "text"
+														},
+														{
+															"key": "role",
+															"value": "{{userRoleForUpdatedUser}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/user/update/{{newlyCreatedUserID}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"user",
+														"update",
+														"{{newlyCreatedUserID}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UpdateUserUsername",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"pm.test(\"Status code is 201\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Role is same as before\", function () {\r",
+															"    var roleBefore = pm.collectionVariables.get(\"newlyCreatedUserForChatbot1Role\");\r",
+															"    pm.expect(jsonData.userRole).to.eql(roleBefore);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Username isnt same as before\", function () {\r",
+															"    var nameBefore = pm.collectionVariables.get(\"newlyCreatedUserForChatbot1Name\")\r",
+															"    pm.expect(jsonData.username).to.not.eql(nameBefore);\r",
+															"});\r",
+															"\r",
+															"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Name\", jsonData.username);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "username",
+															"value": "{{usernameForUpdatedUser}}_{{$randomUserName}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/user/update/{{newlyCreatedUserID}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"user",
+														"update",
+														"{{newlyCreatedUserID}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UpdateUserPassword",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"pm.test(\"Status code is 201\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Role is same as before\", function () {\r",
+															"    var roleBefore = pm.collectionVariables.get(\"updatedUserRole\");\r",
+															"    pm.expect(jsonData.userRole).to.eql(roleBefore);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Username is same as before\", function () {\r",
+															"    var nameBefore = pm.collectionVariables.get(\"newlyCreatedUserForChatbot1Name\")\r",
+															"    pm.expect(jsonData.username).to.eql(nameBefore);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Password isn't same as before\", function () {\r",
+															"    var passwordBefore = pm.collectionVariables.get(\"updatedUserPassword\")\r",
+															"    pm.expect(jsonData.password).to.not.eql(passwordBefore);\r",
+															"});\r",
+															"\r",
+															"pm.collectionVariables.set(\"updatedUserPassword\", jsonData.password);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "password",
+															"value": "{{userPassword}}_{{$randomPassword}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/user/update/{{newlyCreatedUserID}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"user",
+														"update",
+														"{{newlyCreatedUserID}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UpdateUserRole",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"pm.test(\"Status code is 201\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"const currentRole = jsonData.userRole;\r",
+															"pm.test(\"Role isn't same as before\", function () {\r",
+															"    var roleBefore = pm.collectionVariables.get(\"updatedUserRole\");\r",
+															"    pm.expect(currentRole).to.not.eql(roleBefore);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Username is same as before\", function () {\r",
+															"    var nameBefore = pm.collectionVariables.get(\"newlyCreatedUserForChatbot1Name\")\r",
+															"    pm.expect(jsonData.username).to.eql(nameBefore);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Password is same as before\", function () {\r",
+															"    var passwordBefore = pm.collectionVariables.get(\"updatedUserPassword\")\r",
+															"    pm.expect(jsonData.password).to.eql(passwordBefore);\r",
+															"});\r",
+															"\r",
+															"if(currentRole == \"ADMIN\") {\r",
+															"    pm.collectionVariables.set(\"userRoleForUpdatedUser\", \"USER\")\r",
+															"} else {\r",
+															"    pm.collectionVariables.set(\"userRoleForUpdatedUser\", \"ADMIN\")\r",
+															"}\r",
+															"\r",
+															"pm.collectionVariables.set(\"updatedUserRole\", currentRole);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "role",
+															"value": "{{userRoleForUpdatedUser}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/user/update/{{newlyCreatedUserID}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"user",
+														"update",
+														"{{newlyCreatedUserID}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Fail",
+									"item": [
+										{
+											"name": "UpdateUserUsernameDuplicate",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 500\", function () {\r",
+															"    pm.response.to.have.status(500);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "username",
+															"value": "{{userInDbName}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/user/update/{{newlyCreatedUserID}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"user",
+														"update",
+														"{{newlyCreatedUserID}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
 						},
 						{
 							"name": "Text",
@@ -3710,11 +4047,306 @@
 						},
 						{
 							"name": "Chatbot",
-							"item": []
+							"item": [
+								{
+									"name": "Success",
+									"item": [
+										{
+											"name": "UpdateChatbotName",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"const jsonData = pm.response.json();\r",
+															"const newName = jsonData.name;\r",
+															"pm.test(\"Name not same\", function () {\r",
+															"    const oldName = pm.collectionVariables.get(\"updatedChatbotName\");\r",
+															"    pm.expect(newName).to.not.eql(oldName);\r",
+															"});\r",
+															"\r",
+															"pm.collectionVariables.set(\"updatedChatbotName\", newName);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "name",
+															"value": "{{$randomUserName}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/chatbot/update/{{newlyCreatedChatbotId}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"chatbot",
+														"update",
+														"{{newlyCreatedChatbotId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Fail",
+									"item": [
+										{
+											"name": "UpdateChatbotNameDuplicate",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 500\", function () {\r",
+															"    pm.response.to.have.status(500);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "name",
+															"value": "{{chatbotInDbName}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{base_url_chatbot}}/chatbot/update/{{newlyCreatedChatbotId}}",
+													"host": [
+														"{{base_url_chatbot}}"
+													],
+													"path": [
+														"chatbot",
+														"update",
+														"{{newlyCreatedChatbotId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
 						},
 						{
 							"name": "Rating",
-							"item": []
+							"item": [
+								{
+									"name": "updateRatingChangeFavourite",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"pm.test(\"user is correct\", function () {\r",
+													"    const userID = pm.collectionVariables.get(\"newlyCreatedUserID\");\r",
+													"    pm.expect(jsonData.user.id).to.eql(userID);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"chatbot is correct\", function () {\r",
+													"    const chatbotID = pm.collectionVariables.get(\"newlyCreatedChatbotId\");\r",
+													"    pm.expect(jsonData.chatbot.id).to.eql(chatbotID);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"rating is correct\", function () {\r",
+													"    const ratingBefore = pm.collectionVariables.get(\"ratingBefore\");\r",
+													"    pm.expect(jsonData.rating).to.eql(ratingBefore);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Favourite isn't the same anymore\", function() {\r",
+													"    const favouriteBefore = pm.collectionVariables.get(\"favouriteBefore\");\r",
+													"    pm.expect(jsonData.favourite).to.not.eql(favouriteBefore)\r",
+													"})\r",
+													"\r",
+													"const currentRating = jsonData.rating;\r",
+													"if(currentRating == \"UPVOTE\") {\r",
+													"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"DOWNVOTE\")\r",
+													"} else {\r",
+													"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"UPVOTE\")\r",
+													"}\r",
+													"\r",
+													"const currentFavourite = jsonData.favourite;\r",
+													"if(currentFavourite) {\r",
+													"    pm.collectionVariables.set(\"ratingFavouriteForUpdate\", \"FALSE\")\r",
+													"} else {\r",
+													"    pm.collectionVariables.set(\"ratingFavouriteForUpdate\", \"TRUE\")\r",
+													"}\r",
+													"\r",
+													"pm.collectionVariables.set(\"favouriteBefore\", currentFavourite);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "userId",
+													"value": "{{newlyCreatedUserID}}",
+													"type": "text"
+												},
+												{
+													"key": "chatbotId",
+													"value": "{{newlyCreatedChatbotId}}",
+													"type": "text"
+												},
+												{
+													"key": "rating",
+													"value": "{{ratingBefore}}",
+													"type": "text"
+												},
+												{
+													"key": "favourite",
+													"value": "{{ratingFavouriteForUpdate}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{base_url_chatbot}}/rating/update/{{newlyCreatedRating1Id}}",
+											"host": [
+												"{{base_url_chatbot}}"
+											],
+											"path": [
+												"rating",
+												"update",
+												"{{newlyCreatedRating1Id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "updateRatingChangeRating",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"pm.test(\"user is correct\", function () {\r",
+													"    const userID = pm.collectionVariables.get(\"newlyCreatedUserID\");\r",
+													"    pm.expect(jsonData.user.id).to.eql(userID);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"chatbot is correct\", function () {\r",
+													"    const chatbotID = pm.collectionVariables.get(\"newlyCreatedChatbotId\");\r",
+													"    pm.expect(jsonData.chatbot.id).to.eql(chatbotID);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"rating isn't same as before\", function () {\r",
+													"    const ratingBefore = pm.collectionVariables.get(\"ratingBefore\");\r",
+													"    pm.expect(jsonData.rating).to.not.eql(ratingBefore);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Favourite is the same as before\", function() {\r",
+													"    const favouriteBefore = pm.collectionVariables.get(\"favouriteBefore\");\r",
+													"    pm.expect(jsonData.favourite).to.eql(favouriteBefore)\r",
+													"})\r",
+													"\r",
+													"const currentRating = jsonData.rating;\r",
+													"if(currentRating == \"UPVOTE\") {\r",
+													"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"DOWNVOTE\")\r",
+													"} else {\r",
+													"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"UPVOTE\")\r",
+													"}\r",
+													"\r",
+													"const currentFavourite = jsonData.favourite;\r",
+													"if(currentFavourite) {\r",
+													"    pm.collectionVariables.set(\"ratingFavouriteForUpdate\", \"FALSE\")\r",
+													"} else {\r",
+													"    pm.collectionVariables.set(\"ratingFavouriteForUpdate\", \"TRUE\")\r",
+													"}\r",
+													"\r",
+													"pm.collectionVariables.set(\"ratingBefore\", currentRating);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "userId",
+													"value": "{{newlyCreatedUserID}}",
+													"type": "text"
+												},
+												{
+													"key": "chatbotId",
+													"value": "{{newlyCreatedChatbotId}}",
+													"type": "text"
+												},
+												{
+													"key": "rating",
+													"value": "{{ratingForUpdateAndCreate}}",
+													"type": "text"
+												},
+												{
+													"key": "favourite",
+													"value": "{{favouriteBefore}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{base_url_chatbot}}/rating/update/{{newlyCreatedRating1Id}}",
+											"host": [
+												"{{base_url_chatbot}}"
+											],
+											"path": [
+												"rating",
+												"update",
+												"{{newlyCreatedRating1Id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				},
@@ -3991,6 +4623,44 @@
 					]
 				},
 				{
+					"name": "Cleanup",
+					"item": [
+						{
+							"name": "DeleteAdditionalUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url_chatbot}}/user/delete/{{newlyCreatedUserForChatbot1Id}}",
+									"host": [
+										"{{base_url_chatbot}}"
+									],
+									"path": [
+										"user",
+										"delete",
+										"{{newlyCreatedUserForChatbot1Id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "This folder only serves the purpose to delete every leftover from the tests, so its back to how it was in the beginning"
+				},
+				{
 					"name": "Hello World",
 					"event": [
 						{
@@ -4115,11 +4785,37 @@
 			"type": "string"
 		},
 		{
-			"key": "chatbotInDbName",
+			"key": "usernameForUpdatedUser",
+			"value": "userUpdated",
+			"type": "string"
+		},
+		{
+			"key": "userRoleForUpdatedUser",
+			"value": "USER",
+			"type": "string"
+		},
+		{
+			"key": "userPassword",
+			"value": "v3Ry$ecUre"
+		},
+		{
+			"key": "ratingForUpdateAndCreate",
+			"value": "UPVOTE"
+		},
+		{
+			"key": "ratingFavouriteForUpdate",
+			"value": "TRUE"
+		},
+		{
+			"key": "ratingInDbId",
 			"value": ""
 		},
 		{
-			"key": "chatbotInDbId",
+			"key": "ratingInDbUserId",
+			"value": ""
+		},
+		{
+			"key": "ratingInDbChatbotId",
 			"value": ""
 		},
 		{
@@ -4143,51 +4839,11 @@
 			"value": ""
 		},
 		{
-			"key": "ratingInDbId",
-			"value": ""
-		},
-		{
-			"key": "ratingInDbUserId",
-			"value": ""
-		},
-		{
-			"key": "ratingInDbChatbotId",
-			"value": ""
-		},
-		{
-			"key": "newlyCreatedTextID",
-			"value": ""
-		},
-		{
 			"key": "newlyCreatedTextText",
 			"value": ""
 		},
 		{
-			"key": "newlyCreatedUserID",
-			"value": ""
-		},
-		{
-			"key": "newlyCreatedUserUsername",
-			"value": ""
-		},
-		{
-			"key": "newlyCreatedChatbotName",
-			"value": ""
-		},
-		{
-			"key": "newlyCreatedChatbotId",
-			"value": ""
-		},
-		{
-			"key": "newlyCreatedRating2Id",
-			"value": ""
-		},
-		{
-			"key": "newlyCreatedRating1Id",
-			"value": ""
-		},
-		{
-			"key": "newlyCreatedUserForChatbot",
+			"key": "newlyCreatedTextID",
 			"value": ""
 		},
 		{
@@ -4199,7 +4855,63 @@
 			"value": ""
 		},
 		{
+			"key": "newlyCreatedUserForChatbot1Role",
+			"value": ""
+		},
+		{
+			"key": "newlyCreatedUserID",
+			"value": ""
+		},
+		{
+			"key": "newlyCreatedUserUsername",
+			"value": ""
+		},
+		{
+			"key": "newlyCreatedChatbotId",
+			"value": ""
+		},
+		{
+			"key": "updatedChatbotName",
+			"value": ""
+		},
+		{
+			"key": "newlyCreatedChatbotName",
+			"value": ""
+		},
+		{
+			"key": "newlyCreatedRating1Id",
+			"value": ""
+		},
+		{
+			"key": "newlyCreatedRating2Id",
+			"value": ""
+		},
+		{
+			"key": "updatedUserPassword",
+			"value": ""
+		},
+		{
+			"key": "updatedUserRole",
+			"value": ""
+		},
+		{
 			"key": "updatedTextInDb",
+			"value": ""
+		},
+		{
+			"key": "chatbotInDbName",
+			"value": ""
+		},
+		{
+			"key": "chatbotInDbId",
+			"value": ""
+		},
+		{
+			"key": "ratingBefore",
+			"value": ""
+		},
+		{
+			"key": "favouriteBefore",
 			"value": ""
 		}
 	]

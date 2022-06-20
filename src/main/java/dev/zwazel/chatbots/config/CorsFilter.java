@@ -1,4 +1,4 @@
-package dev.zwazel.chatbots.configs;
+package dev.zwazel.chatbots.config;
 
 import dev.zwazel.chatbots.HelloApplication;
 import jakarta.ws.rs.container.ContainerRequestContext;

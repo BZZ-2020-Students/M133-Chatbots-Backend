@@ -1,4 +1,4 @@
-package dev.zwazel.chatbots.services;
+package dev.zwazel.chatbots.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -7,7 +7,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
-import dev.zwazel.chatbots.util.ToJson;
+import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -22,6 +23,60 @@ import javax.persistence.EntityExistsException;
  */
 @Path("/user")
 public class UserResource {
+    /**
+     * Updates an already existing user in the database.
+     *
+     * @param id   The id of the user to update.
+     * @param user The user to update.
+     * @return The updated user.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateUser(@PathParam("id") String id, @Valid @BeanParam User user) {
+        UserDao userDao = new UserDao();
+        User userToUpdate = userDao.findById(id);
+        if (userToUpdate == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        boolean changed = false;
+        if (user.getUsername() != null && !user.getUsername().equals(userToUpdate.getUsername())) {
+            userToUpdate.setUsername(user.getUsername());
+            changed = true;
+        }
+
+        if (user.getPassword() != null && !user.getPassword().equals(userToUpdate.getPassword())) {
+            userToUpdate.setPassword(user.getPassword());
+            changed = true;
+        }
+
+        if (user.getUserRole() != null && !user.getUserRole().equals(userToUpdate.getUserRole())) {
+            userToUpdate.setUserRole(user.getUserRole());
+            changed = true;
+        }
+
+        if (changed) {
+            userDao.update(userToUpdate);
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    // the password isn't being filtered out only for testing purposes
+                    .entity(ToJson.toJson(userToUpdate, getFilterProvider(false)))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
     /**
      * Creates a new User object and returns it.
      *
@@ -65,7 +120,7 @@ public class UserResource {
         try {
             return Response
                     .status(201)
-                    .entity(ToJson.toJson(newUser, getFilterProvider()))
+                    .entity(ToJson.toJson(newUser, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -168,7 +223,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(user, getFilterProvider()))
+                    .entity(ToJson.toJson(user, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -193,7 +248,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users, getFilterProvider()))
+                    .entity(ToJson.toJson(users, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -221,7 +276,7 @@ public class UserResource {
         try {
             return Response
                     .status(200)
-                    .entity(ToJson.toJson(users, getFilterProvider()))
+                    .entity(ToJson.toJson(users, getFilterProvider(true)))
                     .build();
         } catch (JsonProcessingException e) {
             return Response
@@ -233,11 +288,19 @@ public class UserResource {
     /**
      * This method returns a FilterProvider to filter out specific fields.
      *
+     * @param filterOutPassword if true, the password will be filtered out of the response.
      * @return a FilterProvider to filter out specific fields.
      * @author Zwazel
      * @since 1.1.0
      */
-    private FilterProvider getFilterProvider() {
+    private FilterProvider getFilterProvider(boolean filterOutPassword) {
+        if (filterOutPassword) {
+            return new SimpleFilterProvider()
+                    .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
+                    .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                    .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAllExcept("password"));
+        }
+
         return new SimpleFilterProvider()
                 .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
                 .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))

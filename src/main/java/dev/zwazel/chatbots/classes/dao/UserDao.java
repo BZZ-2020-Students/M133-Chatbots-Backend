@@ -4,6 +4,7 @@ import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -26,6 +27,24 @@ public class UserDao extends Dao<User, String> {
      */
     public UserDao() {
         super(User.class);
+    }
+
+    /**
+     * Updates a user in the database. Duplicate Usernames are not allowed.
+     *
+     * @param entity The entity to update.
+     * @throws EntityExistsException If the entity already exists in the database.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @Override
+    public void update(User entity) {
+        User userInDb = findByUsername(entity.getUsername());
+        if (userInDb == null || userInDb.getId().equals(entity.getId())) {
+            super.update(entity);
+        } else {
+            throw new EntityExistsException("User already exists.");
+        }
     }
 
     /**

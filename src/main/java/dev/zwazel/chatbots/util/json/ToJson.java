@@ -1,8 +1,10 @@
-package dev.zwazel.chatbots.util;
+package dev.zwazel.chatbots.util.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 /**
  * Class that converts a Java object to a JSON string.
@@ -10,7 +12,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
  * @author Zwazel
  * @since 0.3
  */
-public class ToJson<T> {
+public class ToJson {
     /**
      * Converts a Java object to a JSON string, with a filter.
      *
@@ -24,6 +26,8 @@ public class ToJson<T> {
      */
     public static <T> String toJson(T t, FilterProvider filterProvider) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         return mapper
                 .writer(filterProvider)
                 .writeValueAsString(t);
@@ -41,6 +45,8 @@ public class ToJson<T> {
      */
     public static <T> String toJson(T t) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         return mapper
                 .writer()
                 .writeValueAsString(t);

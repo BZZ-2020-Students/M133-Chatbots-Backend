@@ -6,7 +6,7 @@
 
     <groupId>dev.zwazel</groupId>
     <artifactId>chatbots</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <name>chatbots</name>
     <packaging>war</packaging>
 
@@ -92,6 +92,11 @@
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>
             <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.13.1</version>
         </dependency>
     </dependencies>
 

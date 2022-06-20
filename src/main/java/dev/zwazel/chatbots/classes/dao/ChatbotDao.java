@@ -1,10 +1,13 @@
 package dev.zwazel.chatbots.classes.dao;
 
 import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.Text;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -22,6 +25,24 @@ public class ChatbotDao extends Dao<Chatbot, String> {
      */
     public ChatbotDao() {
         super(Chatbot.class);
+    }
+
+    /**
+     * Updates a Chatbot in the database. Duplicate names are not allowed.
+     *
+     * @param entity The entity to update.
+     * @throws EntityExistsException If the entity already exists in the database.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @Override
+    public void update(Chatbot entity) {
+        Chatbot chatbotInDb = findByName(entity.getChatbotName());
+        if (chatbotInDb == null || chatbotInDb.getId().equals(entity.getId())) {
+            super.update(entity);
+        } else {
+            throw new EntityExistsException("Chatbot already exists.");
+        }
     }
 
     @Override
@@ -109,6 +130,30 @@ public class ChatbotDao extends Dao<Chatbot, String> {
             delete(chatbot);
         } else {
             throw new IllegalArgumentException("Chatbot with name " + name + " does not exist.");
+        }
+    }
+
+    @Override
+    public void delete(Chatbot chatbot) {
+        RatingDao ratingDao = new RatingDao();
+        Iterable<Rating> ratings = ratingDao.findByChatbotId(chatbot.getId());
+
+        for (Rating rating : ratings) {
+            ratingDao.delete(rating);
+        }
+        chatbot.setRatings(new HashSet<>(0));
+
+        super.delete(chatbot);
+    }
+
+    @Override
+    public void delete(String s) throws IllegalArgumentException {
+        Chatbot t = findById(s);
+
+        if (t != null) {
+            delete(t);
+        } else {
+            throw new IllegalArgumentException("Entity with id " + s + " does not exist.");
         }
     }
 }

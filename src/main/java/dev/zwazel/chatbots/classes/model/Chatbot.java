@@ -2,9 +2,10 @@ package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import dev.zwazel.chatbots.configs.Constants;
+import dev.zwazel.chatbots.config.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.FormParam;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@JsonIgnoreProperties({"createdAt"})
+@JsonIgnoreProperties({"userID", "username"})
 @JsonFilter("ChatbotFilter")
 public class Chatbot {
     /**
@@ -44,10 +45,10 @@ public class Chatbot {
      * @since 0.2
      */
     @Id
-    @Column(name = "id", nullable = false, length = Constants.MAX_UUID_LENGTH)
+    @Column(name = "id", nullable = false, length = Constants.UUID_LENGTH)
     @GeneratedValue(generator = "uuid")
     @Builder.Default
-    @Size(max = Constants.MAX_UUID_LENGTH)
+    @dev.zwazel.chatbots.util.annotation.UUID
     private String id = UUID.randomUUID().toString();
 
 
@@ -58,7 +59,8 @@ public class Chatbot {
      */
     @NonNull
     @Column(nullable = false, length = Constants.MAX_NAME_LENGTH)
-    @Size(max = Constants.MAX_NAME_LENGTH)
+    @Size(min = Constants.MIN_NAME_LENGTH, max = Constants.MAX_NAME_LENGTH)
+    @FormParam("name")
     private String chatbotName;
 
     /**
@@ -103,5 +105,23 @@ public class Chatbot {
     @Builder.Default
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
-// TODO: 16.05.2022 LEVENSHTEIN DISTANCE
+    /**
+     * FormParam for User ID
+     *
+     * @since 1.3.0
+     */
+    @Transient
+    @FormParam("userId")
+    @dev.zwazel.chatbots.util.annotation.UUID
+    private String userID;
+
+    /**
+     * FormParam for User Name
+     *
+     * @since 1.3.0
+     */
+    @Transient
+    @Size(min = Constants.MIN_NAME_LENGTH, max = Constants.MAX_NAME_LENGTH)
+    @FormParam("username")
+    private String username;
 }

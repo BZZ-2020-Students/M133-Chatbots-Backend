@@ -1,4 +1,4 @@
-package dev.zwazel.chatbots.services;
+package dev.zwazel.chatbots.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -7,16 +7,14 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.RatingDao;
 import dev.zwazel.chatbots.classes.dao.UserDao;
-import dev.zwazel.chatbots.classes.enums.RatingEnum;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
-import dev.zwazel.chatbots.util.ToJson;
+import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.util.Arrays;
 
 /**
  * Resource class for the Rating entity.
@@ -26,25 +24,90 @@ import java.util.Arrays;
  */
 @Path("/rating")
 public class RatingResource {
+    /**
+     * Updates an already existing rating in the database.
+     *
+     * @param id     The id of the rating to update.
+     * @param rating The rating to update.
+     * @return The updated rating.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateUser(@PathParam("id") String id, @Valid @BeanParam Rating rating) {
+        RatingDao ratingDao = new RatingDao();
+        Rating ratingToUpdate = ratingDao.findById(id);
+        if (ratingToUpdate == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        boolean changed = false;
+        if (rating.getRating() != null && !rating.getRating().equals(ratingToUpdate.getRating())) {
+            ratingToUpdate.setRating(rating.getRating());
+            changed = true;
+        }
+
+        if (rating.isFavourite() != ratingToUpdate.isFavourite()) {
+            ratingToUpdate.setFavourite(rating.isFavourite());
+            changed = true;
+        }
+
+        if (changed) {
+            ratingDao.update(ratingToUpdate);
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    // the password isn't being filtered out only for testing purposes
+                    .entity(ToJson.toJson(ratingToUpdate, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
+    /**
+     * Creates a new rating for a chatbot. A user can only rate a chatbot once.
+     *
+     * @param rating The rating to create.
+     * @return The created rating.
+     * @author Zwazel
+     * @since 1.3.0
+     */
     @POST
     @Path("/create")
     @Produces("application/json")
     public Response createRating(
-            @DefaultValue("") @FormParam("userId") String userId,
-            @DefaultValue("") @FormParam("username") String username,
-            @DefaultValue("") @FormParam("chatbotId") String chatbotId,
-            @DefaultValue("") @FormParam("chatbotName") String chatbotName,
-            @FormParam("rating") String rating,
-            @FormParam("favourite") boolean favourite
+            @Valid @BeanParam Rating rating
     ) {
-        if ((userId.isBlank() || userId.isEmpty()) && (username.isBlank() || username.isEmpty())) {
+        boolean userIdNotSpecified = rating.getUserId() == null ||
+                rating.getUserId().isBlank() ||
+                rating.getUserId().isEmpty();
+        boolean usernameNotSpecified = rating.getUsername() == null ||
+                rating.getUsername().isBlank() ||
+                rating.getUsername().isEmpty();
+        boolean chatbotIdNotSpecified = rating.getChatbotId() == null ||
+                rating.getChatbotId().isBlank() ||
+                rating.getChatbotId().isEmpty();
+        boolean chatbotNameNotSpecified = rating.getChatbotName() == null ||
+                rating.getChatbotName().isBlank() ||
+                rating.getChatbotName().isEmpty();
+
+        if (userIdNotSpecified && usernameNotSpecified) {
             return Response
                     .status(400)
                     .entity("{\"error\": \"userId or username must be provided\"}")
                     .build();
         }
 
-        if ((chatbotId.isBlank() || chatbotId.isEmpty()) && (chatbotName.isBlank() || chatbotName.isEmpty())) {
+        if (chatbotIdNotSpecified && chatbotNameNotSpecified) {
             return Response
                     .status(400)
                     .entity("{\"error\": \"chatbotId or chatbotName must be provided\"}")
@@ -52,8 +115,8 @@ public class RatingResource {
         }
 
         UserDao userDao = new UserDao();
-        User user = (userId.isBlank() || userId.isEmpty()) ? userDao.findByUsername(username) : userDao.findById(userId);
-
+        User user = (userIdNotSpecified) ? userDao.findByUsername(rating.getUsername()) :
+                userDao.findById(rating.getUserId());
         if (user == null) {
             return Response
                     .status(404)
@@ -62,8 +125,8 @@ public class RatingResource {
         }
 
         ChatbotDao chatbotDao = new ChatbotDao();
-        Chatbot chatbot = (chatbotId.isBlank() || chatbotId.isEmpty()) ? chatbotDao.findByName(chatbotName) : chatbotDao.findById(chatbotId);
-
+        Chatbot chatbot = (chatbotIdNotSpecified) ? chatbotDao.findByName(rating.getChatbotName()) :
+                chatbotDao.findById(rating.getChatbotId());
         if (chatbot == null) {
             return Response
                     .status(404)
@@ -71,30 +134,24 @@ public class RatingResource {
                     .build();
         }
 
-        RatingEnum ratingEnum;
-        try {
-            ratingEnum = RatingEnum.valueOf(rating);
-        } catch (IllegalArgumentException e) {
-            return Response
-                    .status(400)
-                    .entity("{\"error\": \"rating must be one of the following: " + Arrays.toString(RatingEnum.values()) + "\"}")
-                    .build();
-        }
+        // Needed for the save method to work
+        rating.setUser(user);
+        rating.setChatbot(chatbot);
 
         RatingDao ratingDao = new RatingDao();
-        Rating ratingObj = Rating.builder()
-                .rating(ratingEnum)
-                .chatbot(chatbot)
-                .user(user)
-                .favourite(favourite)
-                .build();
-
-        ratingDao.save(ratingObj);
+        try {
+            ratingDao.save(rating);
+        } catch (IllegalArgumentException e) {
+            return Response
+                    .status(409)
+                    .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                    .build();
+        }
 
         try {
             return Response
                     .status(201)
-                    .entity(ToJson.toJson(ratingObj, getFilterProvider()))
+                    .entity(ToJson.toJson(rating, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
             return Response

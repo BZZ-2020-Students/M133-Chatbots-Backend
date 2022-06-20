@@ -119,6 +119,24 @@ public class TextDao extends Dao<Text, String> {
     }
 
     /**
+     * Updates the text in the DB. If the text already exists, it will not be updated.
+     *
+     * @param entity The text.
+     * @throws EntityExistsException If the text already exists.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @Override
+    public void update(Text entity) {
+        Text textInDB = findByText(entity.getText());
+        if (textInDB == null || textInDB.getId().equals(entity.getId())) {
+            super.update(entity);
+        } else {
+            throw new EntityExistsException("Text already exists.");
+        }
+    }
+
+    /**
      * If the text is not in the database, it will be added.
      *
      * @param t The collection of entities to save.

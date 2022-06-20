@@ -1,4 +1,4 @@
-package dev.zwazel.chatbots.services;
+package dev.zwazel.chatbots.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -8,7 +8,8 @@ import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.User;
-import dev.zwazel.chatbots.util.ToJson;
+import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -22,11 +23,47 @@ import jakarta.ws.rs.core.Response;
 @Path("/chatbot")
 public class ChatbotResource {
     /**
+     * Updates a chatbot in the database.
+     *
+     * @param chatbot The chatbot to update.
+     * @param id      The id of the chatbot to update.
+     * @return The updated chatbot.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateText(@PathParam("id") String id, @Valid @BeanParam Chatbot chatbot) {
+        ChatbotDao chatbotDao = new ChatbotDao();
+        Chatbot chatbotFromDb = chatbotDao.findById(id);
+        if (chatbotFromDb == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (!chatbot.getChatbotName().equals(chatbotFromDb.getChatbotName())) {
+            chatbotFromDb.setChatbotName(chatbot.getChatbotName());
+            chatbotDao.update(chatbotFromDb);
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(chatbotFromDb, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
+    /**
      * Creates a new Chatbot
      *
-     * @param name     the name of the chatbot
-     * @param userId   the id of the user. If username is defined, this one can be left empty. If both are defined, the username will be used.
-     * @param username the username of the user. If UserID is defined, this one can be left empty.
+     * @param chatbot the chatbot to create
      * @return the newly created chatbot.
      * @author Zwazel
      * @since 1.2.0
@@ -35,11 +72,10 @@ public class ChatbotResource {
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createChatbot(
-            @FormParam("name") String name,
-            @DefaultValue("") @FormParam("username") String username,
-            @DefaultValue("") @FormParam("userId") String userId
+            @Valid @BeanParam Chatbot chatbot
     ) {
-        if ((userId.isBlank() || userId.isEmpty()) && (username.isBlank() || username.isEmpty())) {
+        if ((chatbot.getUserID() == null || chatbot.getUserID().isBlank() || chatbot.getUserID().isEmpty()) &&
+                (chatbot.getUsername() == null || chatbot.getUsername().isBlank() || chatbot.getUsername().isEmpty())) {
             return Response
                     .status(400)
                     .entity("{\"error\": \"userId or username must be provided\"}")
@@ -47,7 +83,9 @@ public class ChatbotResource {
         }
 
         UserDao userDao = new UserDao();
-        User user = (userId.isBlank() || userId.isEmpty()) ? userDao.findByUsername(username) : userDao.findById(userId);
+        User user = (chatbot.getUserID() == null || chatbot.getUserID().isBlank() || chatbot.getUserID().isEmpty()) ?
+                userDao.findByUsername(chatbot.getUsername()) :
+                userDao.findById(chatbot.getUserID());
 
         if (user == null) {
             // return response with error code for user not found
@@ -57,10 +95,7 @@ public class ChatbotResource {
                     .build();
         }
 
-        Chatbot chatbot = Chatbot.builder()
-                .chatbotName(name)
-                .user(user)
-                .build();
+        chatbot.setUser(user);
 
         try {
             new ChatbotDao().save(chatbot);
@@ -214,12 +249,19 @@ public class ChatbotResource {
      */
     private FilterProvider getFilterProvider() {
         return new SimpleFilterProvider()
-                .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.serializeAll())
-                .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
-                .addFilter("UserFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"))
-                .addFilter("QuestionAnswerFilter", SimpleBeanPropertyFilter.filterOutAllExcept("id", "questionAnswerQuestions", "questionAnswerAnswers"))
-                .addFilter("QuestionAnswerQuestionFilter", SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
-                .addFilter("QuestionAnswerAnswerFilter", SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
-                .addFilter("ChatbotUnknownTextsFilter", SimpleBeanPropertyFilter.serializeAllExcept("chatbot"));
+                .addFilter("ChatbotFilter",
+                        SimpleBeanPropertyFilter.serializeAll())
+                .addFilter("RatingFilter",
+                        SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                .addFilter("UserFilter",
+                        SimpleBeanPropertyFilter.filterOutAllExcept("id", "username"))
+                .addFilter("QuestionAnswerFilter",
+                        SimpleBeanPropertyFilter.filterOutAllExcept("id", "questionAnswerQuestions", "questionAnswerAnswers"))
+                .addFilter("QuestionAnswerQuestionFilter",
+                        SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
+                .addFilter("QuestionAnswerAnswerFilter",
+                        SimpleBeanPropertyFilter.serializeAllExcept("questionAnswer"))
+                .addFilter("ChatbotUnknownTextsFilter",
+                        SimpleBeanPropertyFilter.serializeAllExcept("chatbot"));
     }
 }

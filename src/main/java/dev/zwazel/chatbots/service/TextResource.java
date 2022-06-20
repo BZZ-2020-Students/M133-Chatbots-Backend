@@ -1,10 +1,10 @@
-package dev.zwazel.chatbots.services;
+package dev.zwazel.chatbots.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
-import dev.zwazel.chatbots.configs.Constants;
-import dev.zwazel.chatbots.util.ToJson;
+import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -20,9 +20,47 @@ import javax.persistence.EntityExistsException;
 @Path("/text")
 public class TextResource {
     /**
+     * Updates a text in the database.
+     *
+     * @param id   The id of the text to update.
+     * @param text The text to update.
+     * @return The updated text.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateText(@PathParam("id") String id, @Valid @BeanParam Text text) {
+        TextDao textDao = new TextDao();
+        Text textFromDb = textDao.findById(id);
+        if (textFromDb == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (!text.getText().equals(textFromDb.getText())) {
+            textFromDb.setText(text.getText());
+            textDao.update(textFromDb);
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(textFromDb))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
+    /**
      * Creates a new Text object and returns it.
      *
-     * @param text The text of the Text object.
+     * @param text The text
      * @return The created text object if successful.
      * @author Zwazel
      * @since 1.2.0
@@ -30,16 +68,10 @@ public class TextResource {
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createText(@FormParam("text") String text) {
+    public Response createText(@Valid @BeanParam Text text) {
         TextDao textDao = new TextDao();
-
-        if (text.length() > Constants.MAX_TEXT_LENGTH) {
-            text = text.substring(0, Constants.MAX_TEXT_LENGTH);
-        }
-
-        Text newText = new Text(text);
         try {
-            textDao.save(newText);
+            textDao.save(text);
         } catch (EntityExistsException e) {
             e.printStackTrace();
             return Response
@@ -51,7 +83,7 @@ public class TextResource {
         try {
             return Response
                     .status(201)
-                    .entity(ToJson.toJson(newText))
+                    .entity(ToJson.toJson(text))
                     .build();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -157,7 +189,6 @@ public class TextResource {
     @Path("/chatbot/{id}")
     @Produces("application/json")
     public Response getTextByChatbot(@PathParam("id") String id) {
-        System.out.println("hello");
         TextDao textDao = new TextDao();
         Iterable<Text> texts = textDao.findAllByChatbotId(id);
 

@@ -47,13 +47,28 @@ public class Dao<T, I extends Serializable> {
     }
 
     /**
+     * Updates an entity in the database.
+     *
+     * @param entity The entity to update.
+     * @author Zwazel
+     * @since 1.3.0
+     */
+    public void update(T entity) {
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    /**
      * Persist an entity.
      *
      * @param t The entity to persist.
      * @author Zwazel
      * @since 0.3
      */
-    public void save(T t) {
+    public void save(T t) throws IllegalArgumentException {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(t);

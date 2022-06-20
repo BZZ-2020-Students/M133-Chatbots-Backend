@@ -24,6 +24,15 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/rating")
 public class RatingResource {
+    /**
+     * Updates an already existing rating in the database.
+     *
+     * @param id     The id of the rating to update.
+     * @param rating The rating to update.
+     * @return The updated rating.
+     * @author Zwazel
+     * @since 1.3.0
+     */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
@@ -64,6 +73,14 @@ public class RatingResource {
         }
     }
 
+    /**
+     * Creates a new rating for a chatbot. A user can only rate a chatbot once.
+     *
+     * @param rating The rating to create.
+     * @return The created rating.
+     * @author Zwazel
+     * @since 1.3.0
+     */
     @POST
     @Path("/create")
     @Produces("application/json")

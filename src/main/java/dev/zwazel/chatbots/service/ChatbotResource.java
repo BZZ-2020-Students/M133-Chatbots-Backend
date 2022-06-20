@@ -26,6 +26,7 @@ public class ChatbotResource {
      * Updates a chatbot in the database.
      *
      * @param chatbot The chatbot to update.
+     * @param id      The id of the chatbot to update.
      * @return The updated chatbot.
      * @author Zwazel
      * @since 1.3.0

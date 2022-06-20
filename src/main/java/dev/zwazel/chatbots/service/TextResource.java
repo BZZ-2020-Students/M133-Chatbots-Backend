@@ -22,6 +22,7 @@ public class TextResource {
     /**
      * Updates a text in the database.
      *
+     * @param id   The id of the text to update.
      * @param text The text to update.
      * @return The updated text.
      * @author Zwazel

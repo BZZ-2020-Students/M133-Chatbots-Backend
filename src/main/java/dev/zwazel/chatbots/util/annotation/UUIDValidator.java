@@ -4,6 +4,13 @@ import dev.zwazel.chatbots.config.Constants;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+/**
+ * UUID validator.
+ *
+ * @author Zwazel
+ * @see UUID
+ * @since 1.3.0
+ */
 public class UUIDValidator implements ConstraintValidator<UUID, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

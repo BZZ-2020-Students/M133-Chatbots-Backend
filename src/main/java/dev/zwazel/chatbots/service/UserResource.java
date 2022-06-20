@@ -23,6 +23,15 @@ import javax.persistence.EntityExistsException;
  */
 @Path("/user")
 public class UserResource {
+    /**
+     * Updates an already existing user in the database.
+     *
+     * @param id   The id of the user to update.
+     * @param user The user to update.
+     * @return The updated user.
+     * @author Zwazel
+     * @since 1.3.0
+     */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
@@ -279,6 +288,7 @@ public class UserResource {
     /**
      * This method returns a FilterProvider to filter out specific fields.
      *
+     * @param filterOutPassword if true, the password will be filtered out of the response.
      * @return a FilterProvider to filter out specific fields.
      * @author Zwazel
      * @since 1.1.0

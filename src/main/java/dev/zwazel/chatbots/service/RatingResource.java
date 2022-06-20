@@ -24,6 +24,46 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/rating")
 public class RatingResource {
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/update/{id}")
+    public Response updateUser(@PathParam("id") String id, @Valid @BeanParam Rating rating) {
+        RatingDao ratingDao = new RatingDao();
+        Rating ratingToUpdate = ratingDao.findById(id);
+        if (ratingToUpdate == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        boolean changed = false;
+        if (rating.getRating() != null && !rating.getRating().equals(ratingToUpdate.getRating())) {
+            ratingToUpdate.setRating(rating.getRating());
+            changed = true;
+        }
+
+        if (rating.isFavourite() != ratingToUpdate.isFavourite()) {
+            ratingToUpdate.setFavourite(rating.isFavourite());
+            changed = true;
+        }
+
+        if (changed) {
+            ratingDao.update(ratingToUpdate);
+        }
+
+        try {
+            return Response
+                    .status(201)
+                    // the password isn't being filtered out only for testing purposes
+                    .entity(ToJson.toJson(ratingToUpdate, getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .build();
+        }
+    }
+
     @POST
     @Path("/create")
     @Produces("application/json")

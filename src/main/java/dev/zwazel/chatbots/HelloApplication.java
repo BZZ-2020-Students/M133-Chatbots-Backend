@@ -1,5 +1,7 @@
 package dev.zwazel.chatbots;
 
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
@@ -17,6 +19,8 @@ import java.util.Properties;
  * @since 0.1
  */
 @ApplicationPath("/api")
+@DeclareRoles({"admin", "user", "guest"})
+@BasicAuthenticationMechanismDefinition()
 public class HelloApplication extends Application {
     /**
      * The default JWT Issuer

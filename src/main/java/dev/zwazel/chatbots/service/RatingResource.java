@@ -11,6 +11,8 @@ import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -23,6 +25,8 @@ import jakarta.ws.rs.core.Response;
  * @since 0.3
  */
 @Path("/rating")
+@ApplicationScoped
+@RolesAllowed({"admin", "user"})
 public class RatingResource {
     /**
      * Updates an already existing rating in the database.

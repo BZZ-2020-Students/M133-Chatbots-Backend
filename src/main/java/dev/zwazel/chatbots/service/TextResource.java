@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,6 +20,8 @@ import javax.persistence.EntityExistsException;
  * @since 0.3
  */
 @Path("/text")
+@ApplicationScoped
+@RolesAllowed({"admin", "user"})
 public class TextResource {
     /**
      * Updates a text in the database.

@@ -1,5 +1,7 @@
 package dev.zwazel.chatbots;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -11,6 +13,8 @@ import jakarta.ws.rs.core.Response;
  * @author Zwazel
  * @since 0.1
  */
+@ApplicationScoped
+@PermitAll
 @Path("/hello-world")
 public class HelloResource {
     /**

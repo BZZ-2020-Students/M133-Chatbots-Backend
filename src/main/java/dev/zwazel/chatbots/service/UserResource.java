@@ -8,6 +8,8 @@ import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -22,6 +24,8 @@ import javax.persistence.EntityExistsException;
  * @since 0.1
  */
 @Path("/user")
+@ApplicationScoped
+@RolesAllowed({"admin", "user"})
 public class UserResource {
     /**
      * Updates an already existing user in the database.

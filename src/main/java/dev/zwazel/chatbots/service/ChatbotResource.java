@@ -9,6 +9,9 @@ import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -21,6 +24,8 @@ import jakarta.ws.rs.core.Response;
  * @since 0.2
  */
 @Path("/chatbot")
+@ApplicationScoped
+@RolesAllowed({"admin", "user"})
 public class ChatbotResource {
     /**
      * Updates a chatbot in the database.

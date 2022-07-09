@@ -20,8 +20,6 @@ import javax.persistence.EntityExistsException;
  * @since 0.3
  */
 @Path("/text")
-@ApplicationScoped
-@RolesAllowed({"admin", "user"})
 public class TextResource {
     /**
      * Updates a text in the database.
@@ -32,6 +30,7 @@ public class TextResource {
      * @author Zwazel
      * @since 1.3.0
      */
+    @RolesAllowed({"admin", "user"})
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
@@ -69,6 +68,7 @@ public class TextResource {
      * @author Zwazel
      * @since 1.2.0
      */
+    @RolesAllowed({"admin", "user"})
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
@@ -100,13 +100,13 @@ public class TextResource {
 
     /**
      * Deletes a text by its id.
-     * todo: Implement authorization
      *
      * @param id the id of the text
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
      */
+    @RolesAllowed({"admin", "user"})
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -120,13 +120,13 @@ public class TextResource {
 
     /**
      * Deletes a text by its text.
-     * todo: Implement authorization
      *
      * @param text the Text of the Text
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
      */
+    @RolesAllowed({"admin", "user"})
     @DELETE
     @Path("/delete/content/{content}")
     @Produces(MediaType.TEXT_PLAIN)

@@ -9,7 +9,6 @@ import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -24,8 +23,6 @@ import javax.persistence.EntityExistsException;
  * @since 0.1
  */
 @Path("/user")
-@ApplicationScoped
-@RolesAllowed({"admin", "user"})
 public class UserResource {
     /**
      * Updates an already existing user in the database.
@@ -36,6 +33,7 @@ public class UserResource {
      * @author Zwazel
      * @since 1.3.0
      */
+    @RolesAllowed({"admin", "user"})
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
@@ -137,13 +135,13 @@ public class UserResource {
 
     /**
      * Deletes a User by its id.
-     * todo: Implement authorization
      *
      * @param id the id of the User to delete
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
      */
+    @RolesAllowed({"admin", "user"})
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -164,6 +162,7 @@ public class UserResource {
      * @author Zwazel
      * @since 1.1.0
      */
+    @RolesAllowed({"admin", "user"})
     @DELETE
     @Path("/delete/name/{username}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -271,6 +270,7 @@ public class UserResource {
      * @author Zwazel
      * @since 0.3
      */
+    @RolesAllowed({"admin"})
     @GET
     @Path("/role/{role}")
     @Produces({MediaType.APPLICATION_JSON})

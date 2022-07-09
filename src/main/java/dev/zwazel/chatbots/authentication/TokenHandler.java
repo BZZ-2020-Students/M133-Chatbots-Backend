@@ -2,6 +2,7 @@ package dev.zwazel.chatbots.authentication;
 
 import dev.zwazel.chatbots.HelloApplication;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
+import dev.zwazel.chatbots.classes.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -9,6 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Utility class for generating and validating JWT tokens.
@@ -22,13 +24,13 @@ public class TokenHandler {
      *
      * @param id        the id of the token. todo: still unsure what this is.
      * @param subject   the subject of the token.
-     * @param username  the username of the user owning this token.
+     * @param user      the user for which the token is generated.
      * @param ttlMillis the time until the token expires.
      * @return the generated token.
      * @author Zwazel
      * @since 0.1
      */
-    public static String createJWT(String id, String subject, String username, long ttlMillis) {
+    public static String createJWT(String subject, User user, long ttlMillis) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
 
@@ -40,7 +42,7 @@ public class TokenHandler {
 
         //Let's set the JWT Claims
         JwtBuilder builder = Jwts.builder()
-                .setId(id)
+                .setId(UUID.randomUUID().toString())
                 .setIssuedAt(now)
                 .setSubject(subject)
                 .setIssuer(HelloApplication.getProperty("jwt.issuer", HelloApplication.defaultConfJwtIssuer))
@@ -54,7 +56,10 @@ public class TokenHandler {
         }
 
         //Builds the JWT and serializes it to a compact, URL-safe string
-        return builder.claim("username", username).compact();
+        return builder
+                .claim("username", user.getUsername())
+                .claim("role", user.getUserRole())
+                .compact();
     }
 
     /**
@@ -86,5 +91,17 @@ public class TokenHandler {
      */
     public static String getUsername(String jwt) {
         return decodeJWT(jwt).get("username", String.class);
+    }
+
+    /**
+     * returns the role of the user owning the given token.
+     *
+     * @param jwt the token to decode.
+     * @return the username of the user owning the token.
+     * @author Zwazel
+     * @since 0.1
+     */
+    public static String getUserRole(String jwt) {
+        return decodeJWT(jwt).get("role", String.class);
     }
 }

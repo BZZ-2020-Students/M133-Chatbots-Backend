@@ -25,8 +25,6 @@ import jakarta.ws.rs.core.Response;
  * @since 0.3
  */
 @Path("/rating")
-@ApplicationScoped
-@RolesAllowed({"admin", "user"})
 public class RatingResource {
     /**
      * Updates an already existing rating in the database.
@@ -37,6 +35,7 @@ public class RatingResource {
      * @author Zwazel
      * @since 1.3.0
      */
+    @RolesAllowed({"admin", "user"})
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
@@ -85,6 +84,7 @@ public class RatingResource {
      * @author Zwazel
      * @since 1.3.0
      */
+    @RolesAllowed({"admin", "user"})
     @POST
     @Path("/create")
     @Produces("application/json")
@@ -167,13 +167,13 @@ public class RatingResource {
 
     /**
      * Deletes a rating by its id.
-     * todo: Implement authorization
      *
      * @param id the id of the rating
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
      */
+    @RolesAllowed({"admin", "user"})
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)

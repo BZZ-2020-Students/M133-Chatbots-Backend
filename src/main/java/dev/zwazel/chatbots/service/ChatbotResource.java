@@ -9,9 +9,7 @@ import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.util.json.ToJson;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -24,8 +22,6 @@ import jakarta.ws.rs.core.Response;
  * @since 0.2
  */
 @Path("/chatbot")
-@ApplicationScoped
-@RolesAllowed({"admin", "user"})
 public class ChatbotResource {
     /**
      * Updates a chatbot in the database.
@@ -36,6 +32,7 @@ public class ChatbotResource {
      * @author Zwazel
      * @since 1.3.0
      */
+    @RolesAllowed({"admin", "user"})
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
@@ -73,6 +70,7 @@ public class ChatbotResource {
      * @author Zwazel
      * @since 1.2.0
      */
+    @RolesAllowed({"admin", "user"})
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
@@ -134,6 +132,7 @@ public class ChatbotResource {
      * @author Zwazel
      * @since 1.1.0
      */
+    @RolesAllowed({"admin", "user"})
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -147,13 +146,13 @@ public class ChatbotResource {
 
     /**
      * Deletes a chatbot by its name.
-     * todo: Implement authorization
      *
      * @param name the name of the chatbot
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
      */
+    @RolesAllowed({"admin", "user"})
     @DELETE
     @Path("/delete/name/{name}")
     @Produces(MediaType.TEXT_PLAIN)

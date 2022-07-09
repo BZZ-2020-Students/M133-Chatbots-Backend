@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.authentication;
 
 import dev.zwazel.chatbots.HelloApplication;
+import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
@@ -35,12 +36,17 @@ public class AuthenticateResource {
         System.out.println("username = " + username);
         System.out.println("password = " + password);
 
+        UserDao userDao = new UserDao();
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         NewCookie tokenCookie = new NewCookie(
                 HelloApplication.getProperty("jwt.name", HelloApplication.defaultConfJwtName),
                 TokenHandler.createJWT(
-                        "1", // TODO: 10.05.2022 - change to user id
                         "authentication",
-                        username,
+                        user,
                         DurationsInMilliseconds.DAY.getDuration()
                 ),
                 "/",

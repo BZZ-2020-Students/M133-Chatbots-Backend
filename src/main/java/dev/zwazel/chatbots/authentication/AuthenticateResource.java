@@ -1,13 +1,20 @@
 package dev.zwazel.chatbots.authentication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.HelloApplication;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.exception.NotLoggedInException;
+import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
+
+import static dev.zwazel.chatbots.service.UserResource.getFilterProvider;
 
 /**
  * Resource for authenticating users.
@@ -33,13 +40,20 @@ public class AuthenticateResource {
             @FormParam("username") String username,
             @FormParam("password") String password
     ) {
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
-
         UserDao userDao = new UserDao();
         User user = userDao.findByUsername(username);
         if (user == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response
+                    .status(404)
+                    .entity("User with username not found")
+                    .build();
+        }
+
+        if (!user.getPassword().equals(password)) {
+            return Response
+                    .status(401)
+                    .entity("Wrong password")
+                    .build();
         }
 
         NewCookie tokenCookie = new NewCookie(
@@ -70,8 +84,7 @@ public class AuthenticateResource {
     }
 
     /**
-     * Logs out a user. At the moment, this is a dummy method.
-     * todo: implement
+     * Logs out a user.
      *
      * @return a response with a status code of 200
      * @author Zwazel
@@ -79,13 +92,32 @@ public class AuthenticateResource {
      */
     @GET
     @Path("/logout")
-    public String logout() {
-        return "You're now logged out!";
+    public Response logout() {
+        NewCookie tokenCookie = new NewCookie(
+                HelloApplication.getProperty("jwt.name", HelloApplication.defaultConfJwtName),
+                "",
+                "/",
+                "",
+                "Auth-Token",
+                0,
+                false
+        );
+
+        return Response
+                .status(200)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, DELETE")
+                .entity("")
+                .cookie(tokenCookie)
+                .build();
     }
 
     /**
-     * Checks if a user is logged in and what role he has. Right now, this is a dummy method.
-     * todo: implement
+     * Checks if a user is logged in and what role he has.
      *
      * @return a response with the needed information about the user and a status code depending on the result
      * @author Zwazel
@@ -94,42 +126,74 @@ public class AuthenticateResource {
     @GET
     @Path("auth-check")
     @Produces("application/json")
-    public Response authCheck() {
-        User user = User.builder()
-                .username("Zwazel")
-                .password("1234")
-                .userRole(UserRole.USER)
-                .build();
+    public Response authCheck(ContainerRequestContext requestContext) {
+        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
+        User user;
+        try {
+            user = TokenHandler.getUserFromJWT(cookie);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(401)
+                    .entity(e.getMessage())
+                    .build();
+        }
 
-        return Response
-                .status(200)
-                .entity(user)
-                .build();
+        try {
+            return Response
+                    .status(200)
+                    .entity(ToJson.toJson(user, getFilterProvider(true)))
+                    .build();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Utility method for testing purposes. Tests if the user is logged in and has admin rights.
-     * todo: implement
      *
      * @author Zwazel
      * @since 0.1
      */
     @GET
+    @Produces("text/plain")
     @Path("/admin-check")
-    public String adminCheck() {
-        return "you're an admin";
+    public String adminCheck(ContainerRequestContext requestContext) {
+        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
+        User user;
+        try {
+            user = TokenHandler.getUserFromJWT(cookie);
+        } catch (NotLoggedInException e) {
+            return e.getMessage();
+        }
+
+        if (UserRole.ADMIN == user.getUserRole()) {
+            return "you're an admin";
+        } else {
+            return "you're not an admin";
+        }
     }
 
     /**
      * Utility method for testing purposes. Tests if the user is logged in and has normal user rights.
-     * todo: implement
      *
      * @author Zwazel
      * @since 0.1
      */
     @GET
     @Path("/user-check")
-    public String userCheck() {
-        return "you're a user";
+    public String userCheck(ContainerRequestContext requestContext) {
+        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
+        User user;
+        try {
+            user = TokenHandler.getUserFromJWT(cookie);
+        } catch (NotLoggedInException e) {
+            return e.getMessage();
+        }
+
+        if (UserRole.USER == user.getUserRole()) {
+            return "you're a user";
+        } else {
+            return "you're not a user";
+        }
     }
 }

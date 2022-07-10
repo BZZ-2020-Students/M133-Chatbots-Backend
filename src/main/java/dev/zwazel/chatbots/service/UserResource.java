@@ -25,6 +25,28 @@ import javax.persistence.EntityExistsException;
 @Path("/user")
 public class UserResource {
     /**
+     * This method returns a FilterProvider to filter out specific fields.
+     *
+     * @param filterOutPassword if true, the password will be filtered out of the response.
+     * @return a FilterProvider to filter out specific fields.
+     * @author Zwazel
+     * @since 1.1.0
+     */
+    public static FilterProvider getFilterProvider(boolean filterOutPassword) {
+        if (filterOutPassword) {
+            return new SimpleFilterProvider()
+                    .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
+                    .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                    .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAllExcept("password"));
+        }
+
+        return new SimpleFilterProvider()
+                .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
+                .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
+                .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAll());
+    }
+
+    /**
      * Updates an already existing user in the database.
      *
      * @param id   The id of the user to update.
@@ -287,27 +309,5 @@ public class UserResource {
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
                     .build();
         }
-    }
-
-    /**
-     * This method returns a FilterProvider to filter out specific fields.
-     *
-     * @param filterOutPassword if true, the password will be filtered out of the response.
-     * @return a FilterProvider to filter out specific fields.
-     * @author Zwazel
-     * @since 1.1.0
-     */
-    private FilterProvider getFilterProvider(boolean filterOutPassword) {
-        if (filterOutPassword) {
-            return new SimpleFilterProvider()
-                    .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
-                    .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
-                    .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAllExcept("password"));
-        }
-
-        return new SimpleFilterProvider()
-                .addFilter("ChatbotFilter", SimpleBeanPropertyFilter.filterOutAllExcept("chatbotName", "id"))
-                .addFilter("RatingFilter", SimpleBeanPropertyFilter.filterOutAllExcept("rating", "id"))
-                .addFilter("UserFilter", SimpleBeanPropertyFilter.serializeAll());
     }
 }

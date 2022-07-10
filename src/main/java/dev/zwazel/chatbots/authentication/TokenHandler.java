@@ -1,15 +1,20 @@
 package dev.zwazel.chatbots.authentication;
 
 import dev.zwazel.chatbots.HelloApplication;
+import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
+import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.exception.NotLoggedInException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.ws.rs.core.Cookie;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -22,7 +27,6 @@ public class TokenHandler {
     /**
      * Generates a JWT token for the given username and subject.
      *
-     * @param id        the id of the token. todo: still unsure what this is.
      * @param subject   the subject of the token.
      * @param user      the user for which the token is generated.
      * @param ttlMillis the time until the token expires.
@@ -99,9 +103,36 @@ public class TokenHandler {
      * @param jwt the token to decode.
      * @return the username of the user owning the token.
      * @author Zwazel
-     * @since 0.1
+     * @since 1.4
      */
-    public static String getUserRole(String jwt) {
-        return decodeJWT(jwt).get("role", String.class);
+    public static UserRole getUserRole(String jwt) {
+        String roleString = decodeJWT(jwt).get("role", String.class);
+
+        return UserRole.valueOf(roleString.toUpperCase(Locale.ROOT));
+    }
+
+    /**
+     * Gets a user from a token.
+     *
+     * @param jwtCookie the cookie with the jwt token.
+     * @return the user owning the token.
+     * @author Zwazel
+     * @since 1.4
+     */
+    public static User getUserFromJWT(Cookie jwtCookie) throws NotLoggedInException {
+        if (jwtCookie == null) {
+            throw new NotLoggedInException();
+        }
+
+        String jwt = jwtCookie.getValue();
+        UserDao userDao = new UserDao();
+        String username = getUsername(jwt);
+        User user = userDao.findByUsername(username);
+
+        if (user == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        return user;
     }
 }

@@ -1,6 +1,8 @@
 package dev.zwazel.chatbots.authentication;
 
 import dev.zwazel.chatbots.HelloApplication;
+import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.exception.NotLoggedInException;
 import jakarta.annotation.security.DenyAll;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
@@ -11,12 +13,14 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
+import lombok.Getter;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
     @Context
@@ -35,9 +39,15 @@ public class AuthFilter implements ContainerRequestFilter {
             Set<String> requiredRoles = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
 
             Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
-            String userRole = TokenHandler.getUserRole(cookie.getValue());
+            User user = null;
+            try {
+                user = TokenHandler.getUserFromJWT(cookie);
+            } catch (NotLoggedInException e) {
+                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                        .entity(e.getMessage()).build());
+            }
 
-            if (userRole == null || !isUserAllowed(requiredRoles, userRole)) {
+            if (user == null || !isUserAllowed(requiredRoles, user.getUserRole().toString())) {
                 requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                         .entity("You cannot access this resource").build());
             }

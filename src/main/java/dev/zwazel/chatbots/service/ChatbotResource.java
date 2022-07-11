@@ -56,7 +56,7 @@ public class ChatbotResource {
         if (chatbotFromDb == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        
+
         // admins can change everything, users can only change their own chatbots
         if (UserRole.ADMIN == user.getUserRole() || chatbotFromDb.getUser().getId().equals(user.getId())) {
             if (!chatbot.getChatbotName().equals(chatbotFromDb.getChatbotName())) {
@@ -147,7 +147,6 @@ public class ChatbotResource {
 
     /**
      * Deletes a chatbot by its id.
-     * todo: Implement authorization
      *
      * @param id the id of the chatbot
      * @return 200 if successful
@@ -158,12 +157,35 @@ public class ChatbotResource {
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteChatbot(@PathParam("id") String id) {
-        new ChatbotDao().delete(id);
+    public Response deleteChatbot(@PathParam("id") String id, ContainerRequestContext requestContext) {
+        User user;
 
-        return Response
-                .status(200)
-                .build();
+        try {
+            user = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
+
+        ChatbotDao chatbotDao = new ChatbotDao();
+        Chatbot chatbotFromDb = chatbotDao.findById(id);
+        if (chatbotFromDb == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (UserRole.ADMIN == user.getUserRole() || chatbotFromDb.getUser().getId().equals(user.getId())) {
+            new ChatbotDao().delete(id);
+            return Response
+                    .status(200)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"You are not allowed to delete this chatbot.\"}")
+                    .build();
+        }
     }
 
     /**
@@ -178,12 +200,35 @@ public class ChatbotResource {
     @DELETE
     @Path("/delete/name/{name}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteChatbotByName(@PathParam("name") String name) {
-        new ChatbotDao().deleteByName(name);
+    public Response deleteChatbotByName(@PathParam("name") String name, ContainerRequestContext requestContext) {
+        User user;
 
-        return Response
-                .status(200)
-                .build();
+        try {
+            user = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
+
+        ChatbotDao chatbotDao = new ChatbotDao();
+        Chatbot chatbotFromDb = chatbotDao.findByName(name);
+        if (chatbotFromDb == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (UserRole.ADMIN == user.getUserRole() || chatbotFromDb.getUser().getId().equals(user.getId())) {
+            new ChatbotDao().delete(chatbotFromDb.getId());
+            return Response
+                    .status(200)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"You are not allowed to delete this chatbot.\"}")
+                    .build();
+        }
     }
 
     /**

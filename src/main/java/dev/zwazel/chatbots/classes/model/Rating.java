@@ -53,26 +53,6 @@ public class Rating {
     private User user;
 
     /**
-     * The username of the user that gave the rating.
-     *
-     * @since 1.3.0
-     */
-    @Transient
-    @Size(min = Constants.MIN_NAME_LENGTH, max = Constants.MAX_NAME_LENGTH)
-    @FormParam("username")
-    private String username;
-
-    /**
-     * The user id of the user that gave the rating.
-     *
-     * @since 1.3.0
-     */
-    @Transient
-    @FormParam("userId")
-    @dev.zwazel.chatbots.util.annotation.UUID
-    private String userId;
-
-    /**
      * The rating value.
      *
      * @see RatingEnum

@@ -13,6 +13,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Cookie;
+import lombok.NonNull;
 
 import java.util.Date;
 import java.util.Locale;
@@ -147,7 +148,7 @@ public class TokenHandler {
      * @author Zwazel
      * @since 1.4
      */
-    public static User getUserFromCookie(ContainerRequestContext requestContext) throws NotLoggedInException {
+    public static User getUserFromCookie(@NonNull ContainerRequestContext requestContext) throws NotLoggedInException {
         Cookie jwtCookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
         return getUserFromJWT(jwtCookie);
     }

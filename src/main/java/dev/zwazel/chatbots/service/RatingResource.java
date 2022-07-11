@@ -4,17 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import dev.zwazel.chatbots.authentication.TokenHandler;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.RatingDao;
-import dev.zwazel.chatbots.classes.dao.UserDao;
+import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.exception.NotLoggedInException;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -39,11 +41,28 @@ public class RatingResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
-    public Response updateUser(@PathParam("id") String id, @Valid @BeanParam Rating rating) {
+    public Response updateUser(@PathParam("id") String id, @Valid @BeanParam Rating rating, ContainerRequestContext requestContext) {
         RatingDao ratingDao = new RatingDao();
         Rating ratingToUpdate = ratingDao.findById(id);
         if (ratingToUpdate == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        User loggedInUser;
+        try {
+            loggedInUser = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
+
+        if (UserRole.ADMIN != loggedInUser.getUserRole() || !loggedInUser.getId().equals(ratingToUpdate.getUser().getId())) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"You are not allowed to update this rating.\"}")
+                    .build();
         }
 
         boolean changed = false;
@@ -64,7 +83,6 @@ public class RatingResource {
         try {
             return Response
                     .status(201)
-                    // the password isn't being filtered out only for testing purposes
                     .entity(ToJson.toJson(ratingToUpdate, getFilterProvider()))
                     .build();
         } catch (JsonProcessingException e) {
@@ -89,27 +107,15 @@ public class RatingResource {
     @Path("/create")
     @Produces("application/json")
     public Response createRating(
-            @Valid @BeanParam Rating rating
+            @Valid @BeanParam Rating rating,
+            ContainerRequestContext requestContext
     ) {
-        boolean userIdNotSpecified = rating.getUserId() == null ||
-                rating.getUserId().isBlank() ||
-                rating.getUserId().isEmpty();
-        boolean usernameNotSpecified = rating.getUsername() == null ||
-                rating.getUsername().isBlank() ||
-                rating.getUsername().isEmpty();
         boolean chatbotIdNotSpecified = rating.getChatbotId() == null ||
                 rating.getChatbotId().isBlank() ||
                 rating.getChatbotId().isEmpty();
         boolean chatbotNameNotSpecified = rating.getChatbotName() == null ||
                 rating.getChatbotName().isBlank() ||
                 rating.getChatbotName().isEmpty();
-
-        if (userIdNotSpecified && usernameNotSpecified) {
-            return Response
-                    .status(400)
-                    .entity("{\"error\": \"userId or username must be provided\"}")
-                    .build();
-        }
 
         if (chatbotIdNotSpecified && chatbotNameNotSpecified) {
             return Response
@@ -118,13 +124,13 @@ public class RatingResource {
                     .build();
         }
 
-        UserDao userDao = new UserDao();
-        User user = (userIdNotSpecified) ? userDao.findByUsername(rating.getUsername()) :
-                userDao.findById(rating.getUserId());
-        if (user == null) {
+        User user;
+        try {
+            user = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
             return Response
-                    .status(404)
-                    .entity("{\"error\": \"user not found\"}")
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
                     .build();
         }
 
@@ -177,8 +183,31 @@ public class RatingResource {
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteRating(@PathParam("id") String id) {
-        new RatingDao().delete(id);
+    public Response deleteRating(@PathParam("id") String id, ContainerRequestContext requestContext) {
+        User loggedInUser;
+        try {
+            loggedInUser = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
+
+        RatingDao ratingDao = new RatingDao();
+        Rating rating = ratingDao.findById(id);
+        if (rating == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (UserRole.ADMIN != loggedInUser.getUserRole() || !loggedInUser.getId().equals(rating.getUser().getId())) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"You are not allowed to delete this rating.\"}")
+                    .build();
+        }
+
+        ratingDao.delete(id);
 
         return Response
                 .status(200)

@@ -19,7 +19,7 @@ public class TestDbConnection {
     public static void main(String[] args) {
         User user = User.builder()
                 .username("test")
-                .password("test")
+                .formPassword("test")
                 .userRole(UserRole.USER)
                 .build();
 

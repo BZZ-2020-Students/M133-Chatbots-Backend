@@ -54,14 +54,22 @@ public class User {
     private String username;
 
     /**
-     * User password
+     * User password for the forms, not stored in the database, not hashed.
      *
-     * @since 0.2
+     * @since 1.4
      */
+    @Transient
     @NonNull
-    @Column(nullable = false, length = Constants.MAX_PASSWORD_LENGTH)
     @Password
     @FormParam("password")
+    private String formPassword;
+
+    /**
+     * User password for the database, hashed.
+     *
+     * @since 0.1
+     */
+    @Column(nullable = false, length = Constants.MAX_PASSWORD_LENGTH)
     private String password;
 
     /**
@@ -98,11 +106,10 @@ public class User {
     /**
      * Custom setter for the password field to hash the password before storing it in the database (if it is not null)
      *
-     * @param password The password to hash
      * @author Zwazel
      * @since 1.4
      */
-    public void setPassword(@NonNull String password) {
-        this.password = SHA256.getHexStringInstant(password);
+    public void setPassword() {
+        this.password = SHA256.getHexStringInstant(this.getFormPassword());
     }
 }

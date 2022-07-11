@@ -49,7 +49,7 @@ public class AuthenticateResource {
                     .entity("User with username not found")
                     .build();
         }
-
+        
         if (!user.getPassword().equals(SHA256.getHexStringInstant(password))) {
             return Response
                     .status(401)
@@ -128,7 +128,7 @@ public class AuthenticateResource {
     @Path("auth-check")
     @Produces("application/json")
     public Response authCheck(ContainerRequestContext requestContext) {
-        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
+        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name", HelloApplication.defaultConfJwtName));
         User user;
         try {
             user = TokenHandler.getUserFromJWT(cookie);
@@ -159,7 +159,7 @@ public class AuthenticateResource {
     @Produces("text/plain")
     @Path("/admin-check")
     public String adminCheck(ContainerRequestContext requestContext) {
-        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
+        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name", HelloApplication.defaultConfJwtName));
         User user;
         try {
             user = TokenHandler.getUserFromJWT(cookie);
@@ -183,7 +183,7 @@ public class AuthenticateResource {
     @GET
     @Path("/user-check")
     public String userCheck(ContainerRequestContext requestContext) {
-        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
+        Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name", HelloApplication.defaultConfJwtName));
         User user;
         try {
             user = TokenHandler.getUserFromJWT(cookie);

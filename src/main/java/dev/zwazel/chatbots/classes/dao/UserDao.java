@@ -4,6 +4,7 @@ import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.Rating;
 import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.util.SHA256;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -41,6 +42,7 @@ public class UserDao extends Dao<User, String> {
     public void update(User entity) {
         User userInDb = findByUsername(entity.getUsername());
         if (userInDb == null || userInDb.getId().equals(entity.getId())) {
+            entity.setPassword();
             super.update(entity);
         } else {
             throw new EntityExistsException("User already exists.");
@@ -62,6 +64,7 @@ public class UserDao extends Dao<User, String> {
             throw new IllegalArgumentException("Username " + user.getUsername() + " already exists");
         }
 
+        user.setPassword();
         super.save(user);
     }
 
@@ -124,6 +127,8 @@ public class UserDao extends Dao<User, String> {
                 user.setId(user1.getId());
                 throw new IllegalArgumentException("Username " + user.getUsername() + " already exists");
             }
+
+            user.setPassword();
         }
 
         super.saveCollection(users);

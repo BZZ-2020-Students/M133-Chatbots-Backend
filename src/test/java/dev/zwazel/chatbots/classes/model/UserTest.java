@@ -37,7 +37,7 @@ public class UserTest {
     public void testBuilderMissingName() {
         assertThrows(NullPointerException.class,
                 () -> User.builder()
-                        .password("password")
+                        .formPassword("password")
                         .userRole(UserRole.USER)
                         .build()
         );
@@ -72,12 +72,12 @@ public class UserTest {
         // assert null pointer exception
         User user = User.builder()
                 .username("name")
-                .password("password")
+                .formPassword("password")
                 .build();
 
         assertEquals(UserRole.USER, user.getUserRole());
         assertEquals("name", user.getUsername());
-        assertEquals("password", user.getPassword());
+        assertEquals("password", user.getFormPassword());
     }
 
     /**
@@ -90,7 +90,7 @@ public class UserTest {
     public void testToJson() {
         User user = User.builder()
                 .id(UUID.fromString(testUuid).toString())
-                .password("password")
+                .formPassword("password")
                 .username("name")
                 .userRole(UserRole.USER)
                 .build();
@@ -117,14 +117,14 @@ public class UserTest {
     public void testBuildingValidUser() {
         User user = User.builder()
                 .id(UUID.fromString(testUuid).toString())
-                .password("password")
+                .formPassword("password")
                 .username("name")
                 .userRole(UserRole.USER)
                 .build();
 
         assertEquals(user.getId(), UUID.fromString(testUuid).toString());
         assertEquals("name", user.getUsername());
-        assertEquals("password", user.getPassword());
+        assertEquals("password", user.getFormPassword());
         assertEquals(UserRole.USER, user.getUserRole());
     }
 
@@ -139,7 +139,7 @@ public class UserTest {
         User user = new User("name", "password", UserRole.USER);
 
         assertEquals("name", user.getUsername());
-        assertEquals("password", user.getPassword());
+        assertEquals("password", user.getFormPassword());
         assertEquals(UserRole.USER, user.getUserRole());
     }
 
@@ -155,7 +155,7 @@ public class UserTest {
 
         assertNotNull(user.getId());
         assertNull(user.getUsername());
-        assertNull(user.getPassword());
+        assertNull(user.getFormPassword());
         assertEquals(UserRole.USER, user.getUserRole());
     }
 

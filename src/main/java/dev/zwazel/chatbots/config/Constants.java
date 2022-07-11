@@ -43,7 +43,7 @@ public class Constants {
      *
      * @since 1.2.0
      */
-    public static final int MAX_PASSWORD_LENGTH = 32;
+    public static final int MAX_PASSWORD_LENGTH = 256;
 
     /**
      * The min length of any password

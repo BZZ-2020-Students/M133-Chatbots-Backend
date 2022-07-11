@@ -9,7 +9,6 @@ import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.exception.NotLoggedInException;
-import dev.zwazel.chatbots.util.SHA256;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
@@ -99,8 +98,8 @@ public class UserResource {
             changed = true;
         }
 
-        if (user.getPassword() != null && !user.getPassword().equals(userToUpdate.getPassword())) {
-            userToUpdate.setPassword(user.getPassword());
+        if (user.getFormPassword() != null && !user.getFormPassword().equals(userToUpdate.getFormPassword())) {
+            userToUpdate.setFormPassword(user.getFormPassword());
             changed = true;
         }
 
@@ -150,7 +149,7 @@ public class UserResource {
         User newUser =
                 User.builder()
                         .username(username)
-                        .password(SHA256.getHexStringInstant(password))
+                        .formPassword(password)
                         .build();
         try {
             userDao.save(newUser);

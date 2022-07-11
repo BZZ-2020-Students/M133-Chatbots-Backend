@@ -181,7 +181,7 @@ public class InitDbOnStartup {
 
         User user = User.builder()
                 .username("user")
-                .password(verySecureUserPassword)
+                .formPassword(verySecureUserPassword)
                 .userRole(UserRole.USER)
                 .build();
 
@@ -189,7 +189,7 @@ public class InitDbOnStartup {
 
         User admin = User.builder()
                 .username("admin")
-                .password(verySecureUserPassword)
+                .formPassword(verySecureUserPassword)
                 .userRole(UserRole.ADMIN)
                 .build();
 

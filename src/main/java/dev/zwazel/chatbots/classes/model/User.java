@@ -3,6 +3,7 @@ package dev.zwazel.chatbots.classes.model;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.config.Constants;
+import dev.zwazel.chatbots.util.SHA256;
 import dev.zwazel.chatbots.util.annotation.Password;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -93,4 +94,15 @@ public class User {
     @Builder.Default
     @ToString.Exclude
     private Set<Rating> ratings = new LinkedHashSet<>();
+
+    /**
+     * Custom setter for the password field to hash the password before storing it in the database (if it is not null)
+     *
+     * @param password The password to hash
+     * @author Zwazel
+     * @since 1.4
+     */
+    public void setPassword(@NonNull String password) {
+        this.password = SHA256.getHexStringInstant(password);
+    }
 }

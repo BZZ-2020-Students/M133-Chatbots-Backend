@@ -7,6 +7,7 @@ import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.exception.NotLoggedInException;
+import dev.zwazel.chatbots.util.SHA256;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.container.ContainerRequestContext;
@@ -49,7 +50,7 @@ public class AuthenticateResource {
                     .build();
         }
 
-        if (!user.getPassword().equals(password)) {
+        if (!user.getPassword().equals(SHA256.getHexStringInstant(password))) {
             return Response
                     .status(401)
                     .entity("Wrong password")

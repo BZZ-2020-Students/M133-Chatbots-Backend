@@ -4,13 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import dev.zwazel.chatbots.authentication.TokenHandler;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.exception.NotLoggedInException;
+import dev.zwazel.chatbots.util.SHA256;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -59,11 +63,34 @@ public class UserResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
-    public Response updateUser(@PathParam("id") String id, @Valid @BeanParam User user) {
+    public Response updateUser(@DefaultValue("") @PathParam("id") String id, @Valid @BeanParam User user, ContainerRequestContext requestContext) {
         UserDao userDao = new UserDao();
-        User userToUpdate = userDao.findById(id);
+
+        User userToUpdate;
+        User loggedInUser = null;
+        try {
+            if (id.equals("")) {
+                userToUpdate = TokenHandler.getUserFromCookie(requestContext);
+            } else {
+                userToUpdate = userDao.findById(id);
+                loggedInUser = TokenHandler.getUserFromCookie(requestContext);
+            }
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
         if (userToUpdate == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (loggedInUser != null &&
+                (!loggedInUser.getId().equals(userToUpdate.getId()) && UserRole.ADMIN != loggedInUser.getUserRole())) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("\"error\":\"You are not allowed to update this user.\"")
+                    .build();
         }
 
         boolean changed = false;
@@ -77,9 +104,11 @@ public class UserResource {
             changed = true;
         }
 
-        if (user.getUserRole() != null && !user.getUserRole().equals(userToUpdate.getUserRole())) {
-            userToUpdate.setUserRole(user.getUserRole());
-            changed = true;
+        if (loggedInUser != null && UserRole.ADMIN == loggedInUser.getUserRole()) {
+            if (user.getUserRole() != null && !user.getUserRole().equals(userToUpdate.getUserRole())) {
+                userToUpdate.setUserRole(user.getUserRole());
+                changed = true;
+            }
         }
 
         if (changed) {
@@ -106,7 +135,6 @@ public class UserResource {
      *
      * @param username The username of the User object.
      * @param password The password of the User object.
-     * @param role     The role of the User object.
      * @return The created user object if successful.
      * @author Zwazel
      * @since 1.2.0
@@ -116,21 +144,13 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(
             @FormParam("username") String username,
-            @FormParam("password") String password,
-            @DefaultValue("") @FormParam("role") String role
+            @FormParam("password") String password
     ) {
-        UserRole userRole = (role.isEmpty() || role.isBlank()) ? null : UserRole.valueOf(role);
-
         UserDao userDao = new UserDao();
-        User newUser = (userRole == null) ?
+        User newUser =
                 User.builder()
                         .username(username)
-                        .password(password)
-                        .build() :
-                User.builder()
-                        .username(username)
-                        .password(password)
-                        .userRole(userRole)
+                        .password(SHA256.getHexStringInstant(password))
                         .build();
         try {
             userDao.save(newUser);
@@ -167,8 +187,32 @@ public class UserResource {
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteUser(@PathParam("id") String id) {
-        new UserDao().delete(id);
+    public Response deleteUser(@PathParam("id") String id, ContainerRequestContext requestContext) {
+        UserDao userDao = new UserDao();
+        User userToDelete = userDao.findById(id);
+
+        if (userToDelete == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        User user;
+        try {
+            user = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
+
+        if (!user.getId().equals(userToDelete.getId()) && UserRole.ADMIN != user.getUserRole()) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("\"error\":\"You are not allowed to delete this user.\"")
+                    .build();
+        }
+
+        userDao.delete(userToDelete);
 
         return Response
                 .status(200)
@@ -177,7 +221,6 @@ public class UserResource {
 
     /**
      * Deletes a User by its name.
-     * todo: Implement authorization
      *
      * @param username the username of the User to delete
      * @return 200 if successful
@@ -188,8 +231,32 @@ public class UserResource {
     @DELETE
     @Path("/delete/name/{username}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteUserByUsername(@PathParam("username") String username) {
-        new UserDao().deleteByUsername(username);
+    public Response deleteUserByUsername(@PathParam("username") String username, ContainerRequestContext requestContext) {
+        UserDao userDao = new UserDao();
+        User userToDelete = userDao.findByUsername(username);
+
+        if (userToDelete == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        User user;
+        try {
+            user = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
+
+        if (!user.getId().equals(userToDelete.getId()) && UserRole.ADMIN != user.getUserRole()) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("\"error\":\"You are not allowed to delete this user.\"")
+                    .build();
+        }
+
+        userDao.delete(userToDelete);
 
         return Response
                 .status(200)

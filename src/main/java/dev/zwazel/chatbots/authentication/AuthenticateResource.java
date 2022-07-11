@@ -134,7 +134,7 @@ public class AuthenticateResource {
             user = TokenHandler.getUserFromJWT(cookie);
         } catch (NotLoggedInException e) {
             return Response
-                    .status(401)
+                    .status(201)
                     .entity(e.getMessage())
                     .build();
         }

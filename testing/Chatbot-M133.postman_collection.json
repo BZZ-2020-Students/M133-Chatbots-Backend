@@ -19,170 +19,6 @@
 									"name": "success",
 									"item": [
 										{
-											"name": "User",
-											"item": [
-												{
-													"name": "LoginAsUser",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 200\", function () {\r",
-																	"    pm.response.to.have.status(200);\r",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [],
-														"body": {
-															"mode": "urlencoded",
-															"urlencoded": [
-																{
-																	"key": "username",
-																	"value": "user",
-																	"type": "text"
-																},
-																{
-																	"key": "password",
-																	"value": "{{userPassword}}",
-																	"type": "text"
-																}
-															]
-														},
-														"url": {
-															"raw": "{{base_url_chatbot}}/auth/login",
-															"host": [
-																"{{base_url_chatbot}}"
-															],
-															"path": [
-																"auth",
-																"login"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "auth-check-user",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 200\", function () {\r",
-																	"    pm.response.to.have.status(200);\r",
-																	"});\r",
-																	"\r",
-																	"var jsonData = pm.response.json();\r",
-																	"pm.test(\"Username is user\", function () {\r",
-																	"    pm.expect(jsonData.username).to.eql(\"user\");\r",
-																	"});\r",
-																	"\r",
-																	"pm.test(\"role is USER\", function () {\r",
-																	"    pm.expect(jsonData.userRole).to.eql(\"USER\");\r",
-																	"});\r",
-																	"\r",
-																	"pm.collectionVariables.set(\"loggedInUserId\", jsonData.id);\r",
-																	"pm.collectionVariables.set(\"loggedInUserName\", jsonData.username);"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "GET",
-														"header": [],
-														"url": {
-															"raw": "{{base_url_chatbot}}/auth/auth-check",
-															"host": [
-																"{{base_url_chatbot}}"
-															],
-															"path": [
-																"auth",
-																"auth-check"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "userCheck",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 200\", function () {\r",
-																	"    pm.response.to.have.status(200);\r",
-																	"});\r",
-																	"\r",
-																	"pm.test(\"Body matches string 'you're a user'\", function () {\r",
-																	"    pm.expect(pm.response.text()).to.include(\"you're a user\");\r",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "GET",
-														"header": [],
-														"url": {
-															"raw": "{{base_url_chatbot}}/auth/user-check",
-															"host": [
-																"{{base_url_chatbot}}"
-															],
-															"path": [
-																"auth",
-																"user-check"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "not an adminCheck",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 200\", function () {\r",
-																	"    pm.response.to.have.status(200);\r",
-																	"});\r",
-																	"\r",
-																	"pm.test(\"Body matches string 'you're not an admin'\", function () {\r",
-																	"    pm.expect(pm.response.text()).to.include(\"you're not an admin\");\r",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "GET",
-														"header": [],
-														"url": {
-															"raw": "{{base_url_chatbot}}/auth/admin-check",
-															"host": [
-																"{{base_url_chatbot}}"
-															],
-															"path": [
-																"auth",
-																"admin-check"
-															]
-														}
-													},
-													"response": []
-												}
-											]
-										},
-										{
 											"name": "Admin",
 											"item": [
 												{
@@ -4320,6 +4156,3554 @@
 						{
 							"name": "Cleanup",
 							"item": [
+								{
+									"name": "DeleteAdditionalUser",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_chatbot}}/user/delete/{{newlyCreatedUserForChatbot1Id}}",
+											"host": [
+												"{{base_url_chatbot}}"
+											],
+											"path": [
+												"user",
+												"delete",
+												"{{newlyCreatedUserForChatbot1Id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteAdditionalChatbot",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_chatbot}}/chatbot/delete/name/{{updatedChatbotName3}}",
+											"host": [
+												"{{base_url_chatbot}}"
+											],
+											"path": [
+												"chatbot",
+												"delete",
+												"name",
+												"{{updatedChatbotName3}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "This folder only serves the purpose to delete every leftover from the tests, so its back to how it was in the beginning"
+						},
+						{
+							"name": "logout",
+							"item": [
+								{
+									"name": "logout",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_chatbot}}/auth/logout",
+											"host": [
+												"{{base_url_chatbot}}"
+											],
+											"path": [
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "auth-check-not-logged-in",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Body is correct\", function () {\r",
+													"    pm.response.to.have.body(\"User is not logged in\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_chatbot}}/auth/auth-check",
+											"host": [
+												"{{base_url_chatbot}}"
+											],
+											"path": [
+												"auth",
+												"auth-check"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Auth",
+							"item": [
+								{
+									"name": "success",
+									"item": [
+										{
+											"name": "User",
+											"item": [
+												{
+													"name": "LoginAsUser",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "user",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{userPassword}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/auth/login",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"auth",
+																"login"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "auth-check-user",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"var jsonData = pm.response.json();\r",
+																	"pm.test(\"Username is user\", function () {\r",
+																	"    pm.expect(jsonData.username).to.eql(\"user\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"role is USER\", function () {\r",
+																	"    pm.expect(jsonData.userRole).to.eql(\"USER\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.collectionVariables.set(\"loggedInUserId\", jsonData.id);\r",
+																	"pm.collectionVariables.set(\"loggedInUserName\", jsonData.username);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/auth/auth-check",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"auth",
+																"auth-check"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "userCheck",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Body matches string 'you're a user'\", function () {\r",
+																	"    pm.expect(pm.response.text()).to.include(\"you're a user\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/auth/user-check",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"auth",
+																"user-check"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "not an adminCheck",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Body matches string 'you're not an admin'\", function () {\r",
+																	"    pm.expect(pm.response.text()).to.include(\"you're not an admin\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/auth/admin-check",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"auth",
+																"admin-check"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Read",
+							"item": [
+								{
+									"name": "Chatbot",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestGetAllChatbots",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"chatbotInDbName\", jsonData[0].chatbotName);\r",
+																	"pm.collectionVariables.set(\"chatbotInDbId\", jsonData[0].id);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/list",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"list"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleChatbotByName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Name is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.chatbotName).to.eql(pm.collectionVariables.get(\"chatbotInDbName\"));\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/name/{{chatbotInDbName}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"name",
+																"{{chatbotInDbName}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleChatbotByID",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Chatbotname is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const chatbotName = pm.collectionVariables.get(\"chatbotInDbName\");\r",
+																	"    pm.expect(jsonData.chatbotName).to.eql(chatbotName);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/{{chatbotInDbId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"{{chatbotInDbId}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestGetSingleNonExistentChatbotByName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 404\", function () {\r",
+																	"    pm.response.to.have.status(404);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/name/{{$randomUUID}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"name",
+																"{{$randomUUID}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleNonExistentChatbotById",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 404\", function () {\r",
+																	"    pm.response.to.have.status(404);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/{{$randomUUID}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"{{$randomUUID}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Rating",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestGetAllRatings",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"ratingInDbId\", jsonData[0].id);\r",
+																	"pm.collectionVariables.set(\"ratingInDbUserId\", jsonData[0].user.id);\r",
+																	"pm.collectionVariables.set(\"ratingInDbChatbotId\", jsonData[0].chatbot.id);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/list",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"list"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleRatingById",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"User is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const userID = pm.collectionVariables.get(\"ratingInDbUserId\");\r",
+																	"    pm.expect(jsonData.user.id).to.eql(userID);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Chatbot is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const chatbotID = pm.collectionVariables.get(\"ratingInDbChatbotId\");\r",
+																	"    pm.expect(jsonData.chatbot.id).to.eql(chatbotID);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/{{ratingInDbId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"{{ratingInDbId}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetAllRatingsByAUser",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"All Users are correct\", function() {\r",
+																	"    const ratings = pm.response.json();\r",
+																	"\r",
+																	"    const userID = pm.collectionVariables.get(\"ratingInDbUserId\");\r",
+																	"    ratings.forEach((rating, ratingIndex) => {\r",
+																	"        pm.expect(rating.user.id).to.eql(userID);\r",
+																	"    })\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"No duplicate chatbots found\", function() {\r",
+																	"    const ratings = pm.response.json();\r",
+																	"\r",
+																	"    ratings.forEach((rating, ratingIndex) => {\r",
+																	"        ratings.forEach((rating2, ratingIndex2) => {\r",
+																	"            if(rating !== rating2) {\r",
+																	"                pm.expect(rating.chatbot.id).to.not.eq(rating2.chatbot.id);\r",
+																	"            }\r",
+																	"        })\r",
+																	"    })\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/user/{{ratingInDbUserId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"user",
+																"{{ratingInDbUserId}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestGetSingleNonExistentRatingById",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 404\", function () {\r",
+																	"    pm.response.to.have.status(404);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/{{$randomUUID}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"{{$randomUUID}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "User",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestGetAllUsers",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"userInDbName\", jsonData[0].username);\r",
+																	"pm.collectionVariables.set(\"userInDbId\", jsonData[0].id);\r",
+																	"pm.collectionVariables.set(\"userRoleInDb\", jsonData[0].userRole);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/list",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"list"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleUserByName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Name is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const name = pm.collectionVariables.get(\"userInDbName\");\r",
+																	"    pm.expect(jsonData.username).to.eql(name);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"UserRole is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const userRole = pm.collectionVariables.get(\"userRoleInDb\");\r",
+																	"    pm.expect(jsonData.userRole).to.eql(userRole);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/name/{{userInDbName}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"name",
+																"{{userInDbName}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleUserByID",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Username is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const username = pm.collectionVariables.get(\"userInDbName\");\r",
+																	"    pm.expect(jsonData.username).to.eql(username);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"UserRole is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const userRole = pm.collectionVariables.get(\"userRoleInDb\");\r",
+																	"    pm.expect(jsonData.userRole).to.eql(userRole);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/{{userInDbId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"{{userInDbId}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestGetSingleNonExistentUserByName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 404\", function () {\r",
+																	"    pm.response.to.have.status(404);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/name/{{$randomUserName}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"name",
+																"{{$randomUserName}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleNonExistentUserById",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 404\", function () {\r",
+																	"    pm.response.to.have.status(404);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/{{$randomUUID}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"{{$randomUUID}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetAllUsersByRole",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 401\", function () {\r",
+																	"    pm.response.to.have.status(401);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Body matches string\", function () {\r",
+																	"    pm.expect(pm.response.text()).to.include(\"You cannot access this resource\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/role/USER",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"role",
+																"USER"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Text",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestGetAllTexts",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"textInDbId\", jsonData[0].id);\r",
+																	"pm.collectionVariables.set(\"textInDbText\", jsonData[0].text);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/text/list",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"text",
+																"list"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetSingleTextByID",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Text is correct\", function () {\r",
+																	"    const jsonData = pm.response.json();\r",
+																	"\r",
+																	"    const text = pm.collectionVariables.get(\"textInDbText\");\r",
+																	"    pm.expect(jsonData.text).to.eql(text);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/text/{{textInDbId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"text",
+																"{{textInDbId}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestGetAllTextsOfAChatbot",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/text/chatbot/{{chatbotInDbId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"text",
+																"chatbot",
+																"{{chatbotInDbId}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestGetNonExistentTextById",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 404\", function () {\r",
+																	"    pm.response.to.have.status(404);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/text/{{$randomUUID}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"text",
+																"{{$randomUUID}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Create",
+							"item": [
+								{
+									"name": "User",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestCreateNewUserNoRoleSpecified",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"const jsonData = pm.response.json();\r",
+																	"\r",
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Role is User\", function () {\r",
+																	"    pm.expect(jsonData.userRole).to.eql(\"USER\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Id\", jsonData.id);\r",
+																	"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Name\", jsonData.username);\r",
+																	"pm.collectionVariables.set(\"newlyCreatedUserForChatbot1Role\", jsonData.userRole);\r",
+																	"\r",
+																	"pm.sendRequest(pm.collectionVariables.get(\"base_url_chatbot\") + \"/user/name/\" + jsonData.username, function (err, response) {\r",
+																	"    pm.test(\"Newly created User is found by name\", function() {\r",
+																	"        pm.expect(response.status).eq('OK');\r",
+																	"    })\r",
+																	"});\r",
+																	"\r",
+																	"pm.sendRequest(pm.collectionVariables.get(\"base_url_chatbot\") + \"/user/\" + jsonData.id, function (err, response) {\r",
+																	"    pm.test(\"Newly created User is found by id\", function() {\r",
+																	"        pm.expect(response.status).eq('OK');\r",
+																	"    })\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{userWithoutRoleToCreateName}}_{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{userPassword}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestCreateNewUserRoleUser",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Role is User\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.userRole).to.eql(\"USER\");\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"newlyCreatedUserID\", jsonData.id);\r",
+																	"\r",
+																	"pm.sendRequest(pm.collectionVariables.get(\"base_url_chatbot\") + \"/user/name/\" + jsonData.username, function (err, response) {\r",
+																	"    pm.test(\"Newly created User is found by name\", function() {\r",
+																	"        pm.expect(response.status).eq('OK');\r",
+																	"    })\r",
+																	"});\r",
+																	"\r",
+																	"pm.sendRequest(pm.collectionVariables.get(\"base_url_chatbot\") + \"/user/\" + jsonData.id, function (err, response) {\r",
+																	"    pm.test(\"Newly created User is found by id\", function() {\r",
+																	"        pm.expect(response.status).eq('OK');\r",
+																	"    })\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{userWithRoleUserToCreateName}}_{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{userPassword}}",
+																	"type": "text"
+																},
+																{
+																	"key": "role",
+																	"value": "USER",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestCreateNewUserRoleAdmin",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Role is Admin\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.userRole).to.eql(\"USER\");\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"newlyCreatedUserUsername\", jsonData.username);\r",
+																	"\r",
+																	"pm.sendRequest(pm.collectionVariables.get(\"base_url_chatbot\") + \"/user/name/\" +jsonData.username, function (err, response) {\r",
+																	"    pm.test(\"Newly created User is found by name\", function() {\r",
+																	"        pm.expect(response.status).eq('OK');\r",
+																	"    })\r",
+																	"});\r",
+																	"\r",
+																	"pm.sendRequest(pm.collectionVariables.get(\"base_url_chatbot\") + \"/user/\" + jsonData.id, function (err, response) {\r",
+																	"    pm.test(\"Newly created User is found by id\", function() {\r",
+																	"        pm.expect(response.status).eq('OK');\r",
+																	"    })\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{userWithRoleAdminToCreateName}}_{{$randomUserName}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{userPassword}}",
+																	"type": "text"
+																},
+																{
+																	"key": "role",
+																	"value": "ADMIN",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestCreateUserWithSameNameAgain",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 409\", function () {\r",
+																	"    pm.response.to.have.status(409);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{newlyCreatedUserUsername}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{userPassword}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Validation",
+											"item": [
+												{
+													"name": "Username",
+													"item": [
+														{
+															"name": "TestValidateUsernameTooShort",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "password",
+																			"value": "{{userPassword}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "username",
+																			"value": "12",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "TestValidateUsernameTooLong",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "username",
+																			"value": "123456789101112131415161718192021222324252627282930313233",
+																			"type": "text"
+																		},
+																		{
+																			"key": "password",
+																			"value": "{{userPassword}}",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														}
+													]
+												},
+												{
+													"name": "password",
+													"item": [
+														{
+															"name": "PasswordMissingUppercaseLetter",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "username",
+																			"value": "{{$randomUserName}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "password",
+																			"value": "1234$a",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "PasswordMissingLowercase",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "username",
+																			"value": "{{$randomUserName}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "password",
+																			"value": "1234$A",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "PasswordMissingNumber",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "username",
+																			"value": "{{$randomUserName}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "password",
+																			"value": "abcd$E",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "PasswordMissingSpecialChar",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "username",
+																			"value": "{{$randomUserName}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "password",
+																			"value": "abcd1E",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "PasswordTooShort",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "username",
+																			"value": "{{$randomUserName}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "password",
+																			"value": "aB1$",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "PasswordTooLong",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid Password\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"The correct amount of errors\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple.length).to.eql(1);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "username",
+																			"value": "{{$randomUserName}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "password",
+																			"value": "abcd1E$13gb12uzg3uz123zu12v3zu123z123tz12u398g123vb128zf318z72",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/user/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"user",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Chatbot",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestCreateNewChatbot",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Your test name\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.user.id).to.eql(pm.collectionVariables.get(\"loggedInUserId\"));\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"newlyCreatedChatbotId\", jsonData.id);\r",
+																	"pm.collectionVariables.set(\"updatedChatbotName\", jsonData.chatbotName);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestCreateNewChatbot2",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Your test name\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.user.id).to.eql(pm.collectionVariables.get(\"loggedInUserId\"));\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"newlyCreatedChatbotId2\", jsonData.id);\r",
+																	"pm.collectionVariables.set(\"updatedChatbotName2\", jsonData.chatbotName);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestCreateNewChatbot3",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Your test name\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.user.id).to.eql(pm.collectionVariables.get(\"loggedInUserId\"));\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.collectionVariables.set(\"newlyCreatedChatbotId3\", jsonData.id);\r",
+																	"pm.collectionVariables.set(\"updatedChatbotName3\", jsonData.chatbotName);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestCreateNewChatbotWithSameName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.error).to.eql(\"chatbot name already exists\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "username",
+																	"value": "{{newlyCreatedUserUsername}}",
+																	"type": "text"
+																},
+																{
+																	"key": "name",
+																	"value": "{{updatedChatbotName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Validation",
+											"item": [
+												{
+													"name": "ChatbotName",
+													"item": [
+														{
+															"name": "TestValidateChatbotNameTooShort",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "name",
+																			"value": "12",
+																			"type": "text"
+																		},
+																		{
+																			"key": "username",
+																			"value": "{{userInDbName}}",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/chatbot/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"chatbot",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "TestValidateChatbotNameTooLong",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "name",
+																			"value": "123456789101112131415161718192021222324252627282930313233",
+																			"type": "text"
+																		},
+																		{
+																			"key": "username",
+																			"value": "{{userInDbName}}",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/chatbot/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"chatbot",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Rating",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestCreateRatingChatbotId",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.test(\"user is correct\", function () {\r",
+																	"    const userID = pm.collectionVariables.get(\"loggedInUserId\");\r",
+																	"    pm.expect(jsonData.user.id).to.eql(userID);\r",
+																	"});\r",
+																	"\r",
+																	"\r",
+																	"pm.test(\"chatbot is correct\", function () {\r",
+																	"    const chatbotID = pm.collectionVariables.get(\"newlyCreatedChatbotId\");\r",
+																	"    pm.expect(jsonData.chatbot.id).to.eql(chatbotID);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"rating is correct\", function () {\r",
+																	"    const ratingBefore = pm.collectionVariables.get(\"ratingForUpdateAndCreate\");\r",
+																	"    pm.expect(jsonData.rating).to.eql(ratingBefore);\r",
+																	"});\r",
+																	"\r",
+																	"pm.collectionVariables.set(\"newlyCreatedRating1Id\", jsonData.id);\r",
+																	"pm.collectionVariables.set(\"ratingBefore\", jsonData.rating);\r",
+																	"pm.collectionVariables.set(\"favouriteBefore\", jsonData.favourite);\r",
+																	"\r",
+																	"const currentRating = jsonData.rating;\r",
+																	"if(currentRating == \"UPVOTE\") {\r",
+																	"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"DOWNVOTE\")\r",
+																	"} else {\r",
+																	"    pm.collectionVariables.set(\"ratingForUpdateAndCreate\", \"UPVOTE\")\r",
+																	"}\r",
+																	"\r",
+																	"const currentFavourite = jsonData.favourite;\r",
+																	"if(currentFavourite) {\r",
+																	"    pm.collectionVariables.set(\"ratingFavouriteForUpdate\", \"FALSE\")\r",
+																	"} else {\r",
+																	"    pm.collectionVariables.set(\"ratingFavouriteForUpdate\", \"TRUE\")\r",
+																	"}"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "chatbotId",
+																	"value": "{{newlyCreatedChatbotId}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "{{ratingForUpdateAndCreate}}",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{ratingFavouriteForUpdate}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestCreateRatingChatbotName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.test(\"user is correct\", function () {\r",
+																	"    const username = pm.collectionVariables.get(\"loggedInUserName\");\r",
+																	"    pm.expect(jsonData.user.username).to.eql(username);\r",
+																	"});\r",
+																	"\r",
+																	"\r",
+																	"pm.test(\"chatbot is correct\", function () {\r",
+																	"    const chatbotName = pm.collectionVariables.get(\"updatedChatbotName2\");\r",
+																	"    pm.expect(jsonData.chatbot.chatbotName).to.eql(chatbotName);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"rating is correct\", function () {\r",
+																	"    pm.expect(jsonData.rating).to.eql(\"DOWNVOTE\");\r",
+																	"});\r",
+																	"\r",
+																	"\r",
+																	"pm.collectionVariables.set(\"newlyCreatedRating2Id\", jsonData.id);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "chatbotName",
+																	"value": "{{updatedChatbotName2}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "DOWNVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestCreateRatingWithoutChatbot",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 400\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"error is correct\", function () {\r",
+																	"    var jsonData = pm.response.json();\r",
+																	"    pm.expect(jsonData.error).to.eql(\"chatbotId or chatbotName must be provided\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestCreateRatingDuplicate",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 409\", function () {\r",
+																	"    pm.response.to.have.status(409);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "chatbotId",
+																	"value": "{{newlyCreatedChatbotId}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "UPVOTE",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{$randomBoolean}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/create",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"create"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Validation",
+											"item": [
+												{
+													"name": "chatbotName",
+													"item": [
+														{
+															"name": "ChatbotNameTooShort",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "rating",
+																			"value": "UPVOTE",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "{{$randomBoolean}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "chatbotName",
+																			"value": "12",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "ChatbotNameTooLong",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Größe muss zwischen 3 und 32 sein\");\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "rating",
+																			"value": "DOWNVOTE",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "{{$randomBoolean}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "chatbotName",
+																			"value": "321312312312312312312312321312381267371263781263871263781",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														}
+													]
+												},
+												{
+													"name": "chatbotId",
+													"item": [
+														{
+															"name": "IdTooLong",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "rating",
+																			"value": "UPVOTE",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "{{$randomBoolean}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "chatbotId",
+																			"value": "{{$randomUUID}}X",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "IdTooShort",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "rating",
+																			"value": "UPVOTE",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "{{$randomBoolean}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "chatbotId",
+																			"value": "12c9e7d9-def8-4e5e-9728-efa8e4693b7",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "NotProperUUIDFormat",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Error is correct\", function () {\r",
+																			"    var jsonData = pm.response.json();\r",
+																			"    pm.expect(jsonData.errorSimple[0].error).to.eql(\"Invalid UUID\");\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "chatbotId",
+																			"value": "12c9e7d9-def8-4e5e-972-efa8e4693b7",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "{{$randomBoolean}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "rating",
+																			"value": "DOWNVOTE",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														}
+													]
+												},
+												{
+													"name": "rating",
+													"item": [
+														{
+															"name": "UnknownRating",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "userId",
+																			"value": "{{newlyCreatedUserID}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "chatbotName",
+																			"value": "{{updatedChatbotName2}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "rating",
+																			"value": "DINGENS",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "{{$randomBoolean}}",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "RatingButInLowerCase",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 400\", function () {\r",
+																			"    pm.response.to.have.status(400);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "userId",
+																			"value": "{{newlyCreatedUserID}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "chatbotName",
+																			"value": "{{updatedChatbotName2}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "rating",
+																			"value": "upvote",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "{{$randomBoolean}}",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														}
+													]
+												},
+												{
+													"name": "favourite",
+													"item": [
+														{
+															"name": "FavouriteNonBoolean",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 201\", function () {\r",
+																			"    pm.response.to.have.status(201);\r",
+																			"});\r",
+																			"\r",
+																			"var jsonData = pm.response.json();\r",
+																			"pm.test(\"Favourite is correct\", function () {\r",
+																			"    pm.expect(jsonData.favourite).to.eql(false);\r",
+																			"});\r",
+																			"\r",
+																			"const config = {\r",
+																			"    url: pm.collectionVariables.get(\"base_url_chatbot\") + \"/rating/delete/\" + jsonData.id,\r",
+																			"    method: 'DELETE',\r",
+																			"}\r",
+																			"pm.sendRequest(config, function (err, response) {\r",
+																			"    pm.test(\"Rating was deleted\", function() {\r",
+																			"        pm.expect(response.status).eq('OK');\r",
+																			"    })\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "chatbotName",
+																			"value": "{{updatedChatbotName3}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "rating",
+																			"value": "UPVOTE",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "dings",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "FavouriteBooleanUpperCase",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 201\", function () {\r",
+																			"    pm.response.to.have.status(201);\r",
+																			"});\r",
+																			"\r",
+																			"var jsonData = pm.response.json();\r",
+																			"pm.test(\"Favourite is correct\", function () {\r",
+																			"    pm.expect(jsonData.favourite).to.eql(true);\r",
+																			"});\r",
+																			"\r",
+																			"const config = {\r",
+																			"    url: pm.collectionVariables.get(\"base_url_chatbot\") + \"/rating/delete/\" + jsonData.id,\r",
+																			"    method: 'DELETE',\r",
+																			"}\r",
+																			"pm.sendRequest(config, function (err, response) {\r",
+																			"    pm.test(\"Rating was deleted\", function() {\r",
+																			"        pm.expect(response.status).eq('OK');\r",
+																			"    })\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "chatbotName",
+																			"value": "{{updatedChatbotName3}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "rating",
+																			"value": "UPVOTE",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "TRUE",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														},
+														{
+															"name": "FavouriteBooleanLowerCase",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 201\", function () {\r",
+																			"    pm.response.to.have.status(201);\r",
+																			"});\r",
+																			"\r",
+																			"var jsonData = pm.response.json();\r",
+																			"pm.test(\"Favourite is correct\", function () {\r",
+																			"    pm.expect(jsonData.favourite).to.eql(true);\r",
+																			"});\r",
+																			"\r",
+																			"const config = {\r",
+																			"    url: pm.collectionVariables.get(\"base_url_chatbot\") + \"/rating/delete/\" + jsonData.id,\r",
+																			"    method: 'DELETE',\r",
+																			"}\r",
+																			"pm.sendRequest(config, function (err, response) {\r",
+																			"    pm.test(\"Rating was deleted\", function() {\r",
+																			"        pm.expect(response.status).eq('OK');\r",
+																			"    })\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "POST",
+																"header": [],
+																"body": {
+																	"mode": "urlencoded",
+																	"urlencoded": [
+																		{
+																			"key": "chatbotName",
+																			"value": "{{updatedChatbotName3}}",
+																			"type": "text"
+																		},
+																		{
+																			"key": "rating",
+																			"value": "UPVOTE",
+																			"type": "text"
+																		},
+																		{
+																			"key": "favourite",
+																			"value": "true",
+																			"type": "text"
+																		}
+																	]
+																},
+																"url": {
+																	"raw": "{{base_url_chatbot}}/rating/create",
+																	"host": [
+																		"{{base_url_chatbot}}"
+																	],
+																	"path": [
+																		"rating",
+																		"create"
+																	]
+																}
+															},
+															"response": []
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Update",
+							"item": [
+								{
+									"name": "Chatbot",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "UpdateChatbotName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"const newName = jsonData.name;\r",
+																	"pm.test(\"Name not same\", function () {\r",
+																	"    const oldName = pm.collectionVariables.get(\"updatedChatbotName\");\r",
+																	"    pm.expect(newName).to.not.eql(oldName);\r",
+																	"});\r",
+																	"\r",
+																	"pm.collectionVariables.set(\"updatedChatbotName\", newName);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PUT",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{$randomUserName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/update/{{newlyCreatedChatbotId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"update",
+																"{{newlyCreatedChatbotId}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "UpdateChatbotNameDuplicate",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 500\", function () {\r",
+																	"    pm.response.to.have.status(500);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PUT",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "name",
+																	"value": "{{chatbotInDbName}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/update/{{newlyCreatedChatbotId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"update",
+																"{{newlyCreatedChatbotId}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Rating",
+									"item": [
+										{
+											"name": "fail",
+											"item": [
+												{
+													"name": "updateRatingChangeFavourite",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 401\", function () {\r",
+																	"    pm.response.to.have.status(401);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.test(\"error is correct\", function () {\r",
+																	"    pm.expect(jsonData.error).to.eql(\"You are not allowed to update this rating.\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PUT",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "chatbotId",
+																	"value": "{{newlyCreatedChatbotId}}",
+																	"type": "text"
+																},
+																{
+																	"key": "rating",
+																	"value": "{{ratingBefore}}",
+																	"type": "text"
+																},
+																{
+																	"key": "favourite",
+																	"value": "{{ratingFavouriteForUpdate}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/update/{{newlyCreatedRating1Id}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"update",
+																"{{newlyCreatedRating1Id}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Delete",
+							"item": [
+								{
+									"name": "Rating",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestDeleteRating",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/rating/delete/{{newlyCreatedRating1Id}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"rating",
+																"delete",
+																"{{newlyCreatedRating1Id}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "User",
+									"item": [
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestDeleteUserByName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 403\", function () {\r",
+																	"    pm.response.to.have.status(403);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.test(\"error is correct\", function () {\r",
+																	"    pm.expect(jsonData.error).to.eql(\"You are not allowed to delete this user.\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/delete/name/{{newlyCreatedUserUsername}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"delete",
+																"name",
+																"{{newlyCreatedUserUsername}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestDeleteUserByID",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 403\", function () {\r",
+																	"    pm.response.to.have.status(403);\r",
+																	"});\r",
+																	"\r",
+																	"const jsonData = pm.response.json();\r",
+																	"pm.test(\"error is correct\", function () {\r",
+																	"    pm.expect(jsonData.error).to.eql(\"You are not allowed to delete this user.\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/user/delete/{{newlyCreatedUserID}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"user",
+																"delete",
+																"{{newlyCreatedUserID}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Chatbot",
+									"item": [
+										{
+											"name": "Success",
+											"item": [
+												{
+													"name": "TestDeleteChatbotByID",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/delete/{{newlyCreatedChatbotId}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"delete",
+																"{{newlyCreatedChatbotId}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestDeleteChatbotByName",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/chatbot/delete/name/{{updatedChatbotName2}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"chatbot",
+																"delete",
+																"name",
+																"{{updatedChatbotName2}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Text",
+									"item": [
+										{
+											"name": "Fail",
+											"item": [
+												{
+													"name": "TestDeleteTextByID",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 401\", function () {\r",
+																	"    pm.response.to.have.status(401);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Body matches string\", function () {\r",
+																	"    pm.expect(pm.response.text()).to.include(\"You cannot access this resource\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/text/delete/{{newlyCreatedTextID}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"text",
+																"delete",
+																"{{newlyCreatedTextID}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "TestDeleteTextByItsText",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 401\", function () {\r",
+																	"    pm.response.to.have.status(401);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Body matches string\", function () {\r",
+																	"    pm.expect(pm.response.text()).to.include(\"You cannot access this resource\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{base_url_chatbot}}/text/delete/content/{{newlyCreatedTextText}}",
+															"host": [
+																"{{base_url_chatbot}}"
+															],
+															"path": [
+																"text",
+																"delete",
+																"content",
+																"{{newlyCreatedTextText}}"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Cleanup",
+							"item": [
+								{
+									"name": "LoginAsAdmin Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "username",
+													"value": "admin",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{userPassword}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{base_url_chatbot}}/auth/login",
+											"host": [
+												"{{base_url_chatbot}}"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
 								{
 									"name": "DeleteAdditionalUser",
 									"event": [

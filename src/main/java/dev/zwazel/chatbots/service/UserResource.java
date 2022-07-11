@@ -220,7 +220,7 @@ public class UserResource {
         if (!user.getId().equals(userToDelete.getId()) && UserRole.ADMIN != user.getUserRole()) {
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("\"error\":\"You are not allowed to delete this user.\"")
+                    .entity("{\"error\":\"You are not allowed to delete this user.\"}")
                     .build();
         }
 
@@ -264,7 +264,7 @@ public class UserResource {
         if (!user.getId().equals(userToDelete.getId()) && UserRole.ADMIN != user.getUserRole()) {
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("\"error\":\"You are not allowed to delete this user.\"")
+                    .entity("{\"error\":\"You are not allowed to delete this user.\"}")
                     .build();
         }
 

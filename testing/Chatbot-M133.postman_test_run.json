@@ -1,161 +1,13 @@
 {
-	"id": "91b50c1f-a934-4da2-931d-06b6a2ebadaf",
+	"id": "9f489517-aadd-42c2-9b83-4a43fe3723dc",
 	"name": "Chatbot-M133",
-	"timestamp": "2022-07-11T15:39:20.681Z",
+	"timestamp": "2022-07-11T15:57:06.926Z",
 	"collection_id": "19464364-d502eed0-be90-4dff-b219-dceadf708a76",
-	"folder_id": "19464364-492519f5-1178-44e1-9d40-d7957bdda821",
+	"folder_id": "19464364-314dcbeb-95fd-4e67-9085-937762c8dbb3",
 	"environment_id": "0",
-	"totalPass": 358,
+	"totalPass": 626,
 	"totalFail": 0,
 	"results": [
-		{
-			"id": "6a6dfb88-3529-487b-9edb-b4abc71e2c16",
-			"name": "LoginAsUser",
-			"time": 6,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				57,
-				6
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
-				},
-				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "98049ca8-66e3-46c9-9523-846c7bcabdce",
-			"name": "auth-check-user",
-			"time": 7,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true,
-				"Username is user": true,
-				"role is USER": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 2,
-					"fail": 0
-				},
-				"Username is user": {
-					"pass": 2,
-					"fail": 0
-				},
-				"role is USER": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				58,
-				7
-			],
-			"allTests": [
-				{
-					"Status code is 200": true,
-					"Username is user": true,
-					"role is USER": true
-				},
-				{
-					"Status code is 200": true,
-					"Username is user": true,
-					"role is USER": true
-				}
-			]
-		},
-		{
-			"id": "9e65ca64-aef2-4b30-a7f1-e310d5c87325",
-			"name": "userCheck",
-			"time": 6,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true,
-				"Body matches string 'you're a user'": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 2,
-					"fail": 0
-				},
-				"Body matches string 'you're a user'": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				6,
-				6
-			],
-			"allTests": [
-				{
-					"Status code is 200": true,
-					"Body matches string 'you're a user'": true
-				},
-				{
-					"Status code is 200": true,
-					"Body matches string 'you're a user'": true
-				}
-			]
-		},
-		{
-			"id": "32d61b0c-ccf1-492f-a734-b441d51fefd9",
-			"name": "not an adminCheck",
-			"time": 6,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true,
-				"Body matches string 'you're not an admin'": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 2,
-					"fail": 0
-				},
-				"Body matches string 'you're not an admin'": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				6,
-				6
-			],
-			"allTests": [
-				{
-					"Status code is 200": true,
-					"Body matches string 'you're not an admin'": true
-				},
-				{
-					"Status code is 200": true,
-					"Body matches string 'you're not an admin'": true
-				}
-			]
-		},
 		{
 			"id": "fd7024f2-0c27-4f82-8469-c4ed5065bbb4",
 			"name": "LoginAsAdmin",
@@ -174,7 +26,7 @@
 				}
 			},
 			"times": [
-				6,
+				40,
 				6
 			],
 			"allTests": [
@@ -189,7 +41,7 @@
 		{
 			"id": "20a2497d-9c8c-4db3-b643-103d8ba16576",
 			"name": "auth-check-admin",
-			"time": 10,
+			"time": 6,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -214,8 +66,8 @@
 				}
 			},
 			"times": [
-				7,
-				10
+				72,
+				6
 			],
 			"allTests": [
 				{
@@ -290,7 +142,7 @@
 				}
 			},
 			"times": [
-				6,
+				9,
 				6
 			],
 			"allTests": [
@@ -307,7 +159,7 @@
 		{
 			"id": "d8b6e63e-1000-47d1-8cb0-4f624a50c790",
 			"name": "TestGetAllChatbots",
-			"time": 10,
+			"time": 6,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -322,8 +174,8 @@
 				}
 			},
 			"times": [
-				13,
-				10
+				15,
+				6
 			],
 			"allTests": [
 				{
@@ -374,7 +226,7 @@
 		{
 			"id": "55cc90ce-afb7-4650-8bbb-9ec9424bb9c3",
 			"name": "TestGetSingleChatbotByID",
-			"time": 9,
+			"time": 6,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -394,8 +246,8 @@
 				}
 			},
 			"times": [
-				7,
-				9
+				6,
+				6
 			],
 			"allTests": [
 				{
@@ -411,36 +263,6 @@
 		{
 			"id": "5abb6a79-daff-4631-829c-b9eb0484d0e0",
 			"name": "TestGetSingleNonExistentChatbotByName",
-			"time": 6,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Status code is 404": true
-			},
-			"testPassFailCounts": {
-				"Status code is 404": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				6,
-				6
-			],
-			"allTests": [
-				{
-					"Status code is 404": true
-				},
-				{
-					"Status code is 404": true
-				}
-			]
-		},
-		{
-			"id": "58fdcdb2-dbc7-414f-bbb7-d68a8080f526",
-			"name": "TestGetSingleNonExistentChatbotById",
 			"time": 5,
 			"responseCode": {
 				"code": 404,
@@ -456,8 +278,38 @@
 				}
 			},
 			"times": [
-				5,
+				6,
 				5
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				},
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "58fdcdb2-dbc7-414f-bbb7-d68a8080f526",
+			"name": "TestGetSingleNonExistentChatbotById",
+			"time": 6,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				6
 			],
 			"allTests": [
 				{
@@ -486,7 +338,7 @@
 				}
 			},
 			"times": [
-				7,
+				6,
 				6
 			],
 			"allTests": [
@@ -501,7 +353,7 @@
 		{
 			"id": "7da387a4-1478-4f72-a125-50b3d3d0431e",
 			"name": "TestGetSingleRatingById",
-			"time": 5,
+			"time": 8,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -526,8 +378,8 @@
 				}
 			},
 			"times": [
-				6,
-				5
+				5,
+				8
 			],
 			"allTests": [
 				{
@@ -545,7 +397,7 @@
 		{
 			"id": "a3bf020d-069d-4161-8a56-2b25e683c6b3",
 			"name": "TestGetAllRatingsByAUser",
-			"time": 6,
+			"time": 19,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -571,7 +423,7 @@
 			},
 			"times": [
 				6,
-				6
+				19
 			],
 			"allTests": [
 				{
@@ -619,7 +471,7 @@
 		{
 			"id": "b4ea1e77-0f65-40be-a15e-7fc7f2c5c340",
 			"name": "TestGetAllUsers",
-			"time": 6,
+			"time": 7,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -634,8 +486,8 @@
 				}
 			},
 			"times": [
-				6,
-				6
+				7,
+				7
 			],
 			"allTests": [
 				{
@@ -649,7 +501,7 @@
 		{
 			"id": "06a50197-1340-4a9d-947b-83de9d5b8e09",
 			"name": "TestGetSingleUserByName",
-			"time": 7,
+			"time": 6,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -675,7 +527,7 @@
 			},
 			"times": [
 				6,
-				7
+				6
 			],
 			"allTests": [
 				{
@@ -718,7 +570,7 @@
 				}
 			},
 			"times": [
-				6,
+				5,
 				5
 			],
 			"allTests": [
@@ -737,7 +589,7 @@
 		{
 			"id": "aeaa9a31-8f96-4788-866b-b958ed91553d",
 			"name": "TestGetAllUsersByRole",
-			"time": 9,
+			"time": 10,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -752,8 +604,8 @@
 				}
 			},
 			"times": [
-				9,
-				9
+				10,
+				10
 			],
 			"allTests": [
 				{
@@ -812,7 +664,7 @@
 				}
 			},
 			"times": [
-				5,
+				6,
 				6
 			],
 			"allTests": [
@@ -827,7 +679,7 @@
 		{
 			"id": "34a3fc82-dfc0-49f6-9400-b6801f138e65",
 			"name": "TestGetAllTexts",
-			"time": 7,
+			"time": 5,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -843,7 +695,7 @@
 			},
 			"times": [
 				6,
-				7
+				5
 			],
 			"allTests": [
 				{
@@ -857,7 +709,7 @@
 		{
 			"id": "1492276e-1d6e-4191-bdb5-007e74a254f1",
 			"name": "TestGetSingleTextByID",
-			"time": 6,
+			"time": 5,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -877,8 +729,8 @@
 				}
 			},
 			"times": [
-				8,
-				6
+				5,
+				5
 			],
 			"allTests": [
 				{
@@ -894,7 +746,7 @@
 		{
 			"id": "a024789a-03f4-47d3-834e-0442cfe03c8b",
 			"name": "TestGetAllTextsOfAChatbot",
-			"time": 7,
+			"time": 9,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -909,8 +761,8 @@
 				}
 			},
 			"times": [
-				11,
-				7
+				10,
+				9
 			],
 			"allTests": [
 				{
@@ -939,7 +791,7 @@
 				}
 			},
 			"times": [
-				6,
+				5,
 				5
 			],
 			"allTests": [
@@ -954,7 +806,7 @@
 		{
 			"id": "5af5c505-9d79-459f-832c-ef141dad7a40",
 			"name": "TestCreateNewText",
-			"time": 10,
+			"time": 12,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -974,8 +826,8 @@
 				}
 			},
 			"times": [
-				18,
-				10
+				17,
+				12
 			],
 			"allTests": [
 				{
@@ -991,7 +843,7 @@
 		{
 			"id": "0ca68157-8f97-4240-a5bc-68d2e58bd3f1",
 			"name": "TestCreateNewText2",
-			"time": 11,
+			"time": 10,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1011,8 +863,8 @@
 				}
 			},
 			"times": [
-				11,
-				11
+				10,
+				10
 			],
 			"allTests": [
 				{
@@ -1028,7 +880,7 @@
 		{
 			"id": "2ac1465f-0ebf-40f8-b02f-d3668b5ff1b1",
 			"name": "TestCreateSameTextAgain",
-			"time": 10,
+			"time": 8,
 			"responseCode": {
 				"code": 500,
 				"name": "Internal Server Error"
@@ -1043,8 +895,8 @@
 				}
 			},
 			"times": [
-				11,
-				10
+				10,
+				8
 			],
 			"allTests": [
 				{
@@ -1078,7 +930,7 @@
 				}
 			},
 			"times": [
-				7,
+				8,
 				7
 			],
 			"allTests": [
@@ -1095,7 +947,7 @@
 		{
 			"id": "da88fa79-a5e7-4fb9-8010-f22915a29e61",
 			"name": "TextTooLong",
-			"time": 7,
+			"time": 6,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -1116,7 +968,7 @@
 			},
 			"times": [
 				7,
-				7
+				6
 			],
 			"allTests": [
 				{
@@ -1162,7 +1014,7 @@
 				}
 			},
 			"times": [
-				13,
+				12,
 				11
 			],
 			"allTests": [
@@ -1183,7 +1035,7 @@
 		{
 			"id": "b7cddafa-455e-4e0e-ad33-5dff2ab31094",
 			"name": "TestCreateNewUserRoleUser",
-			"time": 10,
+			"time": 9,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1214,7 +1066,7 @@
 			},
 			"times": [
 				11,
-				10
+				9
 			],
 			"allTests": [
 				{
@@ -1234,7 +1086,7 @@
 		{
 			"id": "1c11d87a-7a6e-4231-b6bb-a594a70e1559",
 			"name": "TestCreateNewUserRoleAdmin",
-			"time": 10,
+			"time": 9,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1242,8 +1094,8 @@
 			"tests": {
 				"Status code is 201": true,
 				"Role is Admin": true,
-				"Newly created User is found by id": true,
-				"Newly created User is found by name": true
+				"Newly created User is found by name": true,
+				"Newly created User is found by id": true
 			},
 			"testPassFailCounts": {
 				"Status code is 201": {
@@ -1254,38 +1106,38 @@
 					"pass": 2,
 					"fail": 0
 				},
-				"Newly created User is found by id": {
+				"Newly created User is found by name": {
 					"pass": 2,
 					"fail": 0
 				},
-				"Newly created User is found by name": {
+				"Newly created User is found by id": {
 					"pass": 2,
 					"fail": 0
 				}
 			},
 			"times": [
-				10,
-				10
+				19,
+				9
 			],
 			"allTests": [
 				{
 					"Status code is 201": true,
 					"Role is Admin": true,
-					"Newly created User is found by id": true,
-					"Newly created User is found by name": true
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
 				},
 				{
 					"Status code is 201": true,
 					"Role is Admin": true,
-					"Newly created User is found by id": true,
-					"Newly created User is found by name": true
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
 				}
 			]
 		},
 		{
 			"id": "8e7fea7f-74cb-4f00-81af-cdfbfdd4d922",
 			"name": "TestCreateUserWithSameNameAgain",
-			"time": 9,
+			"time": 8,
 			"responseCode": {
 				"code": 409,
 				"name": "Conflict"
@@ -1301,7 +1153,7 @@
 			},
 			"times": [
 				9,
-				9
+				8
 			],
 			"allTests": [
 				{
@@ -1384,7 +1236,7 @@
 				}
 			},
 			"times": [
-				13,
+				9,
 				9
 			],
 			"allTests": [
@@ -1403,7 +1255,7 @@
 		{
 			"id": "6549876d-8c00-4632-b636-fc24454d7db3",
 			"name": "PasswordMissingUppercaseLetter",
-			"time": 11,
+			"time": 9,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -1428,8 +1280,8 @@
 				}
 			},
 			"times": [
-				11,
-				11
+				10,
+				9
 			],
 			"allTests": [
 				{
@@ -1491,138 +1343,6 @@
 		{
 			"id": "1e8fb7dd-3cd6-43eb-87c8-ce785d3bbb24",
 			"name": "PasswordMissingNumber",
-			"time": 9,
-			"responseCode": {
-				"code": 400,
-				"name": "Bad Request"
-			},
-			"tests": {
-				"Status code is 400": true,
-				"Error is correct": true,
-				"The correct amount of errors": true
-			},
-			"testPassFailCounts": {
-				"Status code is 400": {
-					"pass": 2,
-					"fail": 0
-				},
-				"Error is correct": {
-					"pass": 2,
-					"fail": 0
-				},
-				"The correct amount of errors": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				10,
-				9
-			],
-			"allTests": [
-				{
-					"Status code is 400": true,
-					"Error is correct": true,
-					"The correct amount of errors": true
-				},
-				{
-					"Status code is 400": true,
-					"Error is correct": true,
-					"The correct amount of errors": true
-				}
-			]
-		},
-		{
-			"id": "64d3b822-a948-4bff-a819-1d163182c1d3",
-			"name": "PasswordMissingSpecialChar",
-			"time": 9,
-			"responseCode": {
-				"code": 400,
-				"name": "Bad Request"
-			},
-			"tests": {
-				"Status code is 400": true,
-				"Error is correct": true,
-				"The correct amount of errors": true
-			},
-			"testPassFailCounts": {
-				"Status code is 400": {
-					"pass": 2,
-					"fail": 0
-				},
-				"Error is correct": {
-					"pass": 2,
-					"fail": 0
-				},
-				"The correct amount of errors": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				13,
-				9
-			],
-			"allTests": [
-				{
-					"Status code is 400": true,
-					"Error is correct": true,
-					"The correct amount of errors": true
-				},
-				{
-					"Status code is 400": true,
-					"Error is correct": true,
-					"The correct amount of errors": true
-				}
-			]
-		},
-		{
-			"id": "a4ad3ed3-66c2-43c2-8779-0a876b297944",
-			"name": "PasswordTooShort",
-			"time": 11,
-			"responseCode": {
-				"code": 400,
-				"name": "Bad Request"
-			},
-			"tests": {
-				"Status code is 400": true,
-				"Error is correct": true,
-				"The correct amount of errors": true
-			},
-			"testPassFailCounts": {
-				"Status code is 400": {
-					"pass": 2,
-					"fail": 0
-				},
-				"Error is correct": {
-					"pass": 2,
-					"fail": 0
-				},
-				"The correct amount of errors": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				10,
-				11
-			],
-			"allTests": [
-				{
-					"Status code is 400": true,
-					"Error is correct": true,
-					"The correct amount of errors": true
-				},
-				{
-					"Status code is 400": true,
-					"Error is correct": true,
-					"The correct amount of errors": true
-				}
-			]
-		},
-		{
-			"id": "4cdfc901-71a4-40a1-b3cd-6133f0b22a55",
-			"name": "PasswordTooLong",
 			"time": 10,
 			"responseCode": {
 				"code": 400,
@@ -1665,9 +1385,141 @@
 			]
 		},
 		{
+			"id": "64d3b822-a948-4bff-a819-1d163182c1d3",
+			"name": "PasswordMissingSpecialChar",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				10,
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "a4ad3ed3-66c2-43c2-8779-0a876b297944",
+			"name": "PasswordTooShort",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				10,
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "4cdfc901-71a4-40a1-b3cd-6133f0b22a55",
+			"name": "PasswordTooLong",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				9,
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
 			"id": "c50568b1-b0f9-4d13-8b18-0ee834251efe",
 			"name": "TestCreateNewChatbot",
-			"time": 14,
+			"time": 17,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1688,7 +1540,7 @@
 			},
 			"times": [
 				17,
-				14
+				17
 			],
 			"allTests": [
 				{
@@ -1704,43 +1556,6 @@
 		{
 			"id": "76ae5e41-deb2-4056-96b7-549370d501b9",
 			"name": "TestCreateNewChatbot2",
-			"time": 14,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true,
-				"Your test name": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 2,
-					"fail": 0
-				},
-				"Your test name": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				14,
-				14
-			],
-			"allTests": [
-				{
-					"Status code is 200": true,
-					"Your test name": true
-				},
-				{
-					"Status code is 200": true,
-					"Your test name": true
-				}
-			]
-		},
-		{
-			"id": "900cc04f-f983-4ab5-8ca0-26fa2eda94dc",
-			"name": "TestCreateNewChatbot3",
 			"time": 15,
 			"responseCode": {
 				"code": 200,
@@ -1763,6 +1578,43 @@
 			"times": [
 				15,
 				15
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				},
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				}
+			]
+		},
+		{
+			"id": "900cc04f-f983-4ab5-8ca0-26fa2eda94dc",
+			"name": "TestCreateNewChatbot3",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Your test name": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Your test name": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				14,
+				13
 			],
 			"allTests": [
 				{
@@ -1830,7 +1682,7 @@
 				}
 			},
 			"times": [
-				7,
+				9,
 				7
 			],
 			"allTests": [
@@ -1845,7 +1697,7 @@
 		{
 			"id": "7837cd06-c7f2-4eb4-bd11-41e9ce185531",
 			"name": "TestValidateChatbotNameTooLong",
-			"time": 11,
+			"time": 7,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -1860,8 +1712,8 @@
 				}
 			},
 			"times": [
-				7,
-				11
+				11,
+				7
 			],
 			"allTests": [
 				{
@@ -1905,7 +1757,7 @@
 				}
 			},
 			"times": [
-				43,
+				25,
 				17
 			],
 			"allTests": [
@@ -1926,7 +1778,7 @@
 		{
 			"id": "7d9da8a8-ed16-42cc-b2be-13cd29277ef0",
 			"name": "TestCreateRatingChatbotName",
-			"time": 17,
+			"time": 16,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -1957,7 +1809,7 @@
 			},
 			"times": [
 				17,
-				17
+				16
 			],
 			"allTests": [
 				{
@@ -1997,7 +1849,7 @@
 				}
 			},
 			"times": [
-				6,
+				8,
 				6
 			],
 			"allTests": [
@@ -2014,7 +1866,7 @@
 		{
 			"id": "6b7b8c65-5782-4b4c-9b17-67080bebcc38",
 			"name": "TestCreateRatingDuplicate",
-			"time": 16,
+			"time": 14,
 			"responseCode": {
 				"code": 409,
 				"name": "Conflict"
@@ -2029,8 +1881,8 @@
 				}
 			},
 			"times": [
-				20,
-				16
+				16,
+				14
 			],
 			"allTests": [
 				{
@@ -2081,7 +1933,7 @@
 		{
 			"id": "09037ce0-c8f3-48ca-ae27-645e60d15205",
 			"name": "ChatbotNameTooLong",
-			"time": 7,
+			"time": 6,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -2102,7 +1954,7 @@
 			},
 			"times": [
 				7,
-				7
+				6
 			],
 			"allTests": [
 				{
@@ -2244,7 +2096,7 @@
 				}
 			},
 			"times": [
-				8,
+				11,
 				8
 			],
 			"allTests": [
@@ -2259,7 +2111,7 @@
 		{
 			"id": "af0843ac-9ca1-48d0-b202-025c9c7063eb",
 			"name": "RatingButInLowerCase",
-			"time": 7,
+			"time": 10,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -2274,8 +2126,8 @@
 				}
 			},
 			"times": [
-				8,
-				7
+				20,
+				10
 			],
 			"allTests": [
 				{
@@ -2289,7 +2141,7 @@
 		{
 			"id": "aedfb814-b336-42f7-9ab0-92e6889e085b",
 			"name": "FavouriteNonBoolean",
-			"time": 20,
+			"time": 17,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2314,8 +2166,8 @@
 				}
 			},
 			"times": [
-				20,
-				20
+				19,
+				17
 			],
 			"allTests": [
 				{
@@ -2333,7 +2185,7 @@
 		{
 			"id": "c53baedf-ddd8-42b7-b400-a7e71ac6ad42",
 			"name": "FavouriteBooleanUpperCase",
-			"time": 16,
+			"time": 17,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2358,8 +2210,8 @@
 				}
 			},
 			"times": [
-				17,
-				16
+				19,
+				17
 			],
 			"allTests": [
 				{
@@ -2377,7 +2229,7 @@
 		{
 			"id": "3b812611-c58c-41dd-a7ec-c98b7175091e",
 			"name": "FavouriteBooleanLowerCase",
-			"time": 16,
+			"time": 15,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2403,7 +2255,7 @@
 			},
 			"times": [
 				16,
-				16
+				15
 			],
 			"allTests": [
 				{
@@ -2421,7 +2273,7 @@
 		{
 			"id": "9cfe227d-15e3-469b-b9c0-aabce0fa01a2",
 			"name": "FullyUpdateUser",
-			"time": 13,
+			"time": 14,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2451,8 +2303,8 @@
 				}
 			},
 			"times": [
-				17,
-				13
+				16,
+				14
 			],
 			"allTests": [
 				{
@@ -2472,7 +2324,7 @@
 		{
 			"id": "59968e54-b0fb-4f7b-9b77-feff912c760e",
 			"name": "UpdateUserUsername",
-			"time": 16,
+			"time": 15,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2497,8 +2349,8 @@
 				}
 			},
 			"times": [
-				14,
-				16
+				13,
+				15
 			],
 			"allTests": [
 				{
@@ -2516,7 +2368,7 @@
 		{
 			"id": "f82ae64a-ecc8-461b-bd93-72e1912ae5ae",
 			"name": "UpdateUserPassword",
-			"time": 14,
+			"time": 15,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2546,8 +2398,8 @@
 				}
 			},
 			"times": [
-				14,
-				14
+				13,
+				15
 			],
 			"allTests": [
 				{
@@ -2597,7 +2449,7 @@
 				}
 			},
 			"times": [
-				14,
+				13,
 				13
 			],
 			"allTests": [
@@ -2618,7 +2470,7 @@
 		{
 			"id": "8c8cdac2-fedd-4796-af4d-e603f1ee8ff1",
 			"name": "UpdateUserUsernameDuplicate",
-			"time": 12,
+			"time": 29,
 			"responseCode": {
 				"code": 500,
 				"name": "Internal Server Error"
@@ -2633,8 +2485,8 @@
 				}
 			},
 			"times": [
-				17,
-				12
+				13,
+				29
 			],
 			"allTests": [
 				{
@@ -2673,7 +2525,7 @@
 				}
 			},
 			"times": [
-				13,
+				12,
 				12
 			],
 			"allTests": [
@@ -2742,7 +2594,7 @@
 				}
 			},
 			"times": [
-				18,
+				17,
 				16
 			],
 			"allTests": [
@@ -2774,7 +2626,7 @@
 				}
 			},
 			"times": [
-				13,
+				12,
 				12
 			],
 			"allTests": [
@@ -2789,7 +2641,7 @@
 		{
 			"id": "6c8a9664-2e69-4214-a9d0-b7ff6da2fabb",
 			"name": "updateRatingChangeFavourite",
-			"time": 13,
+			"time": 14,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2825,7 +2677,7 @@
 			},
 			"times": [
 				14,
-				13
+				14
 			],
 			"allTests": [
 				{
@@ -2847,7 +2699,7 @@
 		{
 			"id": "be561910-2ee6-44d1-8946-ea127c0c8bcd",
 			"name": "updateRatingChangeRating",
-			"time": 17,
+			"time": 18,
 			"responseCode": {
 				"code": 201,
 				"name": "Created"
@@ -2882,8 +2734,8 @@
 				}
 			},
 			"times": [
-				15,
-				17
+				13,
+				18
 			],
 			"allTests": [
 				{
@@ -2905,7 +2757,7 @@
 		{
 			"id": "a2cedc2d-50fb-419a-912f-93e798e3f220",
 			"name": "TestDeleteRating",
-			"time": 12,
+			"time": 14,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -2921,7 +2773,7 @@
 			},
 			"times": [
 				12,
-				12
+				14
 			],
 			"allTests": [
 				{
@@ -2935,7 +2787,7 @@
 		{
 			"id": "681c4c55-31b8-49b5-9aa9-1f3c7cdd0db5",
 			"name": "TestDeleteUserByName",
-			"time": 17,
+			"time": 19,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -2950,8 +2802,8 @@
 				}
 			},
 			"times": [
-				20,
-				17
+				24,
+				19
 			],
 			"allTests": [
 				{
@@ -2980,7 +2832,7 @@
 				}
 			},
 			"times": [
-				18,
+				17,
 				17
 			],
 			"allTests": [
@@ -2995,7 +2847,37 @@
 		{
 			"id": "52af42f2-9775-43ac-98e0-3ae3858171ce",
 			"name": "TestDeleteChatbotByID",
-			"time": 17,
+			"time": 18,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				17,
+				18
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "6ec2841b-45bd-4053-ba51-1d302f721eb7",
+			"name": "TestDeleteChatbotByName",
+			"time": 19,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -3011,37 +2893,7 @@
 			},
 			"times": [
 				19,
-				17
-			],
-			"allTests": [
-				{
-					"Status code is 200": true
-				},
-				{
-					"Status code is 200": true
-				}
-			]
-		},
-		{
-			"id": "6ec2841b-45bd-4053-ba51-1d302f721eb7",
-			"name": "TestDeleteChatbotByName",
-			"time": 17,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Status code is 200": true
-			},
-			"testPassFailCounts": {
-				"Status code is 200": {
-					"pass": 2,
-					"fail": 0
-				}
-			},
-			"times": [
-				20,
-				17
+				19
 			],
 			"allTests": [
 				{
@@ -3070,7 +2922,7 @@
 				}
 			},
 			"times": [
-				11,
+				10,
 				10
 			],
 			"allTests": [
@@ -3085,7 +2937,7 @@
 		{
 			"id": "4f2493ea-8a17-4c0d-a6f4-6c8fd9325b32",
 			"name": "TestDeleteTextByItsText",
-			"time": 9,
+			"time": 10,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -3100,8 +2952,8 @@
 				}
 			},
 			"times": [
-				11,
-				9
+				10,
+				10
 			],
 			"allTests": [
 				{
@@ -3130,7 +2982,7 @@
 				}
 			},
 			"times": [
-				20,
+				17,
 				19
 			],
 			"allTests": [
@@ -3145,7 +2997,7 @@
 		{
 			"id": "1f6124b4-e6c6-47ba-bf0f-f4ef7e39002b",
 			"name": "DeleteAdditionalChatbot",
-			"time": 18,
+			"time": 17,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -3160,8 +3012,8 @@
 				}
 			},
 			"times": [
-				19,
-				18
+				17,
+				17
 			],
 			"allTests": [
 				{
@@ -3205,7 +3057,7 @@
 		{
 			"id": "7e33b71c-ca32-4e78-a823-6d84015b909b",
 			"name": "auth-check-not-logged-in",
-			"time": 3,
+			"time": 2,
 			"responseCode": {
 				"code": 401,
 				"name": "Unauthorized"
@@ -3226,7 +3078,7 @@
 			},
 			"times": [
 				2,
-				3
+				2
 			],
 			"allTests": [
 				{
@@ -3238,28 +3090,2639 @@
 					"Body is correct": true
 				}
 			]
+		},
+		{
+			"id": "7f8a163a-b9ee-4253-b031-9059e2c25dc1",
+			"name": "LoginAsUser",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "c335875b-0b47-427b-8759-3187412e26a5",
+			"name": "auth-check-user",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Username is user": true,
+				"role is USER": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Username is user": {
+					"pass": 2,
+					"fail": 0
+				},
+				"role is USER": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Username is user": true,
+					"role is USER": true
+				},
+				{
+					"Status code is 200": true,
+					"Username is user": true,
+					"role is USER": true
+				}
+			]
+		},
+		{
+			"id": "68c8c9e1-6e36-4b0a-954f-f1441a502648",
+			"name": "userCheck",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Body matches string 'you're a user'": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Body matches string 'you're a user'": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Body matches string 'you're a user'": true
+				},
+				{
+					"Status code is 200": true,
+					"Body matches string 'you're a user'": true
+				}
+			]
+		},
+		{
+			"id": "89e3ac6d-fd06-4df5-83ab-97ebbb679937",
+			"name": "not an adminCheck",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Body matches string 'you're not an admin'": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Body matches string 'you're not an admin'": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Body matches string 'you're not an admin'": true
+				},
+				{
+					"Status code is 200": true,
+					"Body matches string 'you're not an admin'": true
+				}
+			]
+		},
+		{
+			"id": "f0469f18-6226-4b3a-92d1-afb781ea96c3",
+			"name": "TestGetAllChatbots",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				17,
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "ab1809df-657a-4594-a16f-115f7c24af6e",
+			"name": "TestGetSingleChatbotByName",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Name is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Name is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Name is correct": true
+				},
+				{
+					"Status code is 200": true,
+					"Name is correct": true
+				}
+			]
+		},
+		{
+			"id": "0001f4b8-be27-48ba-8fe0-f181e20f8666",
+			"name": "TestGetSingleChatbotByID",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Chatbotname is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Chatbotname is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Chatbotname is correct": true
+				},
+				{
+					"Status code is 200": true,
+					"Chatbotname is correct": true
+				}
+			]
+		},
+		{
+			"id": "dba594c0-64ca-418f-996b-ddcb4ed989ea",
+			"name": "TestGetSingleNonExistentChatbotByName",
+			"time": 5,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				},
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "41ecf5a0-f381-44b8-9129-80db719d9175",
+			"name": "TestGetSingleNonExistentChatbotById",
+			"time": 5,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				},
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "ef55290b-4b4d-4109-b35b-c23d09c85549",
+			"name": "TestGetAllRatings",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "f5c4a09e-6fbb-4c55-bbdb-9fac3582c849",
+			"name": "TestGetSingleRatingById",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"User is correct": true,
+				"Chatbot is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"User is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Chatbot is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"User is correct": true,
+					"Chatbot is correct": true
+				},
+				{
+					"Status code is 200": true,
+					"User is correct": true,
+					"Chatbot is correct": true
+				}
+			]
+		},
+		{
+			"id": "a169d56d-9e85-4614-a940-bac7de0d2f96",
+			"name": "TestGetAllRatingsByAUser",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All Users are correct": true,
+				"No duplicate chatbots found": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"All Users are correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"No duplicate chatbots found": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All Users are correct": true,
+					"No duplicate chatbots found": true
+				},
+				{
+					"Status code is 200": true,
+					"All Users are correct": true,
+					"No duplicate chatbots found": true
+				}
+			]
+		},
+		{
+			"id": "1eaa6b06-8e41-40f9-9c03-51f1297c1bb9",
+			"name": "TestGetSingleNonExistentRatingById",
+			"time": 5,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				},
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "608bbde9-0258-4b50-8c1e-de3f2f1618de",
+			"name": "TestGetAllUsers",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "3fb23486-cd4c-457c-803b-6c08caa19699",
+			"name": "TestGetSingleUserByName",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Name is correct": true,
+				"UserRole is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Name is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"UserRole is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Name is correct": true,
+					"UserRole is correct": true
+				},
+				{
+					"Status code is 200": true,
+					"Name is correct": true,
+					"UserRole is correct": true
+				}
+			]
+		},
+		{
+			"id": "81044669-03e8-494f-b48a-e60bc237374c",
+			"name": "TestGetSingleUserByID",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Username is correct": true,
+				"UserRole is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Username is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"UserRole is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Username is correct": true,
+					"UserRole is correct": true
+				},
+				{
+					"Status code is 200": true,
+					"Username is correct": true,
+					"UserRole is correct": true
+				}
+			]
+		},
+		{
+			"id": "add2e952-f615-44ad-98da-1f257ed4e979",
+			"name": "TestGetSingleNonExistentUserByName",
+			"time": 8,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				},
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "e8107694-919b-4567-af0c-a56cf03f21fd",
+			"name": "TestGetSingleNonExistentUserById",
+			"time": 8,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				},
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "e32e4e95-512d-4b0a-8048-c3523d3d54a1",
+			"name": "TestGetAllUsersByRole",
+			"time": 5,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"Body matches string": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Body matches string": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				8,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"Body matches string": true
+				},
+				{
+					"Status code is 401": true,
+					"Body matches string": true
+				}
+			]
+		},
+		{
+			"id": "3574b9bf-4660-4b2d-8c1b-4a3fd3a4c756",
+			"name": "TestGetAllTexts",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "4eb65aa6-0ad3-4add-af1e-f5c0fbdf0054",
+			"name": "TestGetSingleTextByID",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Text is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Text is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Text is correct": true
+				},
+				{
+					"Status code is 200": true,
+					"Text is correct": true
+				}
+			]
+		},
+		{
+			"id": "a06caec6-e18d-410d-8849-abbed3eb0488",
+			"name": "TestGetAllTextsOfAChatbot",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "97d1bccf-dcba-45f2-8543-5485e1d60644",
+			"name": "TestGetNonExistentTextById",
+			"time": 5,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 404": true
+			},
+			"testPassFailCounts": {
+				"Status code is 404": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 404": true
+				},
+				{
+					"Status code is 404": true
+				}
+			]
+		},
+		{
+			"id": "fc35ef9a-7caa-4565-9758-85270a258990",
+			"name": "TestCreateNewUserNoRoleSpecified",
+			"time": 10,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is User": true,
+				"Newly created User is found by name": true,
+				"Newly created User is found by id": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Role is User": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Newly created User is found by name": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Newly created User is found by id": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				13,
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is User": true,
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
+				},
+				{
+					"Status code is 201": true,
+					"Role is User": true,
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
+				}
+			]
+		},
+		{
+			"id": "12bf224e-0c23-443f-9264-776947e9459e",
+			"name": "TestCreateNewUserRoleUser",
+			"time": 9,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is User": true,
+				"Newly created User is found by id": true,
+				"Newly created User is found by name": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Role is User": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Newly created User is found by name": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Newly created User is found by id": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				10,
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is User": true,
+					"Newly created User is found by name": true,
+					"Newly created User is found by id": true
+				},
+				{
+					"Status code is 201": true,
+					"Role is User": true,
+					"Newly created User is found by id": true,
+					"Newly created User is found by name": true
+				}
+			]
+		},
+		{
+			"id": "fe7fb9ea-646c-4757-be01-a03dc0b3a59b",
+			"name": "TestCreateNewUserRoleAdmin",
+			"time": 12,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Role is Admin": true,
+				"Newly created User is found by id": true,
+				"Newly created User is found by name": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Role is Admin": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Newly created User is found by id": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Newly created User is found by name": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				10,
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Role is Admin": true,
+					"Newly created User is found by id": true,
+					"Newly created User is found by name": true
+				},
+				{
+					"Status code is 201": true,
+					"Role is Admin": true,
+					"Newly created User is found by id": true,
+					"Newly created User is found by name": true
+				}
+			]
+		},
+		{
+			"id": "5f0edd90-b525-4b42-9814-dbbcf942d722",
+			"name": "TestCreateUserWithSameNameAgain",
+			"time": 8,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"Status code is 409": true
+			},
+			"testPassFailCounts": {
+				"Status code is 409": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				8,
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 409": true
+				},
+				{
+					"Status code is 409": true
+				}
+			]
+		},
+		{
+			"id": "3f69958b-47a4-498d-8f2c-a8a11b701a41",
+			"name": "TestValidateUsernameTooShort",
+			"time": 9,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				9,
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "e4850011-cc31-4f2e-9789-da81cfac4b3c",
+			"name": "TestValidateUsernameTooLong",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				9,
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "194b6f61-4727-4f6a-acd9-ec02f9b5ebcd",
+			"name": "PasswordMissingUppercaseLetter",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				13,
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "40799940-a386-4105-a8e5-462c931e2663",
+			"name": "PasswordMissingLowercase",
+			"time": 9,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				10,
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "d0fddae0-4552-4418-a952-605dc62f2b95",
+			"name": "PasswordMissingNumber",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				9,
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "19b027e6-9779-463c-a848-996f09c46de8",
+			"name": "PasswordMissingSpecialChar",
+			"time": 17,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				10,
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "e55d4875-ddcf-463c-ab22-743626ed8c44",
+			"name": "PasswordTooShort",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				9,
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "a8952ab1-98d5-417b-ae50-15e0b93ef89d",
+			"name": "PasswordTooLong",
+			"time": 9,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true,
+				"The correct amount of errors": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"The correct amount of errors": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				10,
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true,
+					"The correct amount of errors": true
+				}
+			]
+		},
+		{
+			"id": "a807a28b-05d0-42b0-9849-b8bc97481134",
+			"name": "TestCreateNewChatbot",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Your test name": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Your test name": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				14,
+				14
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				},
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				}
+			]
+		},
+		{
+			"id": "88844f1f-0795-420e-bf53-2b60efea8884",
+			"name": "TestCreateNewChatbot2",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Your test name": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Your test name": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				20,
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				},
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				}
+			]
+		},
+		{
+			"id": "dc1293df-9741-4546-9a5e-a446b98f2241",
+			"name": "TestCreateNewChatbot3",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Your test name": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Your test name": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				14,
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				},
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				}
+			]
+		},
+		{
+			"id": "9938679d-60ae-46b4-a01e-d03aad272092",
+			"name": "TestCreateNewChatbotWithSameName",
+			"time": 11,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				12,
+				11
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "a7115645-6b07-49ff-bbd4-4d84e6c3d9c1",
+			"name": "TestValidateChatbotNameTooShort",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "1c0a4b12-221f-438c-b376-ceff475a2258",
+			"name": "TestValidateChatbotNameTooLong",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "4a36de6c-744d-4eae-8f2c-5b8969397159",
+			"name": "TestCreateRatingChatbotId",
+			"time": 19,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"user is correct": true,
+				"chatbot is correct": true,
+				"rating is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"user is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"chatbot is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"rating is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				17,
+				19
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating is correct": true
+				},
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating is correct": true
+				}
+			]
+		},
+		{
+			"id": "fbeb51d5-7652-415a-8363-651391a1a5e1",
+			"name": "TestCreateRatingChatbotName",
+			"time": 15,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"user is correct": true,
+				"chatbot is correct": true,
+				"rating is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"user is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"chatbot is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"rating is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				16,
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating is correct": true
+				},
+				{
+					"Status code is 201": true,
+					"user is correct": true,
+					"chatbot is correct": true,
+					"rating is correct": true
+				}
+			]
+		},
+		{
+			"id": "3d9b0639-c719-4593-af9f-ab6461886103",
+			"name": "TestCreateRatingWithoutChatbot",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"error is correct": true
+				},
+				{
+					"Status code is 400": true,
+					"error is correct": true
+				}
+			]
+		},
+		{
+			"id": "4d55f1ab-2743-439e-a8e6-13e9cc9864fb",
+			"name": "TestCreateRatingDuplicate",
+			"time": 15,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"Status code is 409": true
+			},
+			"testPassFailCounts": {
+				"Status code is 409": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				15,
+				15
+			],
+			"allTests": [
+				{
+					"Status code is 409": true
+				},
+				{
+					"Status code is 409": true
+				}
+			]
+		},
+		{
+			"id": "b60c5bc0-053d-4d0a-9d7e-c462e1f66ef0",
+			"name": "ChatbotNameTooShort",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				6,
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "9732ed21-f481-4021-ac7f-8d85e568b9ff",
+			"name": "ChatbotNameTooLong",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "44fef5b9-1a62-4fce-9906-8ae3485370d8",
+			"name": "IdTooLong",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "4a8d47cb-35a0-44ec-8c3d-4b67a62f4e6a",
+			"name": "IdTooShort",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "72657d0c-1c25-472f-b1b1-564f9676887d",
+			"name": "NotProperUUIDFormat",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"Error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				7,
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				},
+				{
+					"Status code is 400": true,
+					"Error is correct": true
+				}
+			]
+		},
+		{
+			"id": "89f9f66a-f630-4db3-a55e-1901bb8ae4e2",
+			"name": "UnknownRating",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				8,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "ad2254e1-a213-4d91-a396-b7467bc65ed3",
+			"name": "RatingButInLowerCase",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				12,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 400": true
+				},
+				{
+					"Status code is 400": true
+				}
+			]
+		},
+		{
+			"id": "8b21bcf1-97fe-421c-b515-24926a59a755",
+			"name": "FavouriteNonBoolean",
+			"time": 16,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Favourite is correct": true,
+				"Rating was deleted": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Favourite is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Rating was deleted": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				19,
+				16
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true,
+					"Rating was deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true,
+					"Rating was deleted": true
+				}
+			]
+		},
+		{
+			"id": "2a2d0d79-0428-4792-8894-a4db552e14dd",
+			"name": "FavouriteBooleanUpperCase",
+			"time": 16,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Favourite is correct": true,
+				"Rating was deleted": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Favourite is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Rating was deleted": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				15,
+				16
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true,
+					"Rating was deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true,
+					"Rating was deleted": true
+				}
+			]
+		},
+		{
+			"id": "ae67b47f-008c-40ea-8254-3c1b5231c9b5",
+			"name": "FavouriteBooleanLowerCase",
+			"time": 16,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Favourite is correct": true,
+				"Rating was deleted": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Favourite is correct": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Rating was deleted": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				16,
+				16
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true,
+					"Rating was deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Favourite is correct": true,
+					"Rating was deleted": true
+				}
+			]
+		},
+		{
+			"id": "115d6b2d-6ae9-48af-a4ea-40956915ca30",
+			"name": "UpdateChatbotName",
+			"time": 14,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Name not same": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Name not same": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				14,
+				14
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Name not same": true
+				},
+				{
+					"Status code is 201": true,
+					"Name not same": true
+				}
+			]
+		},
+		{
+			"id": "53c20046-c337-4377-9ff3-873e89a9f500",
+			"name": "UpdateChatbotNameDuplicate",
+			"time": 12,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"Status code is 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is 500": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				12,
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 500": true
+				},
+				{
+					"Status code is 500": true
+				}
+			]
+		},
+		{
+			"id": "df10e111-2296-4287-a232-ebe62cc563a6",
+			"name": "updateRatingChangeFavourite",
+			"time": 12,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 2,
+					"fail": 0
+				},
+				"error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				12,
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"error is correct": true
+				},
+				{
+					"Status code is 401": true,
+					"error is correct": true
+				}
+			]
+		},
+		{
+			"id": "dcc21511-6014-40a0-822e-d4480cfef9d3",
+			"name": "TestDeleteRating",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				12,
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "2dca302d-9cc8-43f7-a70c-877f1c00c0d1",
+			"name": "TestDeleteUserByName",
+			"time": 12,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true,
+				"error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 2,
+					"fail": 0
+				},
+				"error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				12,
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 403": true,
+					"error is correct": true
+				},
+				{
+					"Status code is 403": true,
+					"error is correct": true
+				}
+			]
+		},
+		{
+			"id": "918d4f28-9651-46aa-86f7-cf3751c59993",
+			"name": "TestDeleteUserByID",
+			"time": 11,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true,
+				"error is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 2,
+					"fail": 0
+				},
+				"error is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				11,
+				11
+			],
+			"allTests": [
+				{
+					"Status code is 403": true,
+					"error is correct": true
+				},
+				{
+					"Status code is 403": true,
+					"error is correct": true
+				}
+			]
+		},
+		{
+			"id": "0e55060b-3c91-4735-a170-b127a1cacbf5",
+			"name": "TestDeleteChatbotByID",
+			"time": 17,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				17,
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "978b401d-f06a-403a-8203-a2353583afc1",
+			"name": "TestDeleteChatbotByName",
+			"time": 17,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				18,
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "8ee6556b-6082-42ce-85ef-7b3741f82604",
+			"name": "TestDeleteTextByID",
+			"time": 9,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"Body matches string": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Body matches string": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"Body matches string": true
+				},
+				{
+					"Status code is 401": true,
+					"Body matches string": true
+				}
+			]
+		},
+		{
+			"id": "8ddf1e24-86c1-4444-bd7a-099a1e35c96f",
+			"name": "TestDeleteTextByItsText",
+			"time": 7,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"Body matches string": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Body matches string": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				9,
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"Body matches string": true
+				},
+				{
+					"Status code is 401": true,
+					"Body matches string": true
+				}
+			]
+		},
+		{
+			"id": "28f1148c-c855-4856-b41a-e59b389df537",
+			"name": "LoginAsAdmin Copy",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				5,
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "3cabec38-dac9-4575-876d-83977046077c",
+			"name": "DeleteAdditionalUser",
+			"time": 17,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				17,
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "3bf4d69f-743c-4fc9-a74c-b58bd58d621c",
+			"name": "DeleteAdditionalChatbot",
+			"time": 17,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				17,
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "17c635b2-b4c2-4050-865e-301f938d6603",
+			"name": "logout",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				2,
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				},
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "8de31b95-c9db-4327-9a92-d0b4a6a3ed2e",
+			"name": "auth-check-not-logged-in",
+			"time": 2,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"Body is correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 2,
+					"fail": 0
+				},
+				"Body is correct": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				2,
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"Body is correct": true
+				},
+				{
+					"Status code is 401": true,
+					"Body is correct": true
+				}
+			]
+		},
+		{
+			"id": "486f93ef-6ecf-4008-ad12-417085e3701d",
+			"name": "Hello World",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"text body is 'hello world'": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 2,
+					"fail": 0
+				},
+				"text body is 'hello world'": {
+					"pass": 2,
+					"fail": 0
+				}
+			},
+			"times": [
+				4,
+				2
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"text body is 'hello world'": true
+				},
+				{
+					"Status code is 200": true,
+					"text body is 'hello world'": true
+				}
+			]
 		}
 	],
 	"count": 2,
-	"totalTime": 1903,
+	"totalTime": 3155,
 	"collection": {
 		"requests": [
-			{
-				"id": "6a6dfb88-3529-487b-9edb-b4abc71e2c16",
-				"method": "POST"
-			},
-			{
-				"id": "98049ca8-66e3-46c9-9523-846c7bcabdce",
-				"method": "GET"
-			},
-			{
-				"id": "9e65ca64-aef2-4b30-a7f1-e310d5c87325",
-				"method": "GET"
-			},
-			{
-				"id": "32d61b0c-ccf1-492f-a734-b441d51fefd9",
-				"method": "GET"
-			},
 			{
 				"id": "fd7024f2-0c27-4f82-8469-c4ed5065bbb4",
 				"method": "POST"
@@ -3586,6 +6049,290 @@
 			},
 			{
 				"id": "7e33b71c-ca32-4e78-a823-6d84015b909b",
+				"method": "GET"
+			},
+			{
+				"id": "7f8a163a-b9ee-4253-b031-9059e2c25dc1",
+				"method": "POST"
+			},
+			{
+				"id": "c335875b-0b47-427b-8759-3187412e26a5",
+				"method": "GET"
+			},
+			{
+				"id": "68c8c9e1-6e36-4b0a-954f-f1441a502648",
+				"method": "GET"
+			},
+			{
+				"id": "89e3ac6d-fd06-4df5-83ab-97ebbb679937",
+				"method": "GET"
+			},
+			{
+				"id": "f0469f18-6226-4b3a-92d1-afb781ea96c3",
+				"method": "GET"
+			},
+			{
+				"id": "ab1809df-657a-4594-a16f-115f7c24af6e",
+				"method": "GET"
+			},
+			{
+				"id": "0001f4b8-be27-48ba-8fe0-f181e20f8666",
+				"method": "GET"
+			},
+			{
+				"id": "dba594c0-64ca-418f-996b-ddcb4ed989ea",
+				"method": "GET"
+			},
+			{
+				"id": "41ecf5a0-f381-44b8-9129-80db719d9175",
+				"method": "GET"
+			},
+			{
+				"id": "ef55290b-4b4d-4109-b35b-c23d09c85549",
+				"method": "GET"
+			},
+			{
+				"id": "f5c4a09e-6fbb-4c55-bbdb-9fac3582c849",
+				"method": "GET"
+			},
+			{
+				"id": "a169d56d-9e85-4614-a940-bac7de0d2f96",
+				"method": "GET"
+			},
+			{
+				"id": "1eaa6b06-8e41-40f9-9c03-51f1297c1bb9",
+				"method": "GET"
+			},
+			{
+				"id": "608bbde9-0258-4b50-8c1e-de3f2f1618de",
+				"method": "GET"
+			},
+			{
+				"id": "3fb23486-cd4c-457c-803b-6c08caa19699",
+				"method": "GET"
+			},
+			{
+				"id": "81044669-03e8-494f-b48a-e60bc237374c",
+				"method": "GET"
+			},
+			{
+				"id": "add2e952-f615-44ad-98da-1f257ed4e979",
+				"method": "GET"
+			},
+			{
+				"id": "e8107694-919b-4567-af0c-a56cf03f21fd",
+				"method": "GET"
+			},
+			{
+				"id": "e32e4e95-512d-4b0a-8048-c3523d3d54a1",
+				"method": "GET"
+			},
+			{
+				"id": "3574b9bf-4660-4b2d-8c1b-4a3fd3a4c756",
+				"method": "GET"
+			},
+			{
+				"id": "4eb65aa6-0ad3-4add-af1e-f5c0fbdf0054",
+				"method": "GET"
+			},
+			{
+				"id": "a06caec6-e18d-410d-8849-abbed3eb0488",
+				"method": "GET"
+			},
+			{
+				"id": "97d1bccf-dcba-45f2-8543-5485e1d60644",
+				"method": "GET"
+			},
+			{
+				"id": "fc35ef9a-7caa-4565-9758-85270a258990",
+				"method": "POST"
+			},
+			{
+				"id": "12bf224e-0c23-443f-9264-776947e9459e",
+				"method": "POST"
+			},
+			{
+				"id": "fe7fb9ea-646c-4757-be01-a03dc0b3a59b",
+				"method": "POST"
+			},
+			{
+				"id": "5f0edd90-b525-4b42-9814-dbbcf942d722",
+				"method": "POST"
+			},
+			{
+				"id": "3f69958b-47a4-498d-8f2c-a8a11b701a41",
+				"method": "POST"
+			},
+			{
+				"id": "e4850011-cc31-4f2e-9789-da81cfac4b3c",
+				"method": "POST"
+			},
+			{
+				"id": "194b6f61-4727-4f6a-acd9-ec02f9b5ebcd",
+				"method": "POST"
+			},
+			{
+				"id": "40799940-a386-4105-a8e5-462c931e2663",
+				"method": "POST"
+			},
+			{
+				"id": "d0fddae0-4552-4418-a952-605dc62f2b95",
+				"method": "POST"
+			},
+			{
+				"id": "19b027e6-9779-463c-a848-996f09c46de8",
+				"method": "POST"
+			},
+			{
+				"id": "e55d4875-ddcf-463c-ab22-743626ed8c44",
+				"method": "POST"
+			},
+			{
+				"id": "a8952ab1-98d5-417b-ae50-15e0b93ef89d",
+				"method": "POST"
+			},
+			{
+				"id": "a807a28b-05d0-42b0-9849-b8bc97481134",
+				"method": "POST"
+			},
+			{
+				"id": "88844f1f-0795-420e-bf53-2b60efea8884",
+				"method": "POST"
+			},
+			{
+				"id": "dc1293df-9741-4546-9a5e-a446b98f2241",
+				"method": "POST"
+			},
+			{
+				"id": "9938679d-60ae-46b4-a01e-d03aad272092",
+				"method": "POST"
+			},
+			{
+				"id": "a7115645-6b07-49ff-bbd4-4d84e6c3d9c1",
+				"method": "POST"
+			},
+			{
+				"id": "1c0a4b12-221f-438c-b376-ceff475a2258",
+				"method": "POST"
+			},
+			{
+				"id": "4a36de6c-744d-4eae-8f2c-5b8969397159",
+				"method": "POST"
+			},
+			{
+				"id": "fbeb51d5-7652-415a-8363-651391a1a5e1",
+				"method": "POST"
+			},
+			{
+				"id": "3d9b0639-c719-4593-af9f-ab6461886103",
+				"method": "POST"
+			},
+			{
+				"id": "4d55f1ab-2743-439e-a8e6-13e9cc9864fb",
+				"method": "POST"
+			},
+			{
+				"id": "b60c5bc0-053d-4d0a-9d7e-c462e1f66ef0",
+				"method": "POST"
+			},
+			{
+				"id": "9732ed21-f481-4021-ac7f-8d85e568b9ff",
+				"method": "POST"
+			},
+			{
+				"id": "44fef5b9-1a62-4fce-9906-8ae3485370d8",
+				"method": "POST"
+			},
+			{
+				"id": "4a8d47cb-35a0-44ec-8c3d-4b67a62f4e6a",
+				"method": "POST"
+			},
+			{
+				"id": "72657d0c-1c25-472f-b1b1-564f9676887d",
+				"method": "POST"
+			},
+			{
+				"id": "89f9f66a-f630-4db3-a55e-1901bb8ae4e2",
+				"method": "POST"
+			},
+			{
+				"id": "ad2254e1-a213-4d91-a396-b7467bc65ed3",
+				"method": "POST"
+			},
+			{
+				"id": "8b21bcf1-97fe-421c-b515-24926a59a755",
+				"method": "POST"
+			},
+			{
+				"id": "2a2d0d79-0428-4792-8894-a4db552e14dd",
+				"method": "POST"
+			},
+			{
+				"id": "ae67b47f-008c-40ea-8254-3c1b5231c9b5",
+				"method": "POST"
+			},
+			{
+				"id": "115d6b2d-6ae9-48af-a4ea-40956915ca30",
+				"method": "PUT"
+			},
+			{
+				"id": "53c20046-c337-4377-9ff3-873e89a9f500",
+				"method": "PUT"
+			},
+			{
+				"id": "df10e111-2296-4287-a232-ebe62cc563a6",
+				"method": "PUT"
+			},
+			{
+				"id": "dcc21511-6014-40a0-822e-d4480cfef9d3",
+				"method": "DELETE"
+			},
+			{
+				"id": "2dca302d-9cc8-43f7-a70c-877f1c00c0d1",
+				"method": "DELETE"
+			},
+			{
+				"id": "918d4f28-9651-46aa-86f7-cf3751c59993",
+				"method": "DELETE"
+			},
+			{
+				"id": "0e55060b-3c91-4735-a170-b127a1cacbf5",
+				"method": "DELETE"
+			},
+			{
+				"id": "978b401d-f06a-403a-8203-a2353583afc1",
+				"method": "DELETE"
+			},
+			{
+				"id": "8ee6556b-6082-42ce-85ef-7b3741f82604",
+				"method": "DELETE"
+			},
+			{
+				"id": "8ddf1e24-86c1-4444-bd7a-099a1e35c96f",
+				"method": "DELETE"
+			},
+			{
+				"id": "28f1148c-c855-4856-b41a-e59b389df537",
+				"method": "POST"
+			},
+			{
+				"id": "3cabec38-dac9-4575-876d-83977046077c",
+				"method": "DELETE"
+			},
+			{
+				"id": "3bf4d69f-743c-4fc9-a74c-b58bd58d621c",
+				"method": "DELETE"
+			},
+			{
+				"id": "17c635b2-b4c2-4050-865e-301f938d6603",
+				"method": "GET"
+			},
+			{
+				"id": "8de31b95-c9db-4327-9a92-d0b4a6a3ed2e",
+				"method": "GET"
+			},
+			{
+				"id": "486f93ef-6ecf-4008-ad12-417085e3701d",
 				"method": "GET"
 			}
 		]

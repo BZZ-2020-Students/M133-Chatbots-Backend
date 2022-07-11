@@ -184,7 +184,7 @@ public class RatingResource {
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteRating(@PathParam("id") String id, ContainerRequestContext requestContext) {
-        System.out.println("deleteRating");
+
 
         User loggedInUser;
         try {
@@ -202,7 +202,7 @@ public class RatingResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (UserRole.ADMIN != loggedInUser.getUserRole() || !loggedInUser.getId().equals(rating.getUser().getId())) {
+        if (UserRole.ADMIN != loggedInUser.getUserRole() && !loggedInUser.getId().equals(rating.getUser().getId())) {
             return Response
                     .status(Response.Status.UNAUTHORIZED)
                     .entity("{\"error\": \"You are not allowed to delete this rating.\"}")

@@ -11,6 +11,7 @@ import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.exception.NotLoggedInException;
 import dev.zwazel.chatbots.util.json.ToJson;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;

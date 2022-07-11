@@ -13,14 +13,12 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
-import lombok.Getter;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
     @Context
@@ -38,10 +36,9 @@ public class AuthFilter implements ContainerRequestFilter {
             RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
             Set<String> requiredRoles = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
 
-            Cookie cookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
             User user = null;
             try {
-                user = TokenHandler.getUserFromJWT(cookie);
+                user = TokenHandler.getUserFromCookie(requestContext);
             } catch (NotLoggedInException e) {
                 requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                         .entity(e.getMessage()).build());

@@ -57,17 +57,17 @@ public class AuthenticateResource {
                     .build();
         }
 
+        DurationsInMilliseconds ttl = DurationsInMilliseconds.DAY;
         NewCookie tokenCookie = new NewCookie(
                 HelloApplication.getProperty("jwt.name", HelloApplication.defaultConfJwtName),
                 TokenHandler.createJWT(
-                        "authentication",
                         user,
-                        DurationsInMilliseconds.DAY.getDuration()
+                        ttl.getDuration()
                 ),
                 "/",
                 "",
                 "Auth-Token",
-                (int) (DurationsInMilliseconds.DAY.getDuration() / 1000),
+                (int) (ttl.getDuration() / 1000),
                 false
         );
 

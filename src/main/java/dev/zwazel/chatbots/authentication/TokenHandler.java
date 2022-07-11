@@ -2,7 +2,6 @@ package dev.zwazel.chatbots.authentication;
 
 import dev.zwazel.chatbots.HelloApplication;
 import dev.zwazel.chatbots.classes.dao.UserDao;
-import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.exception.NotLoggedInException;
@@ -17,7 +16,6 @@ import lombok.NonNull;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Utility class for generating and validating JWT tokens.
@@ -29,14 +27,13 @@ public class TokenHandler {
     /**
      * Generates a JWT token for the given username and subject.
      *
-     * @param subject   the subject of the token.
      * @param user      the user for which the token is generated.
      * @param ttlMillis the time until the token expires.
      * @return the generated token.
      * @author Zwazel
      * @since 0.1
      */
-    public static String createJWT(String subject, User user, long ttlMillis) {
+    public static String createJWT(User user, long ttlMillis) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
 
@@ -48,15 +45,13 @@ public class TokenHandler {
 
         //Let's set the JWT Claims
         JwtBuilder builder = Jwts.builder()
-                .setId(UUID.randomUUID().toString())
                 .setIssuedAt(now)
-                .setSubject(subject)
                 .setIssuer(HelloApplication.getProperty("jwt.issuer", HelloApplication.defaultConfJwtIssuer))
                 .signWith(Keys.hmacShaKeyFor(apiKeySecretBytes), signatureAlgorithm);
 
         //if it has been specified, let's add the expiration
         if (ttlMillis > 0) {
-            long expMillis = nowMillis + DurationsInMilliseconds.HOUR.getDuration();
+            long expMillis = nowMillis + ttlMillis;
             Date exp = new Date(expMillis);
             builder.setExpiration(exp);
         }

@@ -93,6 +93,7 @@ public class Chatbot {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
+    // fetch everything
     private User user;
 
     /**

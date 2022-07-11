@@ -4,14 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import dev.zwazel.chatbots.authentication.TokenHandler;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.dao.UserDao;
+import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.User;
+import dev.zwazel.chatbots.exception.NotLoggedInException;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -36,28 +40,46 @@ public class ChatbotResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
-    public Response updateText(@PathParam("id") String id, @Valid @BeanParam Chatbot chatbot) {
+    public Response updateText(@PathParam("id") String id, @Valid @BeanParam Chatbot chatbot, ContainerRequestContext requestContext) {
+        User user;
+        try {
+            user = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
+                    .build();
+        }
+
         ChatbotDao chatbotDao = new ChatbotDao();
         Chatbot chatbotFromDb = chatbotDao.findById(id);
         if (chatbotFromDb == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        
+        // admins can change everything, users can only change their own chatbots
+        if (UserRole.ADMIN == user.getUserRole() || chatbotFromDb.getUser().getId().equals(user.getId())) {
+            if (!chatbot.getChatbotName().equals(chatbotFromDb.getChatbotName())) {
+                chatbotFromDb.setChatbotName(chatbot.getChatbotName());
+                chatbotDao.update(chatbotFromDb);
+            }
 
-        if (!chatbot.getChatbotName().equals(chatbotFromDb.getChatbotName())) {
-            chatbotFromDb.setChatbotName(chatbot.getChatbotName());
-            chatbotDao.update(chatbotFromDb);
-        }
-
-        try {
+            try {
+                return Response
+                        .status(201)
+                        .entity(ToJson.toJson(chatbotFromDb, getFilterProvider()))
+                        .build();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return Response
+                        .status(500)
+                        .entity("{\"error\": \"Could not return JSON.\"}")
+                        .build();
+            }
+        } else {
             return Response
-                    .status(201)
-                    .entity(ToJson.toJson(chatbotFromDb, getFilterProvider()))
-                    .build();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return Response
-                    .status(500)
-                    .entity("{\"error\": \"Could not return JSON.\"}")
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"You are not allowed to update this chatbot.\"}")
                     .build();
         }
     }

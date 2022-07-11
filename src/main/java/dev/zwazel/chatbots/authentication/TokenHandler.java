@@ -11,6 +11,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Cookie;
 
 import java.util.Date;
@@ -116,6 +117,7 @@ public class TokenHandler {
      *
      * @param jwtCookie the cookie with the jwt token.
      * @return the user owning the token.
+     * @throws NotLoggedInException if the user is not logged in.
      * @author Zwazel
      * @since 1.4
      */
@@ -134,5 +136,19 @@ public class TokenHandler {
         }
 
         return user;
+    }
+
+    /**
+     * Gets a user by directly getting the cookie out of the request context.
+     *
+     * @param requestContext the request context.
+     * @return the user owning the token.
+     * @throws NotLoggedInException if the user is not logged in.
+     * @author Zwazel
+     * @since 1.4
+     */
+    public static User getUserFromCookie(ContainerRequestContext requestContext) throws NotLoggedInException {
+        Cookie jwtCookie = requestContext.getCookies().get(HelloApplication.getProperty("jwt.name"));
+        return getUserFromJWT(jwtCookie);
     }
 }

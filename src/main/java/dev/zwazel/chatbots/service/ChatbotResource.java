@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import dev.zwazel.chatbots.authentication.TokenHandler;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
-import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.Chatbot;
 import dev.zwazel.chatbots.classes.model.User;
@@ -97,26 +96,16 @@ public class ChatbotResource {
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createChatbot(
-            @Valid @BeanParam Chatbot chatbot
+            @Valid @BeanParam Chatbot chatbot,
+            ContainerRequestContext requestContext
     ) {
-        if ((chatbot.getUserID() == null || chatbot.getUserID().isBlank() || chatbot.getUserID().isEmpty()) &&
-                (chatbot.getUsername() == null || chatbot.getUsername().isBlank() || chatbot.getUsername().isEmpty())) {
+        User user;
+        try {
+            user = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
             return Response
-                    .status(400)
-                    .entity("{\"error\": \"userId or username must be provided\"}")
-                    .build();
-        }
-
-        UserDao userDao = new UserDao();
-        User user = (chatbot.getUserID() == null || chatbot.getUserID().isBlank() || chatbot.getUserID().isEmpty()) ?
-                userDao.findByUsername(chatbot.getUsername()) :
-                userDao.findById(chatbot.getUserID());
-
-        if (user == null) {
-            // return response with error code for user not found
-            return Response
-                    .status(404)
-                    .entity("{\"error\": \"user not found\"}")
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(e.getMessage())
                     .build();
         }
 

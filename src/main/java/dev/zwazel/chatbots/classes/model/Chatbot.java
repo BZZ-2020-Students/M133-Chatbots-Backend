@@ -105,24 +105,4 @@ public class Chatbot {
     @ToString.Exclude
     @Builder.Default
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
-
-    /**
-     * FormParam for User ID
-     *
-     * @since 1.3.0
-     */
-    @Transient
-    @FormParam("userId")
-    @dev.zwazel.chatbots.util.annotation.UUID
-    private String userID;
-
-    /**
-     * FormParam for User Name
-     *
-     * @since 1.3.0
-     */
-    @Transient
-    @Size(min = Constants.MIN_NAME_LENGTH, max = Constants.MAX_NAME_LENGTH)
-    @FormParam("username")
-    private String username;
 }

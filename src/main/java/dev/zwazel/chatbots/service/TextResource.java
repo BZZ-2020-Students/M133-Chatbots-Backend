@@ -5,7 +5,6 @@ import dev.zwazel.chatbots.classes.dao.TextDao;
 import dev.zwazel.chatbots.classes.model.Text;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -30,7 +29,7 @@ public class TextResource {
      * @author Zwazel
      * @since 1.3.0
      */
-    @RolesAllowed({"admin", "user"})
+    @RolesAllowed({"admin"})
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
@@ -68,7 +67,7 @@ public class TextResource {
      * @author Zwazel
      * @since 1.2.0
      */
-    @RolesAllowed({"admin", "user"})
+    @RolesAllowed({"admin"})
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
@@ -106,7 +105,7 @@ public class TextResource {
      * @author Zwazel
      * @since 1.1.0
      */
-    @RolesAllowed({"admin", "user"})
+    @RolesAllowed({"admin"})
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -126,7 +125,7 @@ public class TextResource {
      * @author Zwazel
      * @since 1.1.0
      */
-    @RolesAllowed({"admin", "user"})
+    @RolesAllowed({"admin"})
     @DELETE
     @Path("/delete/content/{content}")
     @Produces(MediaType.TEXT_PLAIN)

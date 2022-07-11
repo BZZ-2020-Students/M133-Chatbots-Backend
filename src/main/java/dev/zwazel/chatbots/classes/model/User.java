@@ -1,6 +1,7 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.config.Constants;
 import dev.zwazel.chatbots.util.SHA256;
@@ -29,6 +30,7 @@ import java.util.UUID;
 @Entity
 @ToString
 @JsonFilter("UserFilter")
+@JsonIgnoreProperties({"formPassword"})
 public class User {
     /**
      * User id
@@ -69,7 +71,7 @@ public class User {
      *
      * @since 0.1
      */
-    @Column(nullable = false, length = Constants.MAX_PASSWORD_LENGTH)
+    @Column(nullable = false, length = Constants.MAX_HASHED_PASSWORD_LENGTH)
     private String password;
 
     /**
@@ -110,6 +112,10 @@ public class User {
      * @since 1.4
      */
     public void setPassword() {
-        this.password = SHA256.getHexStringInstant(this.getFormPassword());
+        if (formPassword != null && !formPassword.isEmpty()) {
+            this.password = SHA256.getHexStringInstant(this.getFormPassword());
+        } else if (this.password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
     }
 }

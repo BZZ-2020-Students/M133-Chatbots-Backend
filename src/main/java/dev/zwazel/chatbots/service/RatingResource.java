@@ -184,6 +184,8 @@ public class RatingResource {
     @Path("/delete/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteRating(@PathParam("id") String id, ContainerRequestContext requestContext) {
+        System.out.println("deleteRating");
+
         User loggedInUser;
         try {
             loggedInUser = TokenHandler.getUserFromCookie(requestContext);

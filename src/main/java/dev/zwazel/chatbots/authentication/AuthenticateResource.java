@@ -49,7 +49,7 @@ public class AuthenticateResource {
                     .entity("User with username not found")
                     .build();
         }
-        
+
         if (!user.getPassword().equals(SHA256.getHexStringInstant(password))) {
             return Response
                     .status(401)

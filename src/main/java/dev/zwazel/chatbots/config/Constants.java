@@ -43,7 +43,14 @@ public class Constants {
      *
      * @since 1.2.0
      */
-    public static final int MAX_PASSWORD_LENGTH = 256;
+    public static final int MAX_PASSWORD_LENGTH = 32;
+
+    /**
+     * The max length of a hashed password
+     *
+     * @since 1.4.0
+     */
+    public static final int MAX_HASHED_PASSWORD_LENGTH = 64;
 
     /**
      * The min length of any password

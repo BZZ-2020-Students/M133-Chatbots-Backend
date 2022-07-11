@@ -143,14 +143,27 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(
             @FormParam("username") String username,
-            @FormParam("password") String password
+            @FormParam("password") String password,
+            @DefaultValue("") @FormParam("role") String userRoleParam,
+            ContainerRequestContext requestContext
     ) {
+        User loggedInUser = null;
+        try {
+            loggedInUser = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException ignored) {
+        }
+
+        UserRole userRole = UserRole.USER;
+        if (!userRoleParam.equals("") && loggedInUser != null && UserRole.ADMIN == loggedInUser.getUserRole()) {
+            userRole = UserRole.valueOf(userRoleParam);
+        }
+
         UserDao userDao = new UserDao();
-        User newUser =
-                User.builder()
-                        .username(username)
-                        .formPassword(password)
-                        .build();
+        User newUser = User.builder()
+                .username(username)
+                .formPassword(password)
+                .userRole(userRole)
+                .build();
         try {
             userDao.save(newUser);
         } catch (EntityExistsException | IllegalArgumentException e) {

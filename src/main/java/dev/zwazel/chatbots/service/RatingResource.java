@@ -317,6 +317,33 @@ public class RatingResource {
         }
     }
 
+    @RolesAllowed({"admin", "user"})
+    @GET
+    @Path("/user")
+    @Produces("application/json")
+    public Response getRatingsByLoggedInUser(ContainerRequestContext requestContext) {
+        User loggedInUser;
+        try {
+            loggedInUser = TokenHandler.getUserFromCookie(requestContext);
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                    .build();
+        }
+
+        RatingDao ratingDao = new RatingDao();
+
+        try {
+            return Response.status(200).entity(ToJson.toJson(ratingDao.findByUserId(loggedInUser.getId()), getFilterProvider())).build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
+        }
+    }
+
     /**
      * Utility method to get a filter provider for the chatbot. So that we don't get all the texts from the chatbot, and only its name and id.
      *

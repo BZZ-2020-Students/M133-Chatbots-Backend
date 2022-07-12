@@ -60,6 +60,35 @@ function setUpPage() {
         .catch(error => {
             alert(error.message);
         });
+
+    fetch("".concat(baseUrl, "/rating/user"))
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Failed to get user");
+            }
+        })
+        .then(data => {
+            const ratingCollection = document.getElementById("ratingCollection");
+            data.forEach(rating => {
+                const ratingElement = document.createElement("div");
+                ratingElement.classList.add("ratingContainer");
+                ratingElement.innerHTML = `
+                    <div class="rating-header">
+                        <h3>Rated chatbot: ${rating.chatbot.chatbotName}</h3>
+                    </div>
+                    <div class="rating-footer">
+                        <p>Is it a favourite: ${rating.favourite}</p>
+                        <p>The rating: ${rating.rating}</p>
+                    </div>
+                `;
+                ratingCollection.appendChild(ratingElement);
+            });
+        })
+        .catch(error => {
+            alert(error.message);
+        });
 }
 
 function editChatbot(chatbotId) {

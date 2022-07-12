@@ -128,7 +128,7 @@ public class TokenHandler {
         User user = userDao.findByUsername(username);
 
         if (user == null) {
-            throw new IllegalArgumentException("User not found.");
+            throw new IllegalArgumentException("User " + username + " not found.");
         }
 
         return user;

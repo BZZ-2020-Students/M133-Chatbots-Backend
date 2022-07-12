@@ -97,6 +97,14 @@ public class QuestionAnswer {
     @Builder.Default
     private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
+    public QuestionAnswerAnswer getRandomAnswer() {
+        if (questionAnswerAnswers.isEmpty()) {
+            return null;
+        }
+        int randomIndex = (int) (Math.random() * questionAnswerAnswers.size());
+        return questionAnswerAnswers.toArray(new QuestionAnswerAnswer[0])[randomIndex];
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

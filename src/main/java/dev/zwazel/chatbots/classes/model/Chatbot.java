@@ -104,4 +104,19 @@ public class Chatbot {
     @ToString.Exclude
     @Builder.Default
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
+
+    public Text getAnswer(String message) {
+        System.out.println("message = " + message);
+        for (QuestionAnswer questionAnswer : questionAnswers) {
+            for (QuestionAnswerQuestion questionAnswerQuestion : questionAnswer.getQuestionAnswerQuestions()) {
+                if (questionAnswerQuestion.getQuestion().getText().equalsIgnoreCase(message)) {
+                    return questionAnswer.getRandomAnswer().getAnswer();
+                }
+            }
+        }
+        return Text.builder()
+                .id("")
+                .text("I didn't understand that.")
+                .build();
+    }
 }

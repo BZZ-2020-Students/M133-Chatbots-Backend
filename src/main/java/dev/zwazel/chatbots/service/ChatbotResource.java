@@ -8,10 +8,10 @@ import dev.zwazel.chatbots.authentication.TokenHandler;
 import dev.zwazel.chatbots.classes.dao.ChatbotDao;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.Chatbot;
+import dev.zwazel.chatbots.classes.model.Text;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.exception.NotLoggedInException;
 import dev.zwazel.chatbots.util.json.ToJson;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -27,6 +27,8 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("/chatbot")
 public class ChatbotResource {
+
+
     /**
      * Updates a chatbot in the database.
      *
@@ -80,6 +82,35 @@ public class ChatbotResource {
             return Response
                     .status(Response.Status.UNAUTHORIZED)
                     .entity("{\"error\": \"You are not allowed to update this chatbot.\"}")
+                    .build();
+        }
+    }
+
+    @POST
+    @Path("/{id}/{message}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createChatbot(
+            @PathParam("id") String id,
+            @PathParam("message") String message
+    ) {
+        ChatbotDao chatbotDao = new ChatbotDao();
+        Chatbot chatbot = chatbotDao.findById(id);
+        if (chatbot == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        Text answer = chatbot.getAnswer(message);
+
+        try {
+            return Response
+                    .status(201)
+                    .entity(ToJson.toJson(answer))
+                    .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return Response
+                    .status(500)
+                    .entity("{\"error\": \"Could not return JSON.\"}")
                     .build();
         }
     }

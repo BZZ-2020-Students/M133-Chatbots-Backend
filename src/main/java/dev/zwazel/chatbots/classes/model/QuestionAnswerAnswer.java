@@ -9,7 +9,7 @@ import lombok.*;
 import java.util.UUID;
 
 /**
- * Model class for QuestionAnswerAnswer. Stores Answers for QuestionAnswer
+ * Model class for QuestionAnswerAnswer. Store Answers for QuestionAnswer
  *
  * @author Zwazel
  * @since 1.1.0

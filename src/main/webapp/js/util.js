@@ -11,13 +11,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("Failed to get user");
             }
         }).then(data => {
-        user = data;
-        console.log(user);
-
+        if (!data.error) {
+            user = {
+                id: data.id,
+                username: data.username,
+                role: data.userRole,
+            }
+        }
+    }).then(() => {
+        setNav();
     }).catch(error => {
         alert(error.message);
     });
+});
 
+function setNav() {
     let nav = document.getElementById("nav");
 
     if (nav) {
@@ -41,20 +49,31 @@ document.addEventListener("DOMContentLoaded", () => {
         navLink.innerHTML = "Home";
         navLinks.appendChild(navLink);
 
-        // login
-        if (user === null) {
+        const loggedIn = user !== null;
+        if (!loggedIn) {
             navLink = document.createElement("a");
             navLink.href = (index) ? "pages/login.html" : "login.html";
             navLink.innerHTML = "Login";
             navLinks.appendChild(navLink);
         } else {
             navLink = document.createElement("a");
+            navLink.href = (index) ? "pages/login.html" : "login.html";
             navLink.onclick = () => {
                 user = null;
-                console.log("Logged out");
+                fetch("".concat(baseUrl, "/auth/logout"))
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = (index) ? "index.html" : "../index.html";
+                        } else {
+                            throw new Error("Failed to logout");
+                        }
+                    })
+                    .catch(error => {
+                        alert(error.message);
+                    });
             }
             navLink.innerHTML = "Logout";
             navLinks.appendChild(navLink);
         }
     }
-});
+}

@@ -24,7 +24,8 @@ function login(event) {
             username: data.username,
             role: data.userRole,
         }
-        console.log(user);
+
+        window.location.href = "../index.html";
     }).catch(function (error) {
         alert(error.message);
     });

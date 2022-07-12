@@ -32,8 +32,9 @@ public class ChatbotResource {
     /**
      * Updates a chatbot in the database.
      *
-     * @param chatbot The chatbot to update.
-     * @param id      The id of the chatbot to update.
+     * @param chatbot        The chatbot to update.
+     * @param id             The id of the chatbot to update.
+     * @param requestContext The request context to get the logged-in user from
      * @return The updated chatbot.
      * @author Zwazel
      * @since 1.3.0
@@ -86,10 +87,19 @@ public class ChatbotResource {
         }
     }
 
+    /**
+     * Message service to send a question to a bot and get an answer from it.
+     *
+     * @param id      The id of the chatbot to use.
+     * @param message The message to send to the bot.
+     * @return The answer from the bot.
+     * @author Zwazel
+     * @since 1.4
+     */
     @POST
     @Path("/{id}/{message}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createChatbot(
+    public Response messageChatbot(
             @PathParam("id") String id,
             @PathParam("message") String message
     ) {
@@ -118,7 +128,8 @@ public class ChatbotResource {
     /**
      * Creates a new Chatbot
      *
-     * @param chatbot the chatbot to create
+     * @param chatbot        the chatbot to create
+     * @param requestContext the request context to find the logged in user.
      * @return the newly created chatbot.
      * @author Zwazel
      * @since 1.2.0
@@ -169,7 +180,8 @@ public class ChatbotResource {
     /**
      * Deletes a chatbot by its id.
      *
-     * @param id the id of the chatbot
+     * @param id             the id of the chatbot
+     * @param requestContext the request context to find the logged-in user.
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
@@ -212,7 +224,8 @@ public class ChatbotResource {
     /**
      * Deletes a chatbot by its name.
      *
-     * @param name the name of the chatbot
+     * @param name           the name of the chatbot
+     * @param requestContext the request context to find the logged-in user.
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
@@ -293,6 +306,14 @@ public class ChatbotResource {
         }
     }
 
+    /**
+     * Get all chatbots of a user.
+     *
+     * @param requestContext the request context to find the logged in user.
+     * @return the chatbots
+     * @author Zwazel
+     * @since 1.4
+     */
     @RolesAllowed({"admin", "user"})
     @GET
     @Produces("application/json")

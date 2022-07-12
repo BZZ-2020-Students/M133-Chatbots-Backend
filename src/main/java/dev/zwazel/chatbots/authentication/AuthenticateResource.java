@@ -116,6 +116,7 @@ public class AuthenticateResource {
     /**
      * Checks if a user is logged in and what role he has.
      *
+     * @param requestContext the request context, used to get the cookie with the token to get the user that is logged in
      * @return a response with the needed information about the user and a status code depending on the result
      * @author Zwazel
      * @since 0.1
@@ -148,6 +149,8 @@ public class AuthenticateResource {
     /**
      * Utility method for testing purposes. Tests if the user is logged in and has admin rights.
      *
+     * @param requestContext the request context, used to get the cookie with the token to get the user that is logged in
+     * @return a string explaining if the user is logged in and has admin rights or not
      * @author Zwazel
      * @since 0.1
      */
@@ -173,6 +176,8 @@ public class AuthenticateResource {
     /**
      * Utility method for testing purposes. Tests if the user is logged in and has normal user rights.
      *
+     * @param requestContext the request context, used to get the cookie with the token to get the user that is logged in
+     * @return a string explaining if the user is logged in and has normal user rights or not
      * @author Zwazel
      * @since 0.1
      */

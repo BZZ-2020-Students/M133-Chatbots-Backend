@@ -52,8 +52,9 @@ public class UserResource {
     /**
      * Updates an already existing user in the database.
      *
-     * @param id   The id of the user to update.
-     * @param user The user to update.
+     * @param id             The id of the user to update.
+     * @param user           The user to update.
+     * @param requestContext The request context to get the logged-in user from
      * @return The updated user.
      * @author Zwazel
      * @since 1.3.0
@@ -132,8 +133,10 @@ public class UserResource {
     /**
      * Creates a new User object and returns it.
      *
-     * @param username The username of the User object.
-     * @param password The password of the User object.
+     * @param username       The username of the User object.
+     * @param password       The password of the User object.
+     * @param requestContext The request context to get the logged-in user from
+     * @param userRoleParam  The user role of the User object.
      * @return The created user object if successful.
      * @author Zwazel
      * @since 1.2.0
@@ -190,7 +193,8 @@ public class UserResource {
     /**
      * Deletes a User by its id.
      *
-     * @param id the id of the User to delete
+     * @param id             the id of the User to delete
+     * @param requestContext The request context to get the logged-in user from
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
@@ -234,7 +238,8 @@ public class UserResource {
     /**
      * Deletes a User by its name.
      *
-     * @param username the username of the User to delete
+     * @param username       the username of the User to delete
+     * @param requestContext The request context to get the logged-in user from
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0

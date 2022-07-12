@@ -31,8 +31,9 @@ public class RatingResource {
     /**
      * Updates an already existing rating in the database.
      *
-     * @param id     The id of the rating to update.
-     * @param rating The rating to update.
+     * @param id             The id of the rating to update.
+     * @param rating         The rating to update.
+     * @param requestContext The request context to get the logged-in user from.
      * @return The updated rating.
      * @author Zwazel
      * @since 1.3.0
@@ -97,7 +98,8 @@ public class RatingResource {
     /**
      * Creates a new rating for a chatbot. A user can only rate a chatbot once.
      *
-     * @param rating The rating to create.
+     * @param rating         The rating to create.
+     * @param requestContext The request context to get the logged-in user from.
      * @return The created rating.
      * @author Zwazel
      * @since 1.3.0
@@ -174,7 +176,8 @@ public class RatingResource {
     /**
      * Deletes a rating by its id.
      *
-     * @param id the id of the rating
+     * @param id             the id of the rating
+     * @param requestContext The request context to get the logged-in user from.
      * @return 200 if successful
      * @author Zwazel
      * @since 1.1.0
@@ -317,6 +320,14 @@ public class RatingResource {
         }
     }
 
+    /**
+     * Gets all ratings made by the logged-in user.
+     *
+     * @param requestContext The request context to get the logged-in user from.
+     * @return all ratings made by the logged-in user
+     * @author Zwazel
+     * @since 1.4
+     */
     @RolesAllowed({"admin", "user"})
     @GET
     @Path("/user")

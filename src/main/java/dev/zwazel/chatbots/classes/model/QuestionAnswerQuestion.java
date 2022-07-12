@@ -1,7 +1,6 @@
 package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import dev.zwazel.chatbots.config.Constants;
 import jakarta.persistence.*;
 import jakarta.ws.rs.FormParam;

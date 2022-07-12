@@ -105,6 +105,14 @@ public class Chatbot {
     @Builder.Default
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
+    /**
+     * Gets an answer accordingly to a question
+     *
+     * @param message the message to get an answer for.
+     * @return the answer to the question. if no answer is found, the default answer is returned.
+     * @author Zwazel
+     * @since 1.4
+     */
     public Text getAnswer(String message) {
         for (QuestionAnswer questionAnswer : questionAnswers) {
             QuestionAnswerAnswer questionAnswerAnswer = questionAnswer.getRandomAnswerWithQuestion(message);

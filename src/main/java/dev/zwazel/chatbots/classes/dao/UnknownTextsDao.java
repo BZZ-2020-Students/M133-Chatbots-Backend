@@ -5,6 +5,12 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
+/**
+ * DAO for the ChatbotUnknownTexts class.
+ *
+ * @author Zwazel
+ * @since 1.4
+ */
 public class UnknownTextsDao extends Dao<ChatbotUnknownTexts, String> {
     /**
      * Default constructor.
@@ -28,6 +34,14 @@ public class UnknownTextsDao extends Dao<ChatbotUnknownTexts, String> {
         super.save(chatbotUnknownTexts);
     }
 
+    /**
+     * Finds a chatbotUnknownTexts by its text.
+     *
+     * @param text the text to find the chatbotUnknownTexts for
+     * @return the chatbotUnknownTexts with the given text or null if none was found
+     * @author Zwazel
+     * @since 1.4
+     */
     public ChatbotUnknownTexts findByText(String text) {
         EntityManager entityManager = this.getEntityManagerFactory().createEntityManager();
 

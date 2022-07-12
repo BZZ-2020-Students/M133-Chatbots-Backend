@@ -99,6 +99,14 @@ public class QuestionAnswer {
     @Builder.Default
     private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
+    /**
+     * gets a random answer according to the given question.
+     *
+     * @param question the question to get the answer for
+     * @return a random answer according to the given question
+     * @author Zwazel
+     * @since 1.4.0
+     */
     public QuestionAnswerAnswer getRandomAnswerWithQuestion(String question) {
         for (QuestionAnswerQuestion questionAnswerQuestion : getQuestionAnswerQuestions()) {
             if (questionAnswerQuestion.getQuestion().getText().equalsIgnoreCase(question)) {
@@ -130,6 +138,13 @@ public class QuestionAnswer {
         return null;
     }
 
+    /**
+     * Get a random answer
+     *
+     * @return a random answer
+     * @author Zwazel
+     * @since 1.4.0
+     */
     public QuestionAnswerAnswer getRandomAnswer() {
         if (questionAnswerAnswers.isEmpty()) {
             return null;

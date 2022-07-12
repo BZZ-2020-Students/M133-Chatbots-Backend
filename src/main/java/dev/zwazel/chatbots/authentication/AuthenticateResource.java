@@ -131,7 +131,7 @@ public class AuthenticateResource {
         } catch (NotLoggedInException e) {
             return Response
                     .status(201)
-                    .entity(e.getMessage())
+                    .entity("{\"error\":\"" + e.getMessage() + "\"}")
                     .build();
         }
 

@@ -1,0 +1,35 @@
+body {
+    width: 100%;
+    margin: 0;
+}
+
+#chatContainer {
+    height: 65vh;
+    overflow: auto;
+    /* As soon as needed, show a scrollbar */
+    overflow-x: hidden;
+    border: 1px solid;
+    margin: 10px;
+}
+
+#chatContainer #chatOutPut .message-container {
+    border: 1px solid;
+    /* NOTE: add a small and thin border */
+    padding: 10px;
+    min-height: 50px;
+    vertical-align: middle;
+}
+
+#chatContainer #chatOutPut .message-container.user {
+    text-align: right;
+    background-color: #A36650;
+    color: #ffffff;
+}
+
+nav {
+    background-color: #d0c1bc;
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 50px;
+    width: 100%;
+}

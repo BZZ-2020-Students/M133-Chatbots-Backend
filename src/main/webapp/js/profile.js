@@ -27,8 +27,6 @@ function createChatbot(event) {
 }
 
 function setUpPage() {
-    const username = document.getElementById("username");
-
     const chatbotCollection = document.getElementById("chatbotCollection");
     fetch("".concat(baseUrl, "/chatbot/allFromUser"))
         .then(response => {
@@ -49,6 +47,11 @@ function setUpPage() {
                     <div class="chatbot-footer">
                         <button onclick="loadChatbot('${chatbot.id}')">Start chatting</button>
                         <button onclick="deleteChatbot('${chatbot.id}')">Delete</button>
+                        <div id="updateChatbot-${chatbot.id}">
+                            <label for="chatbotName">Edit Chatbot Name</label>
+                            <input type="text" id="chatbotName-${chatbot.id}" name="name" value="${chatbot.chatbotName}" ">
+                            <button type="button" onclick="editChatbot('${chatbot.id}')">Update</button>
+                        </div>
                     </div>
                 `;
                 chatbotCollection.appendChild(chatbotElement);
@@ -57,6 +60,26 @@ function setUpPage() {
         .catch(error => {
             alert(error.message);
         });
+}
+
+function editChatbot(chatbotId) {
+    const inputField = document.getElementById("chatbotName-" + chatbotId);
+    const chatbotName = inputField.value;
+    const data = new URLSearchParams();
+    data.append("name", chatbotName);
+
+    fetch("".concat(baseUrl, "/chatbot/update/", chatbotId), {
+        method: "PUT",
+        body: data
+    }).then(response => {
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            throw new Error("Failed to update chatbot");
+        }
+    }).catch(error => {
+        alert(error.message);
+    });
 }
 
 function loadChatbot(chatbotId) {

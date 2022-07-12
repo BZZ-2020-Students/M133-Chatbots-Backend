@@ -56,6 +56,7 @@ public class ChatbotResource {
         ChatbotDao chatbotDao = new ChatbotDao();
         Chatbot chatbotFromDb = chatbotDao.findById(id);
         if (chatbotFromDb == null) {
+            System.out.println("Chatbot not found");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 

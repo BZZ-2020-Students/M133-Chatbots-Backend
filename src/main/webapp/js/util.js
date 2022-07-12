@@ -68,7 +68,7 @@ function setNav() {
                 fetch("".concat(baseUrl, "/auth/logout"))
                     .then(response => {
                         if (response.ok) {
-                            window.location.href = (index) ? "index.html" : "../index.html";
+                            window.location.href = (index) ? "pages/login.html" : "login.html";
                         } else {
                             throw new Error("Failed to logout");
                         }

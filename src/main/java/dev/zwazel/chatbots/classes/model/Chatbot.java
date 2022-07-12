@@ -106,7 +106,6 @@ public class Chatbot {
     private Set<ChatbotUnknownTexts> chatbotUnknownTexts = new LinkedHashSet<>();
 
     public Text getAnswer(String message) {
-        System.out.println("message = " + message);
         for (QuestionAnswer questionAnswer : questionAnswers) {
             QuestionAnswerAnswer questionAnswerAnswer = questionAnswer.getRandomAnswerWithQuestion(message);
             if (questionAnswerAnswer != null) {
@@ -115,8 +114,8 @@ public class Chatbot {
         }
 
         return Text.builder()
-                .id("I didn't understand that.")
-                .text("")
+                .id("")
+                .text("I didn't understand that.")
                 .build();
     }
 }

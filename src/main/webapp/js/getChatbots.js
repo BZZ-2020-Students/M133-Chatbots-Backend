@@ -11,12 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }).then(data => {
         data.forEach(chatbot => {
                 let chatbotElement = document.createElement("div");
-                const chatbotId = chatbot.id;
-                chatbotElement.className = "chatbot";
+                chatbotElement.className = "chatbotContainer";
                 chatbotElement.innerHTML = `
                     <h2>${chatbot.chatbotName}</h2>
                     <p>${chatbot.user.username}</p>
-                    <button onclick="loadChatbot('${chatbotId}')">Start chatting</button>
+                    <button onclick="loadChatbot('${chatbot.id}')">Start chatting</button>
                 `;
                 chatbotCollection.appendChild(chatbotElement);
             }

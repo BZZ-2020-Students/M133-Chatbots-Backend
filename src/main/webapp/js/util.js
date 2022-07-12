@@ -74,6 +74,18 @@ function setNav() {
             }
             navLink.innerHTML = "Logout";
             navLinks.appendChild(navLink);
+
+            navLink = document.createElement("a");
+            navLink.href = (index) ? "pages/profile.html" : "profile.html";
+            navLink.innerHTML = "Profile";
+            navLinks.appendChild(navLink);
+
+            if (user.role === "ADMIN") {
+                navLink = document.createElement("a");
+                navLink.href = (index) ? "pages/admin.html" : "admin.html";
+                navLink.innerHTML = "Admin";
+                navLinks.appendChild(navLink);
+            }
         }
     }
 }

@@ -293,6 +293,31 @@ public class ChatbotResource {
         }
     }
 
+    @RolesAllowed({"admin", "user"})
+    @GET
+    @Produces("application/json")
+    @Path("/allFromUser")
+    public Response getAllChatbotsOfAUser(ContainerRequestContext requestContext) {
+        try {
+            User user = TokenHandler.getUserFromCookie(requestContext);
+
+            return Response
+                    .status(200)
+                    .entity(ToJson.toJson(new ChatbotDao().findByUserId(user.getId()), getFilterProvider()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
+        } catch (NotLoggedInException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                    .build();
+        }
+    }
+
     /**
      * Get the Chatbot by its name.
      *

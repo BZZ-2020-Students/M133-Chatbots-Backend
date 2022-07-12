@@ -25,7 +25,7 @@ function login(event) {
             role: data.userRole,
         }
 
-        window.location.href = "../index.html";
+        window.location.href = "profile.html";
     }).catch(function (error) {
         alert(error.message);
     });

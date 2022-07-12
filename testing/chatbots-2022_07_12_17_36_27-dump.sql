@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `chatbot`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `chatbot` (
-  `id` varchar(255) NOT NULL,
-  `CHATBOTNAME` varchar(255) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `CHATBOTNAME` varchar(32) NOT NULL,
   `CREATEDAT` date DEFAULT NULL,
-  `owner_id` varchar(255) DEFAULT NULL,
+  `user_id` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_CHATBOT_owner_id` (`owner_id`),
-  CONSTRAINT `FK_CHATBOT_owner_id` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
+  KEY `FK_CHATBOT_user_id` (`user_id`),
+  CONSTRAINT `FK_CHATBOT_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,35 +39,38 @@ CREATE TABLE `chatbot` (
 
 LOCK TABLES `chatbot` WRITE;
 /*!40000 ALTER TABLE `chatbot` DISABLE KEYS */;
-INSERT INTO `chatbot` VALUES ('809dca09-d7e8-4afa-a0e0-456c8db50997','MRVN','2022-05-20','4fbf34d6-352d-4d8e-b357-af2155da8616');
+INSERT INTO `chatbot` VALUES ('35b8b2f5-8bf3-438f-b7eb-222820298b2f','MRVN','2022-07-12','5275df08-3b68-4bc1-923c-c5cfb9296492');
 /*!40000 ALTER TABLE `chatbot` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `chatbot_unknowntexts`
+-- Table structure for table `chatbotunknowntexts`
 --
 
-DROP TABLE IF EXISTS `chatbot_unknowntexts`;
+DROP TABLE IF EXISTS `chatbotunknowntexts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `chatbot_unknowntexts` (
-  `chatbot_id` varchar(255) NOT NULL,
-  `unknownTexts_id` varchar(255) NOT NULL,
-  PRIMARY KEY (`chatbot_id`,`unknownTexts_id`),
-  KEY `FK_Chatbot_unknownTexts_unknownTexts_id` (`unknownTexts_id`),
-  CONSTRAINT `FK_Chatbot_unknownTexts_chatbot_id` FOREIGN KEY (`chatbot_id`) REFERENCES `chatbot` (`id`),
-  CONSTRAINT `FK_Chatbot_unknownTexts_unknownTexts_id` FOREIGN KEY (`unknownTexts_id`) REFERENCES `text` (`id`)
+CREATE TABLE `chatbotunknowntexts` (
+  `id` varchar(36) NOT NULL,
+  `AMOUNTUSED` int(11) DEFAULT NULL,
+  `chatbot_id` varchar(36) DEFAULT NULL,
+  `unknown_text_id` varchar(36) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_CHATBOTUNKNOWNTEXTS_chatbot_id` (`chatbot_id`),
+  KEY `FK_CHATBOTUNKNOWNTEXTS_unknown_text_id` (`unknown_text_id`),
+  CONSTRAINT `FK_CHATBOTUNKNOWNTEXTS_chatbot_id` FOREIGN KEY (`chatbot_id`) REFERENCES `chatbot` (`id`),
+  CONSTRAINT `FK_CHATBOTUNKNOWNTEXTS_unknown_text_id` FOREIGN KEY (`unknown_text_id`) REFERENCES `text` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `chatbot_unknowntexts`
+-- Dumping data for table `chatbotunknowntexts`
 --
 
-LOCK TABLES `chatbot_unknowntexts` WRITE;
-/*!40000 ALTER TABLE `chatbot_unknowntexts` DISABLE KEYS */;
-INSERT INTO `chatbot_unknowntexts` VALUES ('809dca09-d7e8-4afa-a0e0-456c8db50997','16a07c29-d5ce-48dd-9d13-0b6bf15f62b2'),('809dca09-d7e8-4afa-a0e0-456c8db50997','b8e9f175-120d-4258-8a0f-2731c62ab479');
-/*!40000 ALTER TABLE `chatbot_unknowntexts` ENABLE KEYS */;
+LOCK TABLES `chatbotunknowntexts` WRITE;
+/*!40000 ALTER TABLE `chatbotunknowntexts` DISABLE KEYS */;
+INSERT INTO `chatbotunknowntexts` VALUES ('4a45d8ec-32e3-41a9-94db-25503261d2e2',0,'35b8b2f5-8bf3-438f-b7eb-222820298b2f','c4d7c037-8672-442c-95b8-ed8e2f5688e8'),('cdd44922-3592-46e7-95c7-6b9c1bde48e0',0,'35b8b2f5-8bf3-438f-b7eb-222820298b2f','8c99b9c9-86c4-4211-bf12-90e2a997ca23');
+/*!40000 ALTER TABLE `chatbotunknowntexts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -78,8 +81,8 @@ DROP TABLE IF EXISTS `questionanswer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `questionanswer` (
-  `id` varchar(255) NOT NULL,
-  `chatbot_id` varchar(255) DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `chatbot_id` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_QUESTIONANSWER_chatbot_id` (`chatbot_id`),
   CONSTRAINT `FK_QUESTIONANSWER_chatbot_id` FOREIGN KEY (`chatbot_id`) REFERENCES `chatbot` (`id`)
@@ -92,62 +95,68 @@ CREATE TABLE `questionanswer` (
 
 LOCK TABLES `questionanswer` WRITE;
 /*!40000 ALTER TABLE `questionanswer` DISABLE KEYS */;
-INSERT INTO `questionanswer` VALUES ('4c09a663-01db-4fa1-8559-3e33eaeb215d','809dca09-d7e8-4afa-a0e0-456c8db50997');
+INSERT INTO `questionanswer` VALUES ('6d7e945a-afb3-4046-b42e-d8ceeb7d98d5','35b8b2f5-8bf3-438f-b7eb-222820298b2f');
 /*!40000 ALTER TABLE `questionanswer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `questionanswer_answers`
+-- Table structure for table `questionansweranswer`
 --
 
-DROP TABLE IF EXISTS `questionanswer_answers`;
+DROP TABLE IF EXISTS `questionansweranswer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `questionanswer_answers` (
-  `questionAnswer_id` varchar(255) NOT NULL,
-  `answers_id` varchar(255) NOT NULL,
-  PRIMARY KEY (`questionAnswer_id`,`answers_id`),
-  KEY `FK_QuestionAnswer_answers_answers_id` (`answers_id`),
-  CONSTRAINT `FK_QuestionAnswer_answers_answers_id` FOREIGN KEY (`answers_id`) REFERENCES `text` (`id`),
-  CONSTRAINT `FK_QuestionAnswer_answers_questionAnswer_id` FOREIGN KEY (`questionAnswer_id`) REFERENCES `questionanswer` (`id`)
+CREATE TABLE `questionansweranswer` (
+  `id` varchar(36) NOT NULL,
+  `AMOUNTUSED` int(11) DEFAULT NULL,
+  `answer_id` varchar(36) DEFAULT NULL,
+  `question_answer_id` varchar(36) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_QUESTIONANSWERANSWER_answer_id` (`answer_id`),
+  KEY `FK_QUESTIONANSWERANSWER_question_answer_id` (`question_answer_id`),
+  CONSTRAINT `FK_QUESTIONANSWERANSWER_answer_id` FOREIGN KEY (`answer_id`) REFERENCES `text` (`id`),
+  CONSTRAINT `FK_QUESTIONANSWERANSWER_question_answer_id` FOREIGN KEY (`question_answer_id`) REFERENCES `questionanswer` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `questionanswer_answers`
+-- Dumping data for table `questionansweranswer`
 --
 
-LOCK TABLES `questionanswer_answers` WRITE;
-/*!40000 ALTER TABLE `questionanswer_answers` DISABLE KEYS */;
-INSERT INTO `questionanswer_answers` VALUES ('4c09a663-01db-4fa1-8559-3e33eaeb215d','0ee29235-d6f4-4c4a-937c-3c09f321ac43'),('4c09a663-01db-4fa1-8559-3e33eaeb215d','3d1afe5c-264c-43bf-b55e-9b8f52193d89'),('4c09a663-01db-4fa1-8559-3e33eaeb215d','dbc80255-14e5-4776-851d-1a0309e4d945');
-/*!40000 ALTER TABLE `questionanswer_answers` ENABLE KEYS */;
+LOCK TABLES `questionansweranswer` WRITE;
+/*!40000 ALTER TABLE `questionansweranswer` DISABLE KEYS */;
+INSERT INTO `questionansweranswer` VALUES ('4b676ea1-b4d2-4886-9546-56daaef63475',0,'ba723493-455e-431e-82a5-82fd4fcedbd4','6d7e945a-afb3-4046-b42e-d8ceeb7d98d5'),('9fe803c9-c63e-415e-97b9-09311e661e2a',0,'4ee7e06e-bd67-491e-ad15-b74803ac7d27','6d7e945a-afb3-4046-b42e-d8ceeb7d98d5'),('b881d514-4904-447f-afdb-431403552874',0,'fd6a338b-fbd4-4c41-ba1f-5999c68fc9bc','6d7e945a-afb3-4046-b42e-d8ceeb7d98d5');
+/*!40000 ALTER TABLE `questionansweranswer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `questionanswer_questions`
+-- Table structure for table `questionanswerquestion`
 --
 
-DROP TABLE IF EXISTS `questionanswer_questions`;
+DROP TABLE IF EXISTS `questionanswerquestion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `questionanswer_questions` (
-  `questionAnswer_id` varchar(255) NOT NULL,
-  `questions_id` varchar(255) NOT NULL,
-  PRIMARY KEY (`questionAnswer_id`,`questions_id`),
-  KEY `FK_QuestionAnswer_questions_questions_id` (`questions_id`),
-  CONSTRAINT `FK_QuestionAnswer_questions_questionAnswer_id` FOREIGN KEY (`questionAnswer_id`) REFERENCES `questionanswer` (`id`),
-  CONSTRAINT `FK_QuestionAnswer_questions_questions_id` FOREIGN KEY (`questions_id`) REFERENCES `text` (`id`)
+CREATE TABLE `questionanswerquestion` (
+  `id` varchar(36) NOT NULL,
+  `AMOUNTUSED` int(11) DEFAULT NULL,
+  `question_id` varchar(36) DEFAULT NULL,
+  `question_answer_id` varchar(36) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_QUESTIONANSWERQUESTION_question_answer_id` (`question_answer_id`),
+  KEY `FK_QUESTIONANSWERQUESTION_question_id` (`question_id`),
+  CONSTRAINT `FK_QUESTIONANSWERQUESTION_question_answer_id` FOREIGN KEY (`question_answer_id`) REFERENCES `questionanswer` (`id`),
+  CONSTRAINT `FK_QUESTIONANSWERQUESTION_question_id` FOREIGN KEY (`question_id`) REFERENCES `text` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `questionanswer_questions`
+-- Dumping data for table `questionanswerquestion`
 --
 
-LOCK TABLES `questionanswer_questions` WRITE;
-/*!40000 ALTER TABLE `questionanswer_questions` DISABLE KEYS */;
-INSERT INTO `questionanswer_questions` VALUES ('4c09a663-01db-4fa1-8559-3e33eaeb215d','1b09115d-88fb-409e-af1a-317add8b3ceb'),('4c09a663-01db-4fa1-8559-3e33eaeb215d','22638698-3a77-41ce-a752-9fab6284ad09'),('4c09a663-01db-4fa1-8559-3e33eaeb215d','d633cd2b-01e2-4654-b7b5-fe1ae3849680');
-/*!40000 ALTER TABLE `questionanswer_questions` ENABLE KEYS */;
+LOCK TABLES `questionanswerquestion` WRITE;
+/*!40000 ALTER TABLE `questionanswerquestion` DISABLE KEYS */;
+INSERT INTO `questionanswerquestion` VALUES ('97b57b62-fa09-4736-a2fd-99268f7eb9b6',0,'62991c82-1fa2-4c0f-a678-32f5f4cc3e44','6d7e945a-afb3-4046-b42e-d8ceeb7d98d5'),('f3d6b772-a11f-4f33-8904-c74c5dd9e8cd',0,'f4cade77-db22-45f1-8aa2-f7e18a80901e','6d7e945a-afb3-4046-b42e-d8ceeb7d98d5'),('f897ccee-e2da-4687-b705-9b7a9324e017',0,'1bdfb106-3010-4e46-82bd-4241aa8b21a6','6d7e945a-afb3-4046-b42e-d8ceeb7d98d5');
+/*!40000 ALTER TABLE `questionanswerquestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -158,11 +167,11 @@ DROP TABLE IF EXISTS `rating`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rating` (
-  `id` varchar(255) NOT NULL,
+  `id` varchar(36) NOT NULL,
   `FAVOURITE` tinyint(1) DEFAULT 0,
   `RATING` varchar(255) DEFAULT NULL,
-  `chatbot_id` varchar(255) DEFAULT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
+  `chatbot_id` varchar(36) DEFAULT NULL,
+  `user_id` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_RATING_chatbot_id` (`chatbot_id`),
   KEY `FK_RATING_user_id` (`user_id`),
@@ -177,7 +186,7 @@ CREATE TABLE `rating` (
 
 LOCK TABLES `rating` WRITE;
 /*!40000 ALTER TABLE `rating` DISABLE KEYS */;
-INSERT INTO `rating` VALUES ('88a3a2c4-a2a9-4463-a3d2-da78317e2e05',0,'UPVOTE','809dca09-d7e8-4afa-a0e0-456c8db50997','4fbf34d6-352d-4d8e-b357-af2155da8616');
+INSERT INTO `rating` VALUES ('3d843559-0738-4961-9a24-bdffe250b710',1,'UPVOTE','35b8b2f5-8bf3-438f-b7eb-222820298b2f','5275df08-3b68-4bc1-923c-c5cfb9296492');
 /*!40000 ALTER TABLE `rating` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,9 +222,8 @@ DROP TABLE IF EXISTS `text`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `text` (
-  `id` varchar(255) NOT NULL,
-  `AMOUNTUSED` int(11) DEFAULT NULL,
-  `TEXT` varchar(255) DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `text` varchar(1024) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -226,7 +234,7 @@ CREATE TABLE `text` (
 
 LOCK TABLES `text` WRITE;
 /*!40000 ALTER TABLE `text` DISABLE KEYS */;
-INSERT INTO `text` VALUES ('0ee29235-d6f4-4c4a-937c-3c09f321ac43',0,'Answer 1'),('16a07c29-d5ce-48dd-9d13-0b6bf15f62b2',0,'Unknown Text 1'),('1b09115d-88fb-409e-af1a-317add8b3ceb',0,'Question 3'),('22638698-3a77-41ce-a752-9fab6284ad09',0,'Question 1'),('3d1afe5c-264c-43bf-b55e-9b8f52193d89',0,'Answer 2'),('b8e9f175-120d-4258-8a0f-2731c62ab479',0,'Unknown Text 2'),('d633cd2b-01e2-4654-b7b5-fe1ae3849680',0,'Question 2'),('dbc80255-14e5-4776-851d-1a0309e4d945',0,'Answer 3');
+INSERT INTO `text` VALUES ('1bdfb106-3010-4e46-82bd-4241aa8b21a6','Question 3'),('4ee7e06e-bd67-491e-ad15-b74803ac7d27','Answer 1'),('62991c82-1fa2-4c0f-a678-32f5f4cc3e44','Question 1'),('8c99b9c9-86c4-4211-bf12-90e2a997ca23','Unknown Text 1'),('ba723493-455e-431e-82a5-82fd4fcedbd4','Answer 3'),('c4d7c037-8672-442c-95b8-ed8e2f5688e8','Unknown Text 2'),('f4cade77-db22-45f1-8aa2-f7e18a80901e','Question 2'),('fd6a338b-fbd4-4c41-ba1f-5999c68fc9bc','Answer 2');
 /*!40000 ALTER TABLE `text` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,10 +246,10 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` varchar(255) NOT NULL,
-  `PASSWORD` varchar(255) DEFAULT NULL,
+  `id` varchar(36) NOT NULL,
+  `PASSWORD` varchar(64) NOT NULL,
   `USERROLE` varchar(255) DEFAULT NULL,
-  `USERNAME` varchar(255) DEFAULT NULL,
+  `USERNAME` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -252,7 +260,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('4fbf34d6-352d-4d8e-b357-af2155da8616','admin','ADMIN','admin'),('b4a168ab-0edc-4206-9fe3-4a88d33dde8d','user','USER','user');
+INSERT INTO `user` VALUES ('5275df08-3b68-4bc1-923c-c5cfb9296492','64f52a3d3fabe6c658849fb3dbda3a8104e0bbb823ddee7940d8797d3d4203c1','USER','user'),('8d300e16-39f0-4a74-9bf3-e8c93e27e528','64f52a3d3fabe6c658849fb3dbda3a8104e0bbb823ddee7940d8797d3d4203c1','ADMIN','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -265,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-20 16:31:02
+-- Dump completed on 2022-07-12 17:36:27

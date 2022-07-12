@@ -1,8 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("createChatbotForm").addEventListener("submit", createChatbot);
+
     setUpPage();
 });
 
+function createChatbot(event) {
+    event.preventDefault();
+
+    const createChatbotForm = document.getElementById("createChatbotForm");
+    const formData = new FormData(createChatbotForm);
+    const data = new URLSearchParams(formData);
+
+    fetch("".concat(baseUrl, "/chatbot/create"), {
+        method: "POST",
+        body: data
+    }).then(response => {
+        if (response.ok) {
+            alert("Chatbot created");
+            window.location.reload();
+        } else {
+            throw new Error("Failed to create chatbot");
+        }
+    }).catch(error => {
+        alert(error.message);
+    });
+
+}
+
 function setUpPage() {
+    const username = document.getElementById("username");
+
     const chatbotCollection = document.getElementById("chatbotCollection");
     fetch("".concat(baseUrl, "/chatbot/allFromUser"))
         .then(response => {

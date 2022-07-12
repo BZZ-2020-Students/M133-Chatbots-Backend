@@ -157,7 +157,7 @@ public class Dao<T, I extends Serializable> {
      * @since 0.3
      */
     public T findBy(String field, Object value) {
-        return findBy(field, value, true);
+        return findBy(field, value, false);
     }
 
     /**

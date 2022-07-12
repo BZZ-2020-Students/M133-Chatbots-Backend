@@ -108,15 +108,15 @@ public class Chatbot {
     public Text getAnswer(String message) {
         System.out.println("message = " + message);
         for (QuestionAnswer questionAnswer : questionAnswers) {
-            for (QuestionAnswerQuestion questionAnswerQuestion : questionAnswer.getQuestionAnswerQuestions()) {
-                if (questionAnswerQuestion.getQuestion().getText().equalsIgnoreCase(message)) {
-                    return questionAnswer.getRandomAnswer().getAnswer();
-                }
+            QuestionAnswerAnswer questionAnswerAnswer = questionAnswer.getRandomAnswerWithQuestion(message);
+            if (questionAnswerAnswer != null) {
+                return questionAnswerAnswer.getAnswer();
             }
         }
+
         return Text.builder()
-                .id("")
-                .text("I didn't understand that.")
+                .id("I didn't understand that.")
+                .text("")
                 .build();
     }
 }

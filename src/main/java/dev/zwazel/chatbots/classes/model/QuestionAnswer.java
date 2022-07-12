@@ -2,6 +2,8 @@ package dev.zwazel.chatbots.classes.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import dev.zwazel.chatbots.classes.dao.Dao;
+import dev.zwazel.chatbots.classes.dao.UnknownTextsDao;
 import dev.zwazel.chatbots.config.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -97,12 +99,49 @@ public class QuestionAnswer {
     @Builder.Default
     private Set<QuestionAnswerAnswer> questionAnswerAnswers = new LinkedHashSet<>();
 
+    public QuestionAnswerAnswer getRandomAnswerWithQuestion(String question) {
+        for (QuestionAnswerQuestion questionAnswerQuestion : getQuestionAnswerQuestions()) {
+            if (questionAnswerQuestion.getQuestion().getText().equalsIgnoreCase(question)) {
+                questionAnswerQuestion.setAmountUsed(questionAnswerQuestion.getAmountUsed() + 1);
+                Dao<QuestionAnswerQuestion, String> questionAnswerQuestionDao = new Dao<>(QuestionAnswerQuestion.class);
+                questionAnswerQuestionDao.update(questionAnswerQuestion);
+
+                return getRandomAnswer();
+            }
+        }
+
+        ChatbotUnknownTexts chatbotUnknownText = ChatbotUnknownTexts.builder()
+                .chatbot(chatbot)
+                .unknownText(Text.builder()
+                        .text(question)
+                        .build())
+                .amountUsed(1)
+                .build();
+        UnknownTextsDao unknownTextsDao = new UnknownTextsDao();
+        ChatbotUnknownTexts alreadyExisting = unknownTextsDao.findByText(question);
+
+        if (alreadyExisting != null) {
+            alreadyExisting.setAmountUsed(alreadyExisting.getAmountUsed() + 1);
+            unknownTextsDao.update(alreadyExisting);
+        } else {
+            unknownTextsDao.save(chatbotUnknownText);
+        }
+
+        return null;
+    }
+
     public QuestionAnswerAnswer getRandomAnswer() {
         if (questionAnswerAnswers.isEmpty()) {
             return null;
         }
         int randomIndex = (int) (Math.random() * questionAnswerAnswers.size());
-        return questionAnswerAnswers.toArray(new QuestionAnswerAnswer[0])[randomIndex];
+        QuestionAnswerAnswer questionAnswerAnswer = questionAnswerAnswers.toArray(new QuestionAnswerAnswer[0])[randomIndex];
+        questionAnswerAnswer.setAmountUsed(questionAnswerAnswer.getAmountUsed() + 1);
+
+        Dao<QuestionAnswerAnswer, String> dao = new Dao<>(QuestionAnswerAnswer.class);
+        dao.update(questionAnswerAnswer);
+
+        return questionAnswerAnswer;
     }
 
     @Override

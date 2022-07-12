@@ -44,7 +44,7 @@ public class HelloApplication extends Application {
      *
      * @since 0.2
      */
-    public static final String defaultCorsAllowedOrigins = "http://localhost:3000";
+    public static final String defaultCorsAllowedOrigins = "http://localhost:63342";
 
     /**
      * The properties of this application

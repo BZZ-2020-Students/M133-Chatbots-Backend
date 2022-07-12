@@ -6,8 +6,6 @@ import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.ext.Provider;
 
-import java.io.IOException;
-
 /**
  * Filter class for allowing authorization with CORS
  * <br>
@@ -23,13 +21,12 @@ public class CorsFilter implements ContainerResponseFilter {
      *
      * @param requestContext  the request context
      * @param responseContext the response context
-     * @throws IOException if there is an error
      * @author Zwazel
      * @since 0.1
      */
     @Override
     public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
+                       ContainerResponseContext responseContext) {
         responseContext.getHeaders().add(
                 "Access-Control-Allow-Origin", HelloApplication.getProperty("cors.allowed.origins", HelloApplication.defaultCorsAllowedOrigins));
         responseContext.getHeaders().add(

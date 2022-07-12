@@ -7,6 +7,7 @@ import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.enums.UserRole;
 import dev.zwazel.chatbots.classes.model.User;
 import dev.zwazel.chatbots.exception.NotLoggedInException;
+import dev.zwazel.chatbots.service.UserResource;
 import dev.zwazel.chatbots.util.SHA256;
 import dev.zwazel.chatbots.util.json.ToJson;
 import jakarta.ws.rs.*;
@@ -71,17 +72,18 @@ public class AuthenticateResource {
                 false
         );
 
-        return Response
-                .status(200)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Headers",
-                        "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Methods",
-                        "GET, POST, DELETE")
-                .entity("")
-                .cookie(tokenCookie)
-                .build();
+        try {
+            return Response
+                    .status(200)
+                    .entity(ToJson.toJson(user, UserResource.getFilterProvider(true)))
+                    .cookie(tokenCookie)
+                    .build();
+        } catch (JsonProcessingException e) {
+            return Response
+                    .status(500)
+                    .entity("Could not serialize user")
+                    .build();
+        }
     }
 
     /**
@@ -106,12 +108,6 @@ public class AuthenticateResource {
 
         return Response
                 .status(200)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Headers",
-                        "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Methods",
-                        "GET, POST, DELETE")
                 .entity("")
                 .cookie(tokenCookie)
                 .build();

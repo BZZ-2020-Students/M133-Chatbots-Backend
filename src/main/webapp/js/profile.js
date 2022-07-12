@@ -72,6 +72,29 @@ function setUpPage() {
         .then(data => {
             const ratingCollection = document.getElementById("ratingCollection");
             data.forEach(rating => {
+                const firstOption = (rating.rating === "UPVOTE") ? {
+                    value: "UPVOTE",
+                    text: "Upvote"
+                } : {
+                    value: "DOWNVOTE",
+                    text: "Downvote"
+                };
+
+                const secondOption = (rating.rating === "UPVOTE") ? {
+                    value: "DOWNVOTE",
+                    text: "Downvote"
+                } : {
+                    value: "UPVOTE",
+                    text: "Upvote"
+                };
+
+                let checkbox;
+                if (rating.favourite) {
+                    checkbox = `<input type="checkbox" id="chatbotFavourited-${rating.chatbot.id}" checked>`;
+                } else {
+                    checkbox = `<input type="checkbox" id="chatbotFavourited-${rating.chatbot.id}">`;
+                }
+
                 const ratingElement = document.createElement("div");
                 ratingElement.classList.add("ratingContainer");
                 ratingElement.innerHTML = `
@@ -79,8 +102,16 @@ function setUpPage() {
                         <h3>Rated chatbot: ${rating.chatbot.chatbotName}</h3>
                     </div>
                     <div class="rating-footer">
-                        <p>Is it a favourite: ${rating.favourite}</p>
-                        <p>The rating: ${rating.rating}</p>
+                        <p>Is it a favourite: 
+                            ${checkbox}
+                        </p>
+                        <p>The rating: 
+                            <select id="chatbotRating-${rating.chatbot.id}">
+                                <option value="${firstOption.value}">${firstOption.text}</option>
+                                <option value="${secondOption.value}">${secondOption.text}</option>
+                            </select>
+                        </p>
+                        <button onclick="rateChatbot('${rating.chatbot.id}','${rating.id}')">Update rating</button>
                     </div>
                 `;
                 ratingCollection.appendChild(ratingElement);
@@ -89,6 +120,32 @@ function setUpPage() {
         .catch(error => {
             alert(error.message);
         });
+}
+
+function rateChatbot(chatbotId, rateId) {
+    const data = new URLSearchParams();
+    const favouriteField = document.getElementById("chatbotFavourited-" + chatbotId);
+    const favourited = favouriteField.checked;
+
+    const ratingField = document.getElementById("chatbotRating-" + chatbotId);
+    const rating = ratingField.value;
+
+    data.append("chatbotId", chatbotId);
+    data.append("favourite", favourited);
+    data.append("rating", rating);
+
+    fetch("".concat(baseUrl, "/rating/update/", rateId), {
+        method: "PUT",
+        body: data
+    }).then(response => {
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            throw new Error("Failed to rate chatbot");
+        }
+    }).catch(error => {
+        alert(error.message);
+    });
 }
 
 function editChatbot(chatbotId) {

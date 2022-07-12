@@ -112,6 +112,7 @@ function setUpPage() {
                             </select>
                         </p>
                         <button onclick="rateChatbot('${rating.chatbot.id}','${rating.id}')">Update rating</button>
+                        <button onclick="deleteRating('${rating.id}')">Delete rating</button>
                     </div>
                 `;
                 ratingCollection.appendChild(ratingElement);
@@ -120,6 +121,20 @@ function setUpPage() {
         .catch(error => {
             alert(error.message);
         });
+}
+
+function deleteRating(ratingId) {
+    fetch("".concat(baseUrl, "/rating/delete/", ratingId), {
+        method: "DELETE"
+    }).then(response => {
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            throw new Error("Failed to delete rating");
+        }
+    }).catch(error => {
+        alert(error.message);
+    });
 }
 
 function rateChatbot(chatbotId, rateId) {

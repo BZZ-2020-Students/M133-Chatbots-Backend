@@ -58,7 +58,7 @@ public class RatingResource {
                     .build();
         }
 
-        if (UserRole.ADMIN != loggedInUser.getUserRole() || !loggedInUser.getId().equals(ratingToUpdate.getUser().getId())) {
+        if (UserRole.ADMIN != loggedInUser.getUserRole() && !loggedInUser.getId().equals(ratingToUpdate.getUser().getId())) {
             return Response
                     .status(Response.Status.UNAUTHORIZED)
                     .entity("{\"error\": \"You are not allowed to update this rating.\"}")

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupPage() {
-    let chatbotCollection = document.getElementById("chatbotCollection");
+    const chatbotCollection = document.getElementById("chatbotCollection");
 
     fetch("".concat(baseUrl, "/chatbot/list"))
         .then(response => {
@@ -35,6 +35,49 @@ function setupPage() {
     }).catch(error => {
         alert(error.message);
     });
+
+    const userCollection = document.getElementById("usersContainer");
+    fetch("".concat(baseUrl, "/user/list"))
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Failed to get users");
+            }
+        })
+        .then(data => {
+            data.forEach(user => {
+                let userElement = document.createElement("div");
+                userElement.className = "userContainer";
+                userElement.innerHTML = `
+                    <h2>${user.username}</h2>
+                    <div class="user-footer">
+                        <button onclick="deleteUser('${user.id}')">Delete</button>
+                    </div>
+                `;
+                userCollection.appendChild(userElement);
+            });
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+}
+
+function deleteUser(userId) {
+    if(confirm("Are you sure you want to delete this user?")) {
+        fetch("".concat(baseUrl, "/user/delete/", userId), {
+            method: "DELETE",
+        }).then(response => {
+            if (response.ok) {
+                alert("User deleted");
+                window.location.reload();
+            } else {
+                throw new Error("Failed to delete user");
+            }
+        }).catch(error => {
+            alert(error.message);
+        });
+    }
 }
 
 function editChatbot(chatbotId) {

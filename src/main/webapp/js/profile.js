@@ -16,7 +16,6 @@ function createChatbot(event) {
         body: data
     }).then(response => {
         if (response.ok) {
-            alert("Chatbot created");
             window.location.reload();
         } else {
             throw new Error("Failed to create chatbot");

@@ -55,6 +55,11 @@ function setNav() {
             navLink.href = (index) ? "pages/login.html" : "login.html";
             navLink.innerHTML = "Login";
             navLinks.appendChild(navLink);
+
+            navLink = document.createElement("a");
+            navLink.href = (index) ? "pages/register.html" : "register.html";
+            navLink.innerHTML = "Register";
+            navLinks.appendChild(navLink);
         } else {
             navLink = document.createElement("a");
             navLink.href = (index) ? "pages/login.html" : "login.html";

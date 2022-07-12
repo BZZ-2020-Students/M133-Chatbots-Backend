@@ -1,7 +1,8 @@
-package dev.zwazel.chatbots.authentication;
+package dev.zwazel.chatbots.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.zwazel.chatbots.HelloApplication;
+import dev.zwazel.chatbots.authentication.TokenHandler;
 import dev.zwazel.chatbots.classes.dao.UserDao;
 import dev.zwazel.chatbots.classes.enums.DurationsInMilliseconds;
 import dev.zwazel.chatbots.classes.enums.UserRole;
